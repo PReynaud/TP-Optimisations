@@ -6,7 +6,6 @@ package Shape;
 public class Shape {
     private int height;
     private int width;
-    private boolean isLying;
 
     public Shape(int height, int width) {
         this.height = height;
