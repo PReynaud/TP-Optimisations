@@ -5,7 +5,7 @@ package Shape;
  */
 
 public class Shape0 extends Shape{
-    public Shape0(boolean isLying) {
-        super(30, 24, isLying);
+    public Shape0() {
+        super(30, 24);
     }
 }

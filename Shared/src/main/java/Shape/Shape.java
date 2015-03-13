@@ -8,10 +8,9 @@ public class Shape {
     private int width;
     private boolean isLying;
 
-    public Shape(int height, int width, boolean isLying) {
+    public Shape(int height, int width) {
         this.height = height;
         this.width = width;
-        this.isLying = isLying;
     }
 
     public int getHeight() {
@@ -20,9 +19,5 @@ public class Shape {
 
     public int getWidth() {
         return width;
-    }
-
-    public boolean isLying() {
-        return isLying;
     }
 }
