@@ -28,7 +28,8 @@ public class Sheet extends Shape {
         blankSquares.add(new Shape(height, width));
     }
 
-    public boolean putShape(Shape shape, Shape blankSquare) {
+    public boolean putShape(Shape shape) {
+        for (Shape blankSquare: blankSquares)
         if (shape.getWidth() <= blankSquare.getWidth() && shape.getHeight() <= blankSquare.getHeight()) {
             content.add(shape);
             return true;
