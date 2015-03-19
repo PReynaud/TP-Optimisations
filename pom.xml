@@ -18,6 +18,7 @@
     <modules>
         <module>Distribution</module>
         <module>Positioning</module>
-        <module>Shared</module>
+        <module>Shape</module>
+        <module>Solution</module>
     </modules>
 </project>
