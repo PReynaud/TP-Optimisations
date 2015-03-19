@@ -29,7 +29,7 @@ public class Distribution {
     }
 
     public boolean addOrder(int[] order){
-        if(order.length == nbPatterns){
+        if(order.length == nbShapes){
             this.order = order;
             return true;
         }
@@ -61,9 +61,9 @@ public class Distribution {
             double[] temp = new double[nbPatterns];
             for(int j = 0; j < nbPatterns; j++){
                 temp[j] = this.shapesOnPatterns[j][i];
-                LinearConstraint constraint = new LinearConstraint(temp, Relationship.GEQ, order[j]);
-                constraints.add(constraint);
             }
+            LinearConstraint constraint = new LinearConstraint(temp, Relationship.GEQ, order[i]);
+            constraints.add(constraint);
         }
 
         double[] objectiveToSolve = new double[nbPatterns];

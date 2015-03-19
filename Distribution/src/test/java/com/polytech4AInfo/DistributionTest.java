@@ -45,17 +45,40 @@ public class DistributionTest extends TestCase {
 
 
     public void testGetSolution() throws Exception {
-        //TODO
+        //Test 1
         int[][] temp = {{2, 2}, {0, 1}};
         instance.addShapesForOnePattern(0, temp[0]);
         instance.addShapesForOnePattern(1, temp[1]);
-
         int[] order = {10, 12};
         instance.addOrder(order);
-
         RealPointValuePair res = instance.getSolution();
-        System.out.println(res);
         assertEquals(6.0, res.getPoint()[0]);
         assertEquals(0.0, res.getPoint()[1]);
+
+
+        //Test 2
+        instance = new Distribution(2, 3);
+        temp = new int[][]{{1, 2, 0}, {0, 2, 2}};
+        instance.addShapesForOnePattern(0, temp[0]);
+        instance.addShapesForOnePattern(1, temp[1]);
+        order = new int[]{80, 250, 50};
+        instance.addOrder(order);
+        res = instance.getSolution();
+        assertEquals(100.0, res.getPoint()[0]);
+        assertEquals(25.0, res.getPoint()[1]);
+
+
+        //Test 3
+        instance = new Distribution(3, 3);
+        temp = new int[][]{{1, 0, 0}, {0, 2, 0}, {0, 0, 1}};
+        instance.addShapesForOnePattern(0, temp[0]);
+        instance.addShapesForOnePattern(1, temp[1]);
+        instance.addShapesForOnePattern(2, temp[2]);
+        order = new int[]{80, 250, 50};
+        instance.addOrder(order);
+        res = instance.getSolution();
+        assertEquals(80.0, res.getPoint()[0]);
+        assertEquals(125.0, res.getPoint()[1]);
+        assertEquals(50.0, res.getPoint()[2]);
     }
 }
