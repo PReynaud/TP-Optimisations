@@ -8,10 +8,21 @@ import java.util.Comparator;
 public class Shape implements Comparable<Shape> {
     private int height;
     private int width;
+    private int positionx;
+    private int positiony;
+
+    public Shape(int height, int width, int x, int y) {
+        this.height = height;
+        this.width = width;
+        this.positionx = x;
+        this.positiony = y;
+    }
 
     public Shape(int height, int width) {
         this.height = height;
         this.width = width;
+        this.positionx = 0;
+        this.positiony = 0;
     }
 
     public int getHeight() {
@@ -20,6 +31,22 @@ public class Shape implements Comparable<Shape> {
 
     public int getWidth() {
         return width;
+    }
+
+    public int getPositionx() {
+        return positionx;
+    }
+
+    public int getPositiony() {
+        return positiony;
+    }
+
+    public void setPositiony(int positiony) {
+        this.positiony = positiony;
+    }
+
+    public void setPositionx(int positionx) {
+        this.positionx = positionx;
     }
 
     @Override
