@@ -6,20 +6,33 @@ import java.util.Comparator;
  * Created by Pierre on 13/03/2015.
  */
 public class Shape implements Comparable<Shape> {
-    private int height;
-    private int width;
+    protected int length;
+    protected int breadth;
+    protected boolean isLying;
 
-    public Shape(int height, int width) {
-        this.height = height;
-        this.width = width;
+    public Shape(int height, int breadth) {
+        if (height>= breadth){
+            this.length = height;
+            this.breadth = breadth;
+        }else {
+            this.length = breadth;
+            this.breadth = height;
+        }
+        this.isLying = false;
     }
 
-    public int getHeight() {
-        return height;
+    public int getLength() {
+        return length;
     }
 
-    public int getWidth() {
-        return width;
+    public int getBreadth() {
+        return breadth;
+    }
+
+    public void turnShape (){
+        int tamp = length;
+        length = breadth;
+        breadth = tamp;
     }
 
     @Override
@@ -32,27 +45,25 @@ public class Shape implements Comparable<Shape> {
         public static Comparator<Shape> AREA = new Comparator<Shape>() {
             @Override
             public int compare(Shape o1, Shape o2) {
-                return o1.getWidth() * o1.getHeight() - o2.getWidth() * o2.getHeight();
+                return o1.breadth * o1.length - o2.breadth * o2.length;
             }
         };
-        public static Comparator<Shape> LENGHT = new Comparator<Shape>() {
+        public static Comparator<Shape> LENGTH = new Comparator<Shape>() {
             @Override
             public int compare(Shape o1, Shape o2) {
-                return Integer.max(o1.getWidth(), o1.getHeight()) - Integer.max(o2.getWidth(), o2.getHeight());
+                return o1.length - o2.length;
             }
         };
         public static Comparator<Shape> BREADTH = new Comparator<Shape>() {
             @Override
             public int compare(Shape o1, Shape o2) {
-                return Integer.min(o1.getWidth(), o1.getHeight()) - Integer.min(o2.getWidth(), o2.getHeight());
+                return o1.breadth - o2.breadth;
             }
         };
         public static Comparator<Shape> RATIO = new Comparator<Shape>() {
             @Override
             public int compare(Shape o1, Shape o2) {
-                float r1 = Integer.max(o1.getWidth(), o1.getHeight()) / Integer.min(o1.getWidth(), o1.getHeight()),
-                        r2 = Integer.max(o2.getWidth(), o2.getHeight()) / Integer.min(o2.getWidth(), o2.getHeight());
-                return (int) (r1 - r2);
+                return (int) (o1.breadth /o1.length - o2.breadth /o2.length);
             }
         };
     }
