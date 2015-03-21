@@ -30,17 +30,41 @@ public class DistributionTest extends TestCase {
 
 
     public void testAddShapesForOnePattern() throws Exception {
-        int[][] temp = new int[2][];
-        temp[0] = new int[]{1, 2};
-        temp[1] = new int[]{3, 4};
+        int[][] temp = {{1, 2}, {3, 4}};
         boolean res;
 
         res = instance.addShapesForOnePattern(0, temp[0]);
         assertTrue(res);
         res = instance.addShapesForOnePattern(1, temp[1]);
         assertTrue(res);
-
         Assert.assertArrayEquals(instance.shapesOnPatterns, temp);
+
+        int[][] temp2 = {{1, 2, 3}, {4, 5}};
+        res = instance.addShapesForOnePattern(0, temp2[0]);
+        assertFalse(res);
+        res = instance.addShapesForOnePattern(3, temp2[1]);
+        assertFalse(res);
+        res = instance.addShapesForOnePattern(-1, temp2[1]);
+        assertFalse(res);
+    }
+
+    public void testAddShapesForAllPattern() throws Exception{
+        int[][] temp = new int[2][];
+        temp[0] = new int[]{1, 2};
+        temp[1] = new int[]{3, 4};
+        boolean res;
+
+        res = instance.addShapesForAllPattern(temp);
+        assertTrue(res);
+        Assert.assertArrayEquals(instance.shapesOnPatterns, temp);
+
+        int[][] temp2 = {{1, 2, 3}, {4, 5}};
+        res = instance.addShapesForAllPattern(temp2);
+        assertFalse(res);
+
+        int[][] temp3 = {{1, 2}, {3, 4}, {5, 6}};
+        res = instance.addShapesForAllPattern(temp3);
+        assertFalse(res);
     }
 
 
@@ -80,5 +104,16 @@ public class DistributionTest extends TestCase {
         assertEquals(80.0, res.getPoint()[0]);
         assertEquals(125.0, res.getPoint()[1]);
         assertEquals(50.0, res.getPoint()[2]);
+
+        //Test 4
+        instance = new Distribution(3, 3);
+        temp = new int[][]{{1, 0, 0}, {0, 0, 0}, {0, 0, 1}};
+        instance.addShapesForOnePattern(0, temp[0]);
+        instance.addShapesForOnePattern(1, temp[1]);
+        instance.addShapesForOnePattern(2, temp[2]);
+        order = new int[]{80, 250, 50};
+        instance.addOrder(order);
+        res = instance.getSolution();
+        assertEquals(null, res);
     }
 }
