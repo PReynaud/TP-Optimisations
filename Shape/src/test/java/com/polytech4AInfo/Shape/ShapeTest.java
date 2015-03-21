@@ -14,6 +14,16 @@ public class ShapeTest extends TestCase {
         shape = new Shape(100, 150);
     }
 
+    @Test
+    public void testShape() throws Exception {
+        Shape shape = new Shape(50, 75);
+        assertEquals(75, shape.length);
+        assertEquals(50, shape.breadth);
+
+        shape = new Shape(75, 50);
+        assertEquals(75, shape.length);
+        assertEquals(50, shape.breadth);
+    }
 
     @Test
     public void testGetLength() throws Exception {
@@ -23,6 +33,17 @@ public class ShapeTest extends TestCase {
     @Test
     public void testGetBreadth() throws Exception {
         assertEquals(100, shape.getBreadth());
+    }
+
+    @Test
+    public void testGetRatio() throws Exception {
+        Shape shape = new Shape(200, 100);
+        assertEquals(0.5, shape.getRatio());
+    }
+
+    @Test
+    public void testGetArea() throws Exception{
+        assertEquals(15000 , shape.getArea());
     }
 
     @Test
