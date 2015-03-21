@@ -1,39 +1,43 @@
 package com.polytech4AInfo.Shape;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by Dimitri on 16/03/2015.
  */
 public class Sheet extends Shape {
-    private ArrayList<Shape> content;
-    private ArrayList<Shape> blankSquares;
+    private ArrayList<PlacedShape> content;
+    private ArrayList<PlacedShape> bins;
 
-    public ArrayList<Shape> getContent() {
+    public ArrayList<PlacedShape> getContent() {
         return content;
     }
 
-    public ArrayList<Shape> getBlankSquares() {
-        return blankSquares;
+    public ArrayList<PlacedShape> getBins() {
+        return bins;
     }
 
     public Sheet(int height, int width) {
         super(height, width);
-        content = new ArrayList<Shape>();
-        blankSquares = new ArrayList<Shape>();
-        blankSquares.add(new Shape(height, width));
+        content = new ArrayList<PlacedShape>();
+        bins = new ArrayList<PlacedShape>();
+        bins.add(new PlacedShape(height, width));
     }
 
-    public boolean putShape(Shape shape) {
-        for (Shape blankSquare: blankSquares)
-        if (shape.getWidth() <= blankSquare.getWidth() && shape.getHeight() <= blankSquare.getHeight()) {
-            content.add(shape);
-            return true;
+    public int putShape(PlacedShape shape) {
+        for (PlacedShape bin: bins){
+            if (shape.isLying && shape.breadth <= bin.breadth && shape.length <= bin.length){
+                shape.setPositionx(bin.getPositionx());
+                shape.setPositiony(bin.getPositiony());
+                content.add(shape);
+                return bins.indexOf(bin);
+            }
+            else if (!shape.isLying && shape.getLength()<= bin.getBreadth() && shape.getBreadth()<= bin.getLength()) {
+                shape.setPositionx(bin.getPositionx());
+                content.add(shape);
+                return bins.indexOf(bin);
+            }
         }
-        return false;
+        return -1;
     }
 }
