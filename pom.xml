@@ -20,5 +20,6 @@
         <module>Positioning</module>
         <module>Shape</module>
         <module>Solution</module>
+        <module>Main</module>
     </modules>
 </project>
