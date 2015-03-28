@@ -16,6 +16,10 @@ public class Shape implements Comparable<Shape> {
      */
     protected int breadth;
 
+    public boolean isLying() {
+        return isLying;
+    }
+
     /**
      * Boolean to indicate in which orientation the shape is placed
      */
@@ -48,6 +52,7 @@ public class Shape implements Comparable<Shape> {
         return breadth;
     }
 
+
     /**
      * Get the ratio of the shape
      * @return The ratio between the breadth and the length of the shape
@@ -71,7 +76,6 @@ public class Shape implements Comparable<Shape> {
         isLying = !isLying;
     }
 
-    @Override
     public int compareTo(Shape o) {
         return Comparators.AREA.compare(this, o);
     }
@@ -79,27 +83,23 @@ public class Shape implements Comparable<Shape> {
     public static class Comparators {
 
         public static Comparator<Shape> AREA = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                return o1.breadth * o1.length - o2.breadth * o2.length;
+                return o2.breadth * o2.length - o1.breadth * o1.length;
             }
         };
         public static Comparator<Shape> LENGTH = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                return o1.length - o2.length;
+                return o2.length-o1.length;
             }
         };
         public static Comparator<Shape> BREADTH = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                return o1.breadth - o2.breadth;
+                return o2.breadth - o1.breadth;
             }
         };
         public static Comparator<Shape> RATIO = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                return (int) (o1.getRatio() - o2.getRatio());
+                return (int) (o2.getRatio()-o1.getRatio());
             }
         };
     }
