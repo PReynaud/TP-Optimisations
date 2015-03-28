@@ -54,6 +54,25 @@ public class Shape implements Comparable<Shape> {
         return Comparators.AREA.compare(this, o);
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Shape){
+            Shape s = (Shape) o;
+            if(s.getWidth() == this.getWidth()
+                    && s.getHeight() == this.getHeight()
+                    && s.getPositionx() == this.getPositionx()
+                    && s.getPositiony() == this.getPositiony()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString(){
+        return this.getPositionx() + " " +  this.getPositiony() + " " + this.getHeight() + " " + this.getWidth();
+    }
+
     public static class Comparators {
 
         public static Comparator<Shape> AREA = new Comparator<Shape>() {

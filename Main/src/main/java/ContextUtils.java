@@ -1,10 +1,13 @@
 import com.polytech4AInfo.Shape.Shape;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
+import sun.security.provider.SHA;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -32,15 +35,14 @@ public class ContextUtils {
     public static Context loadContext(String path) throws IOException, ContextLoadException {
         int lx;
         int ly;
-        Shape[] tab_shape;
-        Integer[] tab_order;
         String line_temp;
         String[] line_temp_split;
         final File file = new File(path);
         final LineIterator it = FileUtils.lineIterator(file, "UTF-8");
-        int nombre;
+        Hashtable<Shape, Integer> pattern = new Hashtable<Shape, Integer>();
         Double height_temp;
         Double width_temp;
+        int nombre;
 
 
         if (it.hasNext()) {
@@ -63,8 +65,6 @@ public class ContextUtils {
             } else throw new ContextLoadException(ERREUR_PARAM, 3);
         } else throw new ContextLoadException(ERREUR_LIGNE, 3);
 
-        tab_shape = new Shape[nombre];
-        tab_order = new Integer[nombre];
 
         for (int i = 0; i < nombre; i++) {
             line_temp = it.nextLine();
@@ -72,13 +72,12 @@ public class ContextUtils {
                 line_temp_split = line_temp.split("\\s");
                 height_temp = Double.parseDouble(line_temp_split[0]);
                 width_temp = Double.parseDouble(line_temp_split[1]);
-                tab_shape[i] = new Shape(height_temp.intValue(), width_temp.intValue());
-                tab_order[i] = Integer.parseInt(line_temp_split[2]);
+                pattern.put(new Shape(height_temp.intValue(), width_temp.intValue()),Integer.parseInt(line_temp_split[2]));
             } else throw new ContextLoadException(ERREUR_SHAPE, i + 4);
         }
         it.close();
 
-        Context c = new Context(lx, ly, tab_shape, tab_order);
+        Context c = new Context(lx, ly, pattern);
         return c;
 
     }
@@ -94,8 +93,7 @@ public class ContextUtils {
     public static class Context {
         int lx;
         int ly;
-        Shape[] tab_shape;
-        Integer[] tab_order;
+        Hashtable<Shape, Integer> pattern;
 
         public int getLx() {
             return lx;
@@ -113,27 +111,18 @@ public class ContextUtils {
             this.ly = ly;
         }
 
-        public Shape[] getTab_shape() {
-            return tab_shape;
+        public Hashtable<Shape, Integer> getPattern() {
+            return pattern;
         }
 
-        public void setTab_shape(Shape[] tab_shape) {
-            this.tab_shape = tab_shape;
+        public void setPattern(Hashtable<Shape, Integer> pattern) {
+            this.pattern = pattern;
         }
 
-        public Integer[] getTab_order() {
-            return tab_order;
-        }
-
-        public void setTab_order(Integer[] tab_order) {
-            this.tab_order = tab_order;
-        }
-
-        public Context(int lx, int ly, Shape[] tab_shape, Integer[] tab_order) {
+        public Context(int lx, int ly, Hashtable<Shape, Integer> pattern) {
             this.lx = lx;
             this.ly = ly;
-            this.tab_shape = tab_shape;
-            this.tab_order = tab_order;
+            this.pattern = pattern;
         }
     }
 
