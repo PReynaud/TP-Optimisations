@@ -1,18 +1,19 @@
 package com.polytech4AInfo.Positioning.Pattern;
 
 import com.polytech4AInfo.Positioning.Positioning;
-import com.polytech4AInfo.Shape.Shape;
+import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
  * Created by Dimitri on 15/03/2015.
  */
 public class Pattern {
-    private Hashtable<Shape,Integer> pattern;
+    private ArrayList<ShapeGroup> pattern;
 
-    public Pattern(Hashtable<Shape,Integer> pattern) {
+    public Pattern(ArrayList<ShapeGroup> pattern) {
         this.pattern = pattern;
     }
 
