@@ -1,4 +1,4 @@
-package com.polytech4AInfo;
+package com.polytech4AInfo.Positioning;
 
 import org.apache.commons.math.optimization.RealPointValuePair;
 import org.junit.Assert;

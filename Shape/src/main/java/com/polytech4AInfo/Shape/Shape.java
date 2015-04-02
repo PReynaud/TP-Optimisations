@@ -6,50 +6,76 @@ import java.util.Comparator;
  * Created by Pierre on 13/03/2015.
  */
 public class Shape implements Comparable<Shape> {
-    private int height;
-    private int width;
-    private int positionx;
-    private int positiony;
+    /**
+     * Side of the shape which is the most large
+     */
+    protected int length;
 
-    public Shape(int height, int width, int x, int y) {
-        this.height = height;
-        this.width = width;
-        this.positionx = x;
-        this.positiony = y;
+    /**
+     * Side of the shape which is the smallest
+     */
+    protected int breadth;
+
+    public boolean isLying() {
+        return isLying;
     }
 
-    public Shape(int height, int width) {
-        this.height = height;
-        this.width = width;
-        this.positionx = 0;
-        this.positiony = 0;
+    /**
+     * Boolean to indicate in which orientation the shape is placed
+     */
+    protected boolean isLying;
+
+    public Shape(int width, int breadth) {
+        if (width>= breadth){
+            this.length = width;
+            this.breadth = breadth;
+        }else {
+            this.length = breadth;
+            this.breadth = width;
+        }
+        this.isLying = false;
     }
 
-    public int getHeight() {
-        return height;
+    /**
+     * Getter of length
+     * @return The longest side
+     */
+    public int getLength() {
+        return length;
     }
 
-    public int getWidth() {
-        return width;
+    /**
+     * Getter of breadth
+     * @return The shortest side
+     */
+    public int getBreadth() {
+        return breadth;
     }
 
-    public int getPositionx() {
-        return positionx;
+
+    /**
+     * Get the ratio of the shape
+     * @return The ratio between the breadth and the length of the shape
+     */
+    public double getRatio() {
+        return (double)breadth/(double)length;
     }
 
-    public int getPositiony() {
-        return positiony;
+    /**
+     * Get the area of the shape
+     * @return The area of the shape
+     */
+    public int getArea(){
+        return breadth*length;
     }
 
-    public void setPositiony(int positiony) {
-        this.positiony = positiony;
+    /**
+     * Will do the rotation of the shape to be able to place it
+     */
+    public void turnShape (){
+        isLying = !isLying;
     }
 
-    public void setPositionx(int positionx) {
-        this.positionx = positionx;
-    }
-
-    @Override
     public int compareTo(Shape o) {
         return Comparators.AREA.compare(this, o);
     }
@@ -76,29 +102,23 @@ public class Shape implements Comparable<Shape> {
     public static class Comparators {
 
         public static Comparator<Shape> AREA = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                return o1.getWidth() * o1.getHeight() - o2.getWidth() * o2.getHeight();
+                return o2.breadth * o2.length - o1.breadth * o1.length;
             }
         };
-        public static Comparator<Shape> LENGHT = new Comparator<Shape>() {
-            @Override
+        public static Comparator<Shape> LENGTH = new Comparator<Shape>() {
             public int compare(Shape o1, Shape o2) {
-                return Integer.max(o1.getWidth(), o1.getHeight()) - Integer.max(o2.getWidth(), o2.getHeight());
+                return o2.length-o1.length;
             }
         };
         public static Comparator<Shape> BREADTH = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                return Integer.min(o1.getWidth(), o1.getHeight()) - Integer.min(o2.getWidth(), o2.getHeight());
+                return o2.breadth - o1.breadth;
             }
         };
         public static Comparator<Shape> RATIO = new Comparator<Shape>() {
-            @Override
             public int compare(Shape o1, Shape o2) {
-                float r1 = Integer.max(o1.getWidth(), o1.getHeight()) / Integer.min(o1.getWidth(), o1.getHeight()),
-                        r2 = Integer.max(o2.getWidth(), o2.getHeight()) / Integer.min(o2.getWidth(), o2.getHeight());
-                return (int) (r1 - r2);
+                return (int) (o2.getRatio()-o1.getRatio());
             }
         };
     }

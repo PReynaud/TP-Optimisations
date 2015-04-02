@@ -1,39 +1,64 @@
 package com.polytech4AInfo.Shape;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by Dimitri on 16/03/2015.
  */
-public class Sheet extends Shape {
-    private ArrayList<Shape> content;
-    private ArrayList<Shape> blankSquares;
+public class Sheet{
+    /**
+     * Longest side of the sheet
+     */
+    protected int length;
 
-    public ArrayList<Shape> getContent() {
+    /**
+     * Shortest side of the sheet
+     */
+    protected int breadth;
+
+    /**
+     * List of the different shape which has been placed in the sheet
+     */
+    private ArrayList<PlacedShape> content;
+
+    /**
+     * List of the bins which are contained into the sheet
+     */
+    private ArrayList<PlacedShape> bins;
+
+    /**
+     * Constructor of the class, a first bin is also created wich is initialized at the size of the sheet
+     * @param length Longest side of the sheet
+     * @param breadth Shortest side of the sheet
+     */
+    public Sheet(int length, int breadth) {
+        if(length > breadth){
+            this.length = length;
+            this.breadth = breadth;
+        }
+        else{
+            this.length = breadth;
+            this.breadth = length;
+        }
+
+        this.content = new ArrayList<PlacedShape>();
+        this.bins = new ArrayList<PlacedShape>();
+        this.bins.add(new PlacedShape(length, breadth));
+    }
+
+    public ArrayList<PlacedShape> getContent() {
         return content;
     }
 
-    public ArrayList<Shape> getBlankSquares() {
-        return blankSquares;
+    public ArrayList<PlacedShape> getBins() {
+        return bins;
     }
 
-    public Sheet(int height, int width) {
-        super(height, width);
-        content = new ArrayList<Shape>();
-        blankSquares = new ArrayList<Shape>();
-        blankSquares.add(new Shape(height, width));
+    public int getLength() {
+        return length;
     }
 
-    public boolean putShape(Shape shape) {
-        for (Shape blankSquare: blankSquares)
-        if (shape.getWidth() <= blankSquare.getWidth() && shape.getHeight() <= blankSquare.getHeight()) {
-            content.add(shape);
-            return true;
-        }
-        return false;
+    public int getBreadth() {
+        return breadth;
     }
 }
