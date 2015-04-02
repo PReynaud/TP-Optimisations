@@ -15,4 +15,20 @@ public class ShapeGroup extends PlacedShape {
         super(height, width, x, y);
         this.number=number;
     }
+
+    @Override
+    public String toString(){
+        return super.toString() + " " + this.number;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof ShapeGroup){
+            ShapeGroup s = (ShapeGroup) o;
+            if(super.equals(o) && this.number == s.number){
+                return true;
+            }
+        }
+        return false;
+    }
 }

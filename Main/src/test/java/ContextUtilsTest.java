@@ -1,10 +1,11 @@
+import com.polytech4AInfo.Shape.PlacedShape;
 import com.polytech4AInfo.Shape.Shape;
+import com.polytech4AInfo.Shape.ShapeGroup;
 import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-
 
 
 /**
@@ -15,16 +16,15 @@ public class ContextUtilsTest extends TestCase {
     private static final String GOOD_FILE = "src/test/resources/good.txt";
     private static final String BAD_FILE = "src/test/resources/bad.txt";
     private static final String MISSING_FILE = "";
-    private Hashtable<Shape, Integer> pattern = new Hashtable<Shape, Integer>();
-    String[] l1_temp;
-    String[] l2_temp;
+    private ShapeGroup[] pattern;
     private int lx;
     private int ly;
 
     public void setUp() {
-        pattern.put(new Shape(933, 372), 179);
-        pattern.put(new Shape(893, 307), 192);
-        pattern.put(new Shape(727, 333), 121);
+        pattern = new ShapeGroup[3];
+        pattern[0] = new ShapeGroup(933, 372, 179);
+        pattern[1] = new ShapeGroup(893, 307, 192);
+        pattern[2] = new ShapeGroup(727, 333, 121);
         lx = 1400;
         ly = 700;
     }
@@ -34,11 +34,10 @@ public class ContextUtilsTest extends TestCase {
         ContextUtils.Context c_good = ContextUtils.loadContext(GOOD_FILE);
         assertEquals(lx, c_good.getLx());
         assertEquals(ly, c_good.getLy());
-        assertEquals(pattern.size(), c_good.getPattern().size());
-        l1_temp = (pattern.toString().substring(1, pattern.toString().length() - 1)).split(", ");
-        l2_temp = (pattern.toString().substring(1, c_good.getPattern().toString().length() - 1)).split(", ");
-        System.out.print(l1_temp[0]);
-        assertEquals(true, compareArrays(l1_temp, l2_temp));
+        assertEquals(pattern.length, c_good.getPattern().length);
+        for (int i = 0; i < pattern.length; i++) {
+            assertEquals(pattern[i], c_good.getPattern()[i]);
+        }
 
         try {
             ContextUtils.Context c_bad = ContextUtils.loadContext(BAD_FILE);
@@ -56,6 +55,7 @@ public class ContextUtilsTest extends TestCase {
 
     /**
      * Compare tous les éléments de deux listes de string non ordonnées
+     *
      * @param s1 liste non ordinnée de string
      * @param s2 liste non ordinnée de string
      * @return true si tout est équivalent, false sinon

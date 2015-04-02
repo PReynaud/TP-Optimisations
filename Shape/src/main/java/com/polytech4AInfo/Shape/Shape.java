@@ -84,10 +84,8 @@ public class Shape implements Comparable<Shape> {
     public boolean equals(Object o){
         if(o instanceof Shape){
             Shape s = (Shape) o;
-            if(s.getWidth() == this.getWidth()
-                    && s.getHeight() == this.getHeight()
-                    && s.getPositionx() == this.getPositionx()
-                    && s.getPositiony() == this.getPositiony()){
+            if(s.getLength() == this.getLength()
+                    && s.getBreadth() == this.getBreadth()){
                 return true;
             }
         }
@@ -96,7 +94,7 @@ public class Shape implements Comparable<Shape> {
 
     @Override
     public String toString(){
-        return this.getPositionx() + " " +  this.getPositiony() + " " + this.getHeight() + " " + this.getWidth();
+        return this.length + " " +  this.breadth;
     }
 
     public static class Comparators {

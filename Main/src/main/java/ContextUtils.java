@@ -1,4 +1,5 @@
 import com.polytech4AInfo.Shape.Shape;
+import com.polytech4AInfo.Shape.ShapeGroup;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import sun.security.provider.SHA;
@@ -39,7 +40,7 @@ public class ContextUtils {
         String[] line_temp_split;
         final File file = new File(path);
         final LineIterator it = FileUtils.lineIterator(file, "UTF-8");
-        Hashtable<Shape, Integer> pattern = new Hashtable<Shape, Integer>();
+        ShapeGroup[] pattern;
         Double height_temp;
         Double width_temp;
         int nombre;
@@ -65,6 +66,7 @@ public class ContextUtils {
             } else throw new ContextLoadException(ERREUR_PARAM, 3);
         } else throw new ContextLoadException(ERREUR_LIGNE, 3);
 
+        pattern = new ShapeGroup[nombre];
 
         for (int i = 0; i < nombre; i++) {
             line_temp = it.nextLine();
@@ -72,7 +74,7 @@ public class ContextUtils {
                 line_temp_split = line_temp.split("\\s");
                 height_temp = Double.parseDouble(line_temp_split[0]);
                 width_temp = Double.parseDouble(line_temp_split[1]);
-                pattern.put(new Shape(height_temp.intValue(), width_temp.intValue()),Integer.parseInt(line_temp_split[2]));
+                pattern[i] = new ShapeGroup(height_temp.intValue(), width_temp.intValue(),Integer.parseInt(line_temp_split[2]));
             } else throw new ContextLoadException(ERREUR_SHAPE, i + 4);
         }
         it.close();
@@ -93,7 +95,7 @@ public class ContextUtils {
     public static class Context {
         int lx;
         int ly;
-        Hashtable<Shape, Integer> pattern;
+        ShapeGroup[] pattern;
 
         public int getLx() {
             return lx;
@@ -111,15 +113,15 @@ public class ContextUtils {
             this.ly = ly;
         }
 
-        public Hashtable<Shape, Integer> getPattern() {
+        public ShapeGroup[] getPattern() {
             return pattern;
         }
 
-        public void setPattern(Hashtable<Shape, Integer> pattern) {
+        public void setPattern(ShapeGroup[] pattern) {
             this.pattern = pattern;
         }
 
-        public Context(int lx, int ly, Hashtable<Shape, Integer> pattern) {
+        public Context(int lx, int ly, ShapeGroup[] pattern) {
             this.lx = lx;
             this.ly = ly;
             this.pattern = pattern;

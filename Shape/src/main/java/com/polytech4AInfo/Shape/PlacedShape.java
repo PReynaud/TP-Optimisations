@@ -36,16 +36,22 @@ public class PlacedShape extends Shape {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o instanceof PlacedShape){
+    public boolean equals(Object o) {
+        if (o instanceof PlacedShape) {
             PlacedShape s = (PlacedShape) o;
-            if(s.getLength() == this.getLength()
-                    && s.getBreadth() == this.getBreadth()
+            if (super.equals(o)
                     && s.getPositionx() == this.getPositionx()
-                    && s.getPositiony() == this.getPositiony()){
+                    && s.getPositiony() == this.getPositiony()) {
                 return true;
             }
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " " + this.positionx + " " + this.positiony;
+    }
+
+
 }
