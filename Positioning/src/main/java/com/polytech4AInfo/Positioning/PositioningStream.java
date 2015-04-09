@@ -5,6 +5,7 @@ import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Created by Dimitri on 08/04/2015.
@@ -25,9 +26,10 @@ public class PositioningStream {
     }
 
     public boolean isPossible(Sheet sheet, ArrayList<ShapeGroup> shapes){
-        return positionings
+        Optional<Positioning> solution = positionings
                 .parallelStream()
-                .filtg
+                .filter(p->p.isPossible(sheet,shapes))
+                .findAny();
         return false;
     }
 }

@@ -46,6 +46,13 @@ public class Sheet{
         this.bins.add(new PlacedShape(length, breadth));
     }
 
+    public Sheet(int length, int breadth, ArrayList<PlacedShape> content, ArrayList<PlacedShape> bins) {
+        this.length = length;
+        this.breadth = breadth;
+        this.content = content;
+        this.bins = bins;
+    }
+
     public ArrayList<PlacedShape> getContent() {
         return content;
     }
@@ -60,5 +67,9 @@ public class Sheet{
 
     public int getBreadth() {
         return breadth;
+    }
+
+    public Sheet clone (){
+        return new Sheet (length,breadth,content,bins);
     }
 }

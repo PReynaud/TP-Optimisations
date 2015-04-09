@@ -19,4 +19,8 @@ public class ShapeGroup extends PlacedShape {
     public int getNumber() {
         return number;
     }
+
+    public ShapeGroup clone(){
+        return new ShapeGroup(length, breadth, this.getPositionx(), this.getPositiony(), number);
+    }
 }

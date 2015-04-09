@@ -9,6 +9,9 @@ import com.polytech4AInfo.Shape.Sheet;
  */
 public class LengthGuillotine implements Guillotine {
 
+    /**
+     * {@inheritDoc}
+     */
     public void cut(Sheet sheet, int index, Shape shape) {
         PlacedShape bin = sheet.getBins().remove(index);
         if (shape.isLying()){

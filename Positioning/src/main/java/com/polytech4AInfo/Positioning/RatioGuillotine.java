@@ -9,6 +9,9 @@ import com.polytech4AInfo.Shape.Sheet;
  */
 public class RatioGuillotine implements Guillotine {
 
+    /**
+     * {@inheritDoc}
+     */
     public void cut(Sheet sheet, int index, Shape shape) {
         PlacedShape bin = sheet.getBins().remove(index),
                 bin1 =new PlacedShape(bin.getLength()-shape.getLength(),bin.getBreadth(),bin.getPositionx()+shape.getLength(),bin.getPositiony()),
