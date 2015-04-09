@@ -2,33 +2,33 @@ package com.polytech4AInfo.Positioning;
 
 import com.polytech4AInfo.Shape.PlacedShape;
 import com.polytech4AInfo.Shape.Shape;
+import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Comparator;
 
 /**
  * Created by Dimitri on 15/03/2015.
  */
-public abstract class Positioning {
+public class Positioning {
+    private Comparator<Shape> comparator;
+    private Guillotine guillotine;
 
-    protected abstract void sortShapes(ArrayList<? extends Shape> shapes);
+    public Positioning (Guillotine guillotine,Comparator<Shape> comparator){
+        this.guillotine = guillotine;
+        this.comparator = comparator;
+    }
 
-    protected abstract void guillotine(Sheet sheet, int index, Shape shape);
+    protected void guillotine(Sheet sheet, int index, Shape shape){
+        guillotine.cut(sheet, index, shape);
+    }
 
-    public boolean isPossible(Sheet sheet, Hashtable<PlacedShape,Integer> pattern) {
-        Enumeration<PlacedShape> enumeration= pattern.keys();
-        ArrayList<PlacedShape> shapes = new ArrayList<PlacedShape>();
+    public boolean isPossible(Sheet sheet, ArrayList<ShapeGroup> pattern) {
         int i;
-        while(enumeration.hasMoreElements()){
-            shapes.add(enumeration.nextElement());
-        }
-
-        sortShapes(shapes);
-        for(PlacedShape shape: shapes) {
-            System.out.println(pattern.contains(shape));
-            for (int j=0; j<pattern.get(shape);j++) {
+        pattern.sort((Comparator)comparator);
+        for(ShapeGroup shape: pattern) {
+            for (int j=0; j<shape.getNumber();j++) {
                 i = put(shape, sheet);
                 if (i < 0) return false;
                 guillotine(sheet, i, shape);
@@ -60,4 +60,6 @@ public abstract class Positioning {
         shape.turnShape();
         return putShape(shape,sheet);
     }
+
+
 }

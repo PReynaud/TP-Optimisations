@@ -1,11 +1,11 @@
 package com.polytech4AInfo.Positioning.Pattern;
 
 import com.polytech4AInfo.Positioning.Positioning;
+import com.polytech4AInfo.Positioning.PositioningStream;
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 /**
  * Created by Dimitri on 15/03/2015.
@@ -17,7 +17,7 @@ public class Pattern {
         this.pattern = pattern;
     }
 
-    public boolean isPossible(Positioning positioning,Sheet sheet) {
+    public boolean isPossible(PositioningStream positioning,Sheet sheet) {
         return positioning.isPossible(sheet,pattern);
     }
 }
