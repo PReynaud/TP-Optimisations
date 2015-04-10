@@ -1,11 +1,8 @@
-import com.polytech4AInfo.Shape.PlacedShape;
-import com.polytech4AInfo.Shape.Shape;
 import com.polytech4AInfo.Shape.ShapeGroup;
 import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
-import java.util.*;
 
 
 /**
@@ -56,8 +53,8 @@ public class ContextUtilsTest extends TestCase {
     /**
      * Compare tous les éléments de deux listes de string non ordonnées
      *
-     * @param s1 liste non ordinnée de string
-     * @param s2 liste non ordinnée de string
+     * @param s1 liste non ordonnée de string
+     * @param s2 liste non ordonnée de string
      * @return true si tout est équivalent, false sinon
      */
     private boolean compareArrays(String[] s1, String[] s2) {
