@@ -15,23 +15,25 @@ import static org.junit.Assert.*;
  */
 public class PositioningTest {
     Positioning positioning;
+    Positioning positioning2;
     Sheet sheet;
     ArrayList<ShapeGroup> pattern;
 
     @Before
     public void setUp() throws Exception {
         this.positioning = new Positioning(new BreadthGuillotine(), Shape.Comparators.LENGTH );
+        this.positioning2 = new Positioning(new LengthGuillotine(),Shape.Comparators.BREADTH);
     }
 
-    /*@Test
+    @Test
     public void testIsPossible() throws Exception {
         this.sheet = new Sheet(1400,700);
         this.pattern = new ArrayList<ShapeGroup>();
         pattern.add(new ShapeGroup(933,372,1));
-        pattern.add(new ShapeGroup(700,333,1));
+        pattern.add(new ShapeGroup(700,328,1));
         pattern.add(new ShapeGroup(307,293,3));
-        assertEquals("Test isPossible : should return true", positioning.isPossible(sheet, pattern), true);
-    }*/
+        assertEquals("Test isPossible2 : should return true", positioning2.isPossible(sheet, pattern), true);
+    }
 
     @Test
     public void testIsPossible2() throws Exception{
@@ -40,8 +42,8 @@ public class PositioningTest {
         pattern.add(new ShapeGroup(933,372,1));
         pattern.add(new ShapeGroup(700,333,1));
         pattern.add(new ShapeGroup(307,293,2));
-        pattern.add(new ShapeGroup(307,100,5));
-        pattern.add(new ShapeGroup(200,50,5));
+        pattern.add(new ShapeGroup(307, 100, 5));
+        pattern.add(new ShapeGroup(200, 50, 5));
 
         assertEquals("Test isPossible : should return true", positioning.isPossible(sheet, pattern), true);
     }
