@@ -43,7 +43,7 @@ import java.util.ArrayList;
  */
 public class ToImg {
 
-    protected final static String OUTPUT_PATH = "../../OUTPUT/";
+    protected final static String OUTPUT_PATH = "../OUTPUT/";
 
     /**
      * Font size for legend.
