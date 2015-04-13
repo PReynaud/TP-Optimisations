@@ -1,6 +1,5 @@
 package com.polytech4AInfo.Positioning.Pattern;
 
-import com.polytech4AInfo.Positioning.Positioning;
 import com.polytech4AInfo.Positioning.PositioningStream;
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
@@ -28,6 +27,23 @@ public class Pattern {
      * @return True if valid, else false
      */
     public boolean isPossible(PositioningStream positioning,Sheet sheet) {
-        return positioning.isPossible(sheet,pattern);
+        return positioning.isPossible(sheet, pattern);
+    }
+
+    /**
+     * Function which will return if the pattern is valid or not
+     * @return true if valid, false otherwise
+     */
+    public boolean isAValidPattern(){
+        //TODO fonction qui doit renvoyer si le pattern est valide ou non
+        return true;
+    }
+
+    public int getNumberOfShapes(){
+        return pattern.size();
+    }
+
+    public ArrayList<ShapeGroup> getPattern() {
+        return pattern;
     }
 }
