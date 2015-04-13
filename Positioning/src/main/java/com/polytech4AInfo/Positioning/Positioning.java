@@ -77,7 +77,7 @@ public class Positioning {
      * @return Int : index of the shape if it cans be placed
      * on the sheet else return -1
      */
-    private int putShape (PlacedShape shape, Sheet sheet){
+    private synchronized int putShape (PlacedShape shape, Sheet sheet){
         for (PlacedShape bin: sheet.getBins()){
             if (shape.isLying()==bin.isLying() && shape.getBreadth() <= bin.getBreadth() && shape.getLength() <= bin.getLength()){
                 shape.setPositionx(bin.getPositionx());

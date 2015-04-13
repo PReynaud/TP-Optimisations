@@ -2,6 +2,8 @@ package com.polytech4AInfo.Positioning.Pattern;
 
 import com.polytech4AInfo.Positioning.Distribution;
 
+import java.util.Arrays;
+
 /**
  * Created by Pierre on 10/04/2015.
  */
@@ -126,5 +128,14 @@ public class Solution {
         newSolution.setPatterns(this.getPatterns().clone());
 
         return newSolution;
+    }
+
+    @Override
+    public String toString() {
+        return "Solution{" +
+                "solution=" + Arrays.toString(solution) +
+                ", cost=" + cost +
+                ", order=" + Arrays.toString(order) +
+                '}';
     }
 }
