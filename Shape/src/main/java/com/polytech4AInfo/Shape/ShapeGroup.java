@@ -11,8 +11,13 @@ public class ShapeGroup extends PlacedShape {
         this.number = number;
     }
 
-    public ShapeGroup(int height, int width, int x, int y, int number) {
-        super(height, width, x, y);
+    public ShapeGroup(int height, int width, int x, int y, int number, boolean isLying) {
+        super(height, width, x, y, isLying);
+        this.number=number;
+    }
+
+    public ShapeGroup(PlacedShape shape, int number) {
+        super(shape);
         this.number=number;
     }
 
@@ -21,6 +26,6 @@ public class ShapeGroup extends PlacedShape {
     }
 
     public ShapeGroup clone(){
-        return new ShapeGroup(length, breadth, this.getPositionx(), this.getPositiony(), number);
+        return new ShapeGroup(length, breadth, this.getPositionx(), this.getPositiony(), number, this.isLying);
     }
 }

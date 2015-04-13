@@ -25,6 +25,12 @@ public class PlacedShape extends Shape {
         this.positiony = y;
     }
 
+    public PlacedShape(PlacedShape shape) {
+        super(shape.length,shape.breadth,shape.isLying);
+        this.positionx = shape.positionx;
+        this.positiony = shape.positiony;
+    }
+
     public int getPositionx() {
         return positionx;
     }
