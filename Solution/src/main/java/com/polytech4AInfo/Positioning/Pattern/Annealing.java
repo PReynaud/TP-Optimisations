@@ -11,6 +11,8 @@ public class Annealing {
      */
     private int counter = 0;
 
+    public Annealing(){}
+
     /**
      * Execute the algorithm
      * @param s
@@ -52,7 +54,7 @@ public class Annealing {
         // un CLONE de la solution de départ
         Solution s2;
         do {
-            s2 = s;
+            s2 = s.clone();
             int a = (int) (Math.random() * (s.getSolution().length));
             int b = (int) (Math.random() * (s.getSolution()[a].length));
             s2.getSolution()[a][b] -= 1;

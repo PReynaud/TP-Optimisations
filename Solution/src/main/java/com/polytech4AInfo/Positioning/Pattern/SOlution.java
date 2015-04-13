@@ -84,7 +84,7 @@ public class Solution {
     /**
      * Will send the cost of a pattern. It's our fitness function
      */
-    public void calculCost(){
+    public int calculCost(){
         Distribution solutionCalc = new Distribution(patterns.length, patterns[0].getNumberOfShapes());
 
         solutionCalc.addShapesForAllPattern(solution);
@@ -92,9 +92,11 @@ public class Solution {
         solutionCalc.addOrder(order);
         double[] res = solutionCalc.getSolution().getPoint();
         for (int i = 0; i < res.length; i++){
-            //TODO change that with the right values
+            // Will be our fitness
             cost += res[i];
         }
+        cost += res.length * 20;
+        return cost;
     }
 
     /**
@@ -103,11 +105,11 @@ public class Solution {
      */
     public boolean isPossible(){
         boolean res = true;
-        for(int i = 0; i < this.patterns.length; i++){
-            //TODO fonction de validation d'un pattern
-            /*res = res && this.patterns[i].isPossible()*/
+        int i = 0;
+        while(res && i < this.patterns.length){
+            res = res && this.patterns[i].isPossible();
+            i++;
         }
-
         return res;
     }
 

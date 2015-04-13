@@ -45,15 +45,6 @@ public class Pattern {
         return positionings.isPossible(sheet, pattern);
     }
 
-    /**
-     * Function which will return if the pattern is valid or not
-     * @return true if valid, false otherwise
-     */
-    public boolean isAValidPattern(){
-        //TODO fonction qui doit renvoyer si le pattern est valide ou non
-        return true;
-    }
-
     public int getNumberOfShapes(){
         return pattern.size();
     }
