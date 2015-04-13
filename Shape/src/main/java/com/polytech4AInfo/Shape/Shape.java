@@ -25,15 +25,16 @@ public class Shape implements Comparable<Shape> {
      */
     protected boolean isLying;
 
-    public Shape(int width, int breadth) {
-        if (width>= breadth){
-            this.length = width;
+    public Shape(int length, int breadth) {
+        if (length>= breadth){
+            this.length = length;
             this.breadth = breadth;
+            this.isLying = true;
         }else {
             this.length = breadth;
-            this.breadth = width;
+            this.breadth = length;
+            this.isLying = false;
         }
-        this.isLying = false;
     }
 
     /**
