@@ -47,8 +47,14 @@ public class Sheet{
     }
 
     public Sheet(int length, int breadth, ArrayList<PlacedShape> content, ArrayList<PlacedShape> bins) {
-        this.length = length;
-        this.breadth = breadth;
+        if(length > breadth){
+            this.length = length;
+            this.breadth = breadth;
+        }
+        else{
+            this.length = breadth;
+            this.breadth = length;
+        }
         this.content = content;
         this.bins = bins;
     }

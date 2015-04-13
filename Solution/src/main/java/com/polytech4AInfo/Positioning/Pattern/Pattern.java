@@ -11,23 +11,38 @@ import java.util.ArrayList;
  */
 public class Pattern {
     private ArrayList<ShapeGroup> pattern;
+    private Sheet sheet;
+    private PositioningStream positionings;
+
+    /**
+     * Constructor with default positioning
+     * @param pattern : List of shape in a pattern
+     * @param sheet : Content for the shapes
+     */
+    public Pattern(ArrayList<ShapeGroup> pattern,Sheet sheet) {
+        this.pattern = pattern;
+        this.sheet = sheet;
+        this.positionings = new PositioningStream();
+    }
 
     /**
      * Constructor
-     * @param pattern List of shapes in a pattern
+     * @param pattern : List of shape in a pattern
+     * @param sheet : Content for the shapes
+     * @param positionings : List of methods to fill a pattern
      */
-    public Pattern(ArrayList<ShapeGroup> pattern) {
+    public Pattern(ArrayList<ShapeGroup> pattern,Sheet sheet, PositioningStream positionings) {
         this.pattern = pattern;
+        this.sheet = sheet;
+        this.positionings = positionings;
     }
 
     /**
      * Wille return if the pattern is valid
-     * @param positioning
-     * @param sheet
      * @return True if valid, else false
      */
-    public boolean isPossible(PositioningStream positioning,Sheet sheet) {
-        return positioning.isPossible(sheet, pattern);
+    public boolean isPossible() {
+        return positionings.isPossible(sheet, pattern);
     }
 
     /**
