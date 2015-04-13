@@ -6,13 +6,50 @@ package com.polytech4AInfo.Positioning.Pattern;
  */
 public class Annealing {
     private static int LIMIT = 1000;
-    private int counter;
+    /**
+     * Will count the number of iterations of our algorithm
+     */
+    private int counter = 0;
 
-    public void simulatedAnnealing(Solution s) {
-        Solution s2 = findNeighbour(s);
+    /**
+     * Execute the algorithm
+     * @param s
+     */
+    public Solution simulatedAnnealing(Solution s, double temperature) {
+        Solution currentSolution = s.clone();
+        Solution bestSolution = s.clone();
+
+        double deltaCost;
+        double p;
+        while(counter < LIMIT){
+            Solution s2 = findNeighbour(s);
+            deltaCost = s.getCost() - s2.getCost();
+            if (deltaCost <= 0){
+                currentSolution = s2;
+                if(bestSolution.getCost() < currentSolution.getCost()){
+                    bestSolution = currentSolution;
+                }
+            }
+            else{
+                p = Math.random();
+                if(p < Math.exp(-deltaCost / temperature)){
+                    currentSolution = s2;
+                }
+            }
+            counter++;
+            temperature = calcNewTemperature(temperature);
+        }
+        return currentSolution;
     }
 
+    /**
+     * Will look for a neighnour and return it
+     * @param s
+     * @return A clone of the initial solution but which has been modified
+     */
     private Solution findNeighbour(Solution s) {
+        // TODO un test dessus pourrait être utile je pense, la nouvelle solution doit aussi absolument etre
+        // un CLONE de la solution de départ
         Solution s2;
         do {
             s2 = s;
@@ -24,25 +61,13 @@ public class Annealing {
         return s2;
     }
 
-    private class Solution {
-        int[][] solution;
-
-        public Solution() {
-        }
-
-        public Solution(int[][] solution) {
-            this.solution = solution;
-        }
-
-        public int[][] getSolution() {
-            return solution;
-        }
-
-        public void setSolution(int[][] solution) {
-            this.solution = solution;
-        }
-        public boolean isPossible(){
-            return true;
-        }
+    /**
+     * Calcule the new temperature. It used a geometric progression
+     * @param oldTemperature The old temperature
+     * @return The new temperature we'll used
+     */
+    private double calcNewTemperature(double oldTemperature){
+        return 0.99 * oldTemperature;
     }
+
 }
