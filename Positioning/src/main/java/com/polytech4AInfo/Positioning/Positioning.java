@@ -87,7 +87,8 @@ public class Positioning {
             }
             else if (shape.isLying()!=bin.isLying() && shape.getLength()<= bin.getBreadth() && shape.getBreadth()<= bin.getLength()) {
                 shape.setPositionx(bin.getPositionx());
-                sheet.getContent().add(shape);
+                shape.setPositiony(bin.getPositiony());
+                sheet.getContent().add(shape.clone());
                 return sheet.getBins().indexOf(bin);
             }
         }

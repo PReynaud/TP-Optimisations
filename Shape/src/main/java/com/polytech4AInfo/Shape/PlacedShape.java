@@ -61,6 +61,6 @@ public class PlacedShape extends Shape {
 
     @Override
     public PlacedShape clone(){
-        return new PlacedShape(this.length,this.getBreadth(), this.getPositionx(),this.getPositiony(),this.isLying);
+        return new PlacedShape(this.length,this.breadth, this.positionx,this.positiony,this.isLying);
     }
 }

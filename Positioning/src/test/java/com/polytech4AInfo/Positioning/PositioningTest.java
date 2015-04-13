@@ -30,6 +30,6 @@ public class PositioningTest {
 
     @Test
     public void testIsPossible() throws Exception {
-        assertEquals("Test isPossible : should return false",positioning.isPossible(sheet,pattern),false);
+        assertEquals("Test isPossible : should return true",positioning.isPossible(sheet,pattern),true);
     }
 }
