@@ -13,6 +13,7 @@ public class LengthGuillotine implements Guillotine {
      * {@inheritDoc}
      */
     public void cut(Sheet sheet, int index, Shape shape) {
+        //TODO: Remake it
         PlacedShape bin = sheet.getBins().remove(index);
         if (shape.isLying()){
             sheet.getBins().add(new PlacedShape(bin.getLength()-shape.getLength(),shape.getBreadth(), bin.getPositionx()+shape.getLength(), bin.getPositiony()));

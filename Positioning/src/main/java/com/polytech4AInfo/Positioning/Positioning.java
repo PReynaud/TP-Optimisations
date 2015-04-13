@@ -64,6 +64,8 @@ public class Positioning {
                 guillotine(sheet, i, shape);
             }
         }
+        ToImg img = new ToImg();
+        img.savePattern("/Tests/",sheet);
         return true;
     }
 
@@ -77,13 +79,13 @@ public class Positioning {
      */
     private int putShape (PlacedShape shape, Sheet sheet){
         for (PlacedShape bin: sheet.getBins()){
-            if (shape.isLying() && shape.getBreadth() <= bin.getBreadth() && shape.getLength() <= bin.getLength()){
+            if (shape.isLying()==bin.isLying() && shape.getBreadth() <= bin.getBreadth() && shape.getLength() <= bin.getLength()){
                 shape.setPositionx(bin.getPositionx());
                 shape.setPositiony(bin.getPositiony());
-                sheet.getContent().add(shape);
+                sheet.getContent().add(shape.clone());
                 return sheet.getBins().indexOf(bin);
             }
-            else if (!shape.isLying() && shape.getLength()<= bin.getBreadth() && shape.getBreadth()<= bin.getLength()) {
+            else if (shape.isLying()!=bin.isLying() && shape.getLength()<= bin.getBreadth() && shape.getBreadth()<= bin.getLength()) {
                 shape.setPositionx(bin.getPositionx());
                 sheet.getContent().add(shape);
                 return sheet.getBins().indexOf(bin);

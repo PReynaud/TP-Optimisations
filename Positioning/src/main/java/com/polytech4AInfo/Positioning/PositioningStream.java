@@ -5,7 +5,7 @@ import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Dimitri on 08/04/2015.
@@ -25,11 +25,22 @@ public class PositioningStream {
         this.positionings=positionings;
     }
 
+    /**
+     * Test if a pattern fits in a sheet
+     * @param sheet content for the shapes
+     * @param shapes pattern to put on the sheet
+     * @return boolean : true if the pattern fits the sheet
+     */
     public boolean isPossible(Sheet sheet, ArrayList<ShapeGroup> shapes){
-        Optional<Positioning> solution = positionings
+        //Parallel execution catch the first match
+        try{ Positioning pos = positionings
                 .parallelStream()
                 .filter(p->p.isPossible(sheet,shapes))
-                .findAny();
-        return false;
+                .findAny()
+                .get();
+            return true;
+        }catch(NoSuchElementException e) {
+            return false;
+        }
     }
 }

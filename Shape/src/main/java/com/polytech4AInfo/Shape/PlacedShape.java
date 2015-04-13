@@ -19,6 +19,12 @@ public class PlacedShape extends Shape {
         this.positiony = y;
     }
 
+    public PlacedShape(int height, int width, int x, int y,boolean isLying) {
+        super(height, width,isLying);
+        this.positionx = x;
+        this.positiony = y;
+    }
+
     public int getPositionx() {
         return positionx;
     }
@@ -53,5 +59,8 @@ public class PlacedShape extends Shape {
         return super.toString() + " " + this.positionx + " " + this.positiony;
     }
 
-
+    @Override
+    public PlacedShape clone(){
+        return new PlacedShape(this.length,this.getBreadth(), this.getPositionx(),this.getPositiony(),this.isLying);
+    }
 }

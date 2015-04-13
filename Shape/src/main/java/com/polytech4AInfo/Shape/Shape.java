@@ -37,6 +37,17 @@ public class Shape implements Comparable<Shape> {
         }
     }
 
+    public Shape(int length, int breadth, boolean isLying) {
+        if (length>= breadth){
+            this.length = length;
+            this.breadth = breadth;
+        }else {
+            this.length = breadth;
+            this.breadth = length;
+        }
+        this.isLying=isLying;
+    }
+
     /**
      * Getter of length
      * @return The longest side
