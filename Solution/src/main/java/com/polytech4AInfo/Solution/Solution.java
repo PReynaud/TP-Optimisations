@@ -2,6 +2,7 @@ package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Positioning.Distribution;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -83,6 +84,7 @@ public class Solution {
      * Will send the cost of a pattern. It's our fitness function
      */
     public int calculCost() {
+        cost = 0;
         Distribution solutionCalc = new Distribution(patterns.length, patterns[0].getNumberOfShapes());
 
         solutionCalc.addShapesForAllPattern(solution);
@@ -104,13 +106,32 @@ public class Solution {
      */
     public boolean isPossible() {
         boolean res = true;
+        boolean atLeastOneShape = true;
         int i = 0;
         while (res && i < this.patterns.length) {
             res = res && this.patterns[i].isPossible();
+
+            // Parcours pour vérifier qu'une solution va faire apparaître chaque pièce au moins une fois
+            int[] sumOfShapes = new int[this.solution[0].length];
+            for (int j = 0; j < sumOfShapes.length; j++){
+                sumOfShapes[j] = 0;
+            }
+            for (int j = 0; j < this.solution.length; j++){
+                for (int k = 0; k < this.solution[j].length; k++){
+                    sumOfShapes[k] += this.solution[j][k];
+                }
+            }
+            for (int j = 0; j < sumOfShapes.length; j++){
+                if(sumOfShapes[j] <= 0){
+                    atLeastOneShape = false;
+                }
+            }
+            System.out.println(Arrays.toString(sumOfShapes));
             i++;
         }
-        return res;
+        return res && atLeastOneShape;
     }
+
 
     /**
      * Clone the object solution and all of its attibutes

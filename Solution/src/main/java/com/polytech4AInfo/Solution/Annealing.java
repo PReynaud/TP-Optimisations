@@ -47,7 +47,7 @@ public class Annealing {
                 }
             }
             counter++;
-            temperature = calculeNewTemperature(temperature);
+            temperature = calculNewTemperature(temperature);
             System.out.println("Tepmerature: " + temperature);
         }
         return currentSolution;
@@ -82,7 +82,7 @@ public class Annealing {
      * @param oldTemperature The old temperature
      * @return The new temperature we'll used
      */
-    private double calculeNewTemperature(double oldTemperature) {
+    private double calculNewTemperature(double oldTemperature) {
         return 0.90 * oldTemperature;
     }
 
