@@ -1,5 +1,7 @@
 package com.polytech4AInfo.Positioning.Pattern;
 
+import org.apache.commons.math.util.FastMath;
+
 /**
  * Created by benoitvuillemin on 10/04/2015.
  * RECUIT SIMULE
@@ -25,8 +27,8 @@ public class Annealing {
         double p;
         while(counter < LIMIT){
             System.out.println("Number of iteration: " + counter);
-            Solution oneSolution = findNeighbour(s);
-            deltaCost = s.getCost() - oneSolution.getCost();
+            Solution oneSolution = findNeighbour(currentSolution);
+            deltaCost = currentSolution.getCost() - oneSolution.calculCost();
             if (deltaCost <= 0){
                 currentSolution = oneSolution;
                 if(bestSolution.getCost() < currentSolution.getCost()){
@@ -35,7 +37,7 @@ public class Annealing {
             }
             else{
                 p = Math.random();
-                if(p < Math.exp(-deltaCost / temperature)){
+                if(p < FastMath.exp(-deltaCost / temperature)){
                     currentSolution = oneSolution;
                 }
             }
@@ -60,7 +62,7 @@ public class Annealing {
             int b = (int) (Math.random() * (s.getSolution()[a].length));
             s2.getSolution()[a][b] -= 1;
         }
-        while(s2.isPossible());
+        while(!s2.isPossible());
         return s2;
     }
 

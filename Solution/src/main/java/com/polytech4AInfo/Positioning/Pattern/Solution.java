@@ -29,12 +29,7 @@ public class Solution {
         return solution;
     }
 
-    /**
-     * Do the calcul of the cost before getting it
-     * @return the cost of the pattern
-     */
     public int getCost() {
-        calculCost();
         return cost;
     }
 
