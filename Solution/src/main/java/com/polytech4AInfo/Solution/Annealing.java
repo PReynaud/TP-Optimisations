@@ -66,7 +66,7 @@ public class Annealing {
             int a = (int) (Math.random() * (s.getSolution().length));
             int b = (int) (Math.random() * (s.getSolution()[a].length));
             int plus_or_minus = (int) (Math.random() * 2);
-            if (plus_or_minus == 0) {
+            if (plus_or_minus == 0 && s2.getSolution()[a][b] > 0) {
                 s2.getSolution()[a][b] -= 1;
             } else {
                 s2.getSolution()[a][b] += 1;
