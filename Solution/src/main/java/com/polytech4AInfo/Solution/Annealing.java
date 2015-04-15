@@ -22,6 +22,8 @@ public class Annealing {
      * @param s
      */
     public Solution simulatedAnnealing(Solution s, double temperature) {
+        double startTime = System.currentTimeMillis();
+        s.calculCost();
         Solution currentSolution = s.clone();
         Solution bestSolution = s.clone();
 
@@ -30,12 +32,13 @@ public class Annealing {
         while (counter < LIMIT) {
             System.out.println("Number of iteration: " + counter);
             Solution oneSolution = findNeighbour(currentSolution);
-            System.out.println("Current neighbour: " + currentSolution.toString());
+            System.out.println("Current solution: " + currentSolution.toString());
+            System.out.println("Tested neighbour: " + oneSolution.toString());
             deltaCost = currentSolution.getCost() - oneSolution.calculCost();
-            System.out.println("Its cost: " + oneSolution.getCost());
+            System.out.println("Cost of neighbour: " + oneSolution.getCost());
             if (deltaCost <= 0) {
                 currentSolution = oneSolution;
-                if (bestSolution.getCost() < currentSolution.getCost()) {
+                if (currentSolution.getCost() < bestSolution.getCost()) {
                     bestSolution = currentSolution;
                 }
             } else {
@@ -48,9 +51,13 @@ public class Annealing {
             }
             counter++;
             temperature = calculNewTemperature(temperature);
-            System.out.println("Tepmerature: " + temperature);
+            System.out.println("Temperature: " + temperature);
         }
-        return currentSolution;
+        System.out.println("-------------------------------");
+        System.out.println("Best Solution: " + bestSolution);
+        double stopTime = System.currentTimeMillis();
+        System.out.println("Execution time: " + (stopTime - startTime));
+        return bestSolution;
     }
 
     /**
@@ -71,8 +78,7 @@ public class Annealing {
             } else {
                 s2.getSolution()[a][b] += 1;
             }
-        }
-        while (s2.isPossible());
+        }while (!s2.isPossible());
         return s2;
     }
 
@@ -83,7 +89,7 @@ public class Annealing {
      * @return The new temperature we'll used
      */
     private double calculNewTemperature(double oldTemperature) {
-        return 0.90 * oldTemperature;
+        return 0.99 * oldTemperature;
     }
 
 }

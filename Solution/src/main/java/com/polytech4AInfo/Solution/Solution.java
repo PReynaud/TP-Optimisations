@@ -93,7 +93,9 @@ public class Solution {
         double[] res = solutionCalc.getSolution().getPoint();
         for (int i = 0; i < res.length; i++) {
             // Will be our fitness
-            cost += res[i];
+            if(res[i]>0){
+                cost += (int)Math.round(res[i]);
+            }
         }
         cost += res.length * 20;
         return cost;
@@ -126,7 +128,6 @@ public class Solution {
                     atLeastOneShape = false;
                 }
             }
-            System.out.println(Arrays.toString(sumOfShapes));
             i++;
         }
         return res && atLeastOneShape;
