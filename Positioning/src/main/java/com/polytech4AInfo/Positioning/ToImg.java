@@ -21,7 +21,6 @@ package com.polytech4AInfo.Positioning;
  */
 
 import com.polytech4AInfo.Shape.PlacedShape;
-import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
 import java.io.IOException;
@@ -31,7 +30,6 @@ import java.io.IOException;
         import java.awt.geom.Rectangle2D;
         import java.awt.image.BufferedImage;
         import java.io.File;
-import java.util.ArrayList;
 
 /**
  * Created by Antoine CARON on 24/03/2015.
