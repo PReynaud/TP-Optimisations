@@ -123,7 +123,7 @@ public class Solution {
         newSolution.setCost(this.getCost());
         int[][] clone_solution = new int[this.getSolution().length][this.getSolution()[0].length];
         for (int i = 0; i < clone_solution.length; i++) {
-            for (int j = 0; j < clone_solution.length; j++) {
+            for (int j = 0; j < clone_solution[0].length; j++) {
                 clone_solution[i][j] = this.getSolution()[i][j];
             }
         }
