@@ -127,8 +127,16 @@ public class Solution {
 
     @Override
     public String toString() {
+        String tabSolution = " [";
+        for (int i = 0; i < solution.length; i++){
+            for(int j = 0; j < solution[0].length; j++){
+                tabSolution += solution[i][j] + " ";
+            }
+            tabSolution += ", ";
+        }
+        tabSolution += "]";
         return "Solution{" +
-                "solution=" + Arrays.toString(solution) +
+                "solution=" + tabSolution +
                 ", cost=" + cost +
                 ", order=" + Arrays.toString(order) +
                 '}';
