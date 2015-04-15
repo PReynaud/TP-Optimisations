@@ -1,4 +1,4 @@
-package com.polytech4AInfo.Positioning.Pattern;
+package com.polytech4AInfo.Solution;
 
 import org.apache.commons.math.util.FastMath;
 
@@ -13,10 +13,12 @@ public class Annealing {
      */
     private int counter = 0;
 
-    public Annealing(){}
+    public Annealing() {
+    }
 
     /**
      * Execute the algorithm
+     *
      * @param s
      */
     public Solution simulatedAnnealing(Solution s, double temperature) {
@@ -25,19 +27,18 @@ public class Annealing {
 
         double deltaCost;
         double p;
-        while(counter < LIMIT){
+        while (counter < LIMIT) {
             System.out.println("Number of iteration: " + counter);
             Solution oneSolution = findNeighbour(currentSolution);
             deltaCost = currentSolution.getCost() - oneSolution.calculCost();
-            if (deltaCost <= 0){
+            if (deltaCost <= 0) {
                 currentSolution = oneSolution;
-                if(bestSolution.getCost() < currentSolution.getCost()){
+                if (bestSolution.getCost() < currentSolution.getCost()) {
                     bestSolution = currentSolution;
                 }
-            }
-            else{
+            } else {
                 p = Math.random();
-                if(p < FastMath.exp(-deltaCost / temperature)){
+                if (p < FastMath.exp(-deltaCost / temperature)) {
                     currentSolution = oneSolution;
                 }
             }
@@ -49,35 +50,34 @@ public class Annealing {
 
     /**
      * Will look for a neighnour and return it
+     *
      * @param s
      * @return A clone of the initial solution but which has been modified
      */
-    private Solution findNeighbour(Solution s) {
-        // TODO un test dessus pourrait �tre utile je pense, la nouvelle solution doit aussi absolument etre
-        // un CLONE de la solution de d�part
+    protected static Solution findNeighbour(Solution s) {
         Solution s2;
         do {
             s2 = s.clone();
             int a = (int) (Math.random() * (s.getSolution().length));
             int b = (int) (Math.random() * (s.getSolution()[a].length));
             int plus_or_minus = (int) (Math.random() * 2);
-            if(plus_or_minus == 0) {
+            if (plus_or_minus == 0) {
                 s2.getSolution()[a][b] -= 1;
-            }
-            else{
+            } else {
                 s2.getSolution()[a][b] += 1;
             }
         }
-        while(!s2.isPossible());
+        while (s2.isPossible());
         return s2;
     }
 
     /**
      * Calcule the new temperature. It used a geometric progression
+     *
      * @param oldTemperature The old temperature
      * @return The new temperature we'll used
      */
-    private double calculeNewTemperature(double oldTemperature){
+    private double calculeNewTemperature(double oldTemperature) {
         return 0.99 * oldTemperature;
     }
 

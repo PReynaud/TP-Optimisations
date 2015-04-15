@@ -1,4 +1,4 @@
-package com.polytech4AInfo.Positioning.Pattern;
+package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Positioning.Distribution;
 
