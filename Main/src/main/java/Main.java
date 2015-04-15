@@ -1,8 +1,8 @@
-import com.polytech4AInfo.Positioning.Pattern.Annealing;
-import com.polytech4AInfo.Positioning.Pattern.Pattern;
-import com.polytech4AInfo.Positioning.Pattern.Solution;
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
+import com.polytech4AInfo.Solution.Annealing;
+import com.polytech4AInfo.Solution.Pattern;
+import com.polytech4AInfo.Solution.Solution;
 
 import java.util.ArrayList;
 
