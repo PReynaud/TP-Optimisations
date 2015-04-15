@@ -64,8 +64,8 @@ public class Positioning {
                 guillotine(sheet, i, shape);
             }
         }
-        ToImg img = new ToImg();
-        img.savePattern("/Tests/",sheet);
+        //ToImg img = new ToImg();
+        //img.savePattern("/Tests/",sheet);
         return true;
     }
 
