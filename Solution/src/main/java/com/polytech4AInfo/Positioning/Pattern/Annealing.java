@@ -51,14 +51,20 @@ public class Annealing {
      * @return A clone of the initial solution but which has been modified
      */
     private Solution findNeighbour(Solution s) {
-        // TODO un test dessus pourrait être utile je pense, la nouvelle solution doit aussi absolument etre
-        // un CLONE de la solution de départ
+        // TODO un test dessus pourrait ï¿½tre utile je pense, la nouvelle solution doit aussi absolument etre
+        // un CLONE de la solution de dï¿½part
         Solution s2;
         do {
             s2 = s.clone();
             int a = (int) (Math.random() * (s.getSolution().length));
             int b = (int) (Math.random() * (s.getSolution()[a].length));
-            s2.getSolution()[a][b] -= 1;
+            int plus_or_minus = (int) (Math.random() * 2);
+            if(plus_or_minus == 0) {
+                s2.getSolution()[a][b] -= 1;
+            }
+            else{
+                s2.getSolution()[a][b] += 1;
+            }
         }
         while(s2.isPossible());
         return s2;
