@@ -76,6 +76,13 @@ public class Sheet{
     }
 
     public Sheet clone (){
-        return new Sheet (length,breadth,content,bins);
+        ArrayList<PlacedShape> tempContent = new ArrayList<PlacedShape>(), tempBin = new ArrayList<PlacedShape>();
+        for (PlacedShape shape : content){
+            tempContent.add(shape);
+        }
+        for (PlacedShape shape : bins){
+            tempBin.add(shape);
+        }
+        return new Sheet (length,breadth,tempContent,tempBin);
     }
 }
