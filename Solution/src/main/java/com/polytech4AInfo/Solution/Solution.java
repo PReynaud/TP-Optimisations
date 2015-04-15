@@ -59,36 +59,37 @@ public class Solution {
 
     /**
      * Will construct the array with all the results
+     *
      * @param patterns it's the group of pattern
      */
-    public Solution(Pattern[] patterns, int[] order){
+    public Solution(Pattern[] patterns, int[] order) {
         this.patterns = patterns;
         this.order = order;
 
         int nbPatterns = patterns.length;
         int nbShapes = patterns[0].getNumberOfShapes();
         solution = new int[nbPatterns][nbShapes];
-        for(int i = 0; i < nbPatterns; i++){
-            for(int j = 0 ; j < nbShapes; j++){
+        for (int i = 0; i < nbPatterns; i++) {
+            for (int j = 0; j < nbShapes; j++) {
                 solution[i][j] = patterns[i].getPattern().get(j).getNumber();
             }
         }
     }
 
-    public Solution(){
+    public Solution() {
     }
 
     /**
      * Will send the cost of a pattern. It's our fitness function
      */
-    public int calculCost(){
+    public int calculCost() {
         Distribution solutionCalc = new Distribution(patterns.length, patterns[0].getNumberOfShapes());
 
         solutionCalc.addShapesForAllPattern(solution);
 
         solutionCalc.addOrder(order);
         double[] res = solutionCalc.getSolution().getPoint();
-        for (int i = 0; i < res.length; i++){
+        for (int i = 0; i < res.length; i++) {
             // Will be our fitness
             cost += res[i];
         }
@@ -98,12 +99,13 @@ public class Solution {
 
     /**
      * Will return if the solution is correct or not
+     *
      * @return True if correct, false otherwise
      */
-    public boolean isPossible(){
+    public boolean isPossible() {
         boolean res = true;
         int i = 0;
-        while(res && i < this.patterns.length){
+        while (res && i < this.patterns.length) {
             res = res && this.patterns[i].isPossible();
             i++;
         }
@@ -112,13 +114,20 @@ public class Solution {
 
     /**
      * Clone the object solution and all of its attibutes
+     *
      * @return A clone of the current object
      */
-    public Solution clone(){
+    public Solution clone() {
         Solution newSolution = new Solution();
 
         newSolution.setCost(this.getCost());
-        newSolution.setSolution(this.getSolution().clone());
+        int[][] clone_solution = new int[this.getSolution().length][this.getSolution()[0].length];
+        for (int i = 0; i < clone_solution.length; i++) {
+            for (int j = 0; j < clone_solution.length; j++) {
+                clone_solution[i][j] = this.getSolution()[i][j];
+            }
+        }
+        newSolution.setSolution(clone_solution);
         newSolution.setOrder(this.getOrder().clone());
         newSolution.setPatterns(this.getPatterns().clone());
 
