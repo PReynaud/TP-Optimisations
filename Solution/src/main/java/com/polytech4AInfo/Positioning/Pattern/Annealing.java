@@ -24,10 +24,11 @@ public class Annealing {
         double deltaCost;
         double p;
         while(counter < LIMIT){
-            Solution s2 = findNeighbour(s);
-            deltaCost = s.getCost() - s2.getCost();
+            System.out.println("Number of iteration: " + counter);
+            Solution oneSolution = findNeighbour(s);
+            deltaCost = s.getCost() - oneSolution.getCost();
             if (deltaCost <= 0){
-                currentSolution = s2;
+                currentSolution = oneSolution;
                 if(bestSolution.getCost() < currentSolution.getCost()){
                     bestSolution = currentSolution;
                 }
@@ -35,11 +36,11 @@ public class Annealing {
             else{
                 p = Math.random();
                 if(p < Math.exp(-deltaCost / temperature)){
-                    currentSolution = s2;
+                    currentSolution = oneSolution;
                 }
             }
             counter++;
-            temperature = calcNewTemperature(temperature);
+            temperature = calculeNewTemperature(temperature);
         }
         return currentSolution;
     }
@@ -68,7 +69,7 @@ public class Annealing {
      * @param oldTemperature The old temperature
      * @return The new temperature we'll used
      */
-    private double calcNewTemperature(double oldTemperature){
+    private double calculeNewTemperature(double oldTemperature){
         return 0.99 * oldTemperature;
     }
 
