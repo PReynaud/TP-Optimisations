@@ -17,8 +17,7 @@ public class PositioningStream {
         this.positionings = new ArrayList<Positioning>();
         this.positionings.add(new Positioning(new LengthGuillotine(),Shape.Comparators.BREADTH));
         this.positionings.add(new Positioning(new BreadthGuillotine(),Shape.Comparators.LENGTH));
-        /*this.positionings.add(new Positioning(new RatioGuillotine(),Shape.Comparators.AREA));
-        this.positionings.add(new Positioning(new RatioGuillotine(),Shape.Comparators.AREA));*/
+        this.positionings.add(new Positioning(new RatioGuillotine(),Shape.Comparators.RATIO));
     }
 
     public PositioningStream(ArrayList<Positioning> positionings){

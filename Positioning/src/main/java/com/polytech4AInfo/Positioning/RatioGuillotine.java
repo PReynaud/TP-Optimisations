@@ -13,15 +13,18 @@ public class RatioGuillotine implements Guillotine {
      * {@inheritDoc}
      */
     public void cut(Sheet sheet, int index, Shape shape) {
-        //TODO: Remake it
-        PlacedShape bin = sheet.getBins().remove(index),
-                bin1 =new PlacedShape(bin.getLength()-shape.getLength(),bin.getBreadth(),bin.getPositionx()+shape.getLength(),bin.getPositiony()),
-                bin2 =new PlacedShape(shape.getLength(),bin.getBreadth()-shape.getBreadth(), bin.getPositionx(), bin.getPositiony()+shape.getBreadth()),
-                bin3 =new PlacedShape(bin.getLength()-shape.getLength(),shape.getBreadth(),bin.getPositionx()+shape.getLength(),bin.getPositiony()),
-                bin4 =new PlacedShape(bin.getLength(),bin.getBreadth()-shape.getBreadth(), bin.getPositionx(), bin.getPositiony()+shape.getBreadth());
+        Sheet sheet1 = sheet.clone(), sheet2 = sheet.clone();
+        new BreadthGuillotine().cut(sheet1,index,shape);
+        new LengthGuillotine().cut(sheet2, index, shape);
 
-        if ((bin1.getRatio() +bin2.getRatio())/2 <= (bin3.getRatio()+bin4.getRatio())/2){
-            if(bin1.getArea()<=bin2.getArea()){
+        sheet.getBins().remove(index);
+        PlacedShape bin1 = sheet1.getBins().get(0),
+                bin2 = sheet1.getBins().get(1),
+                bin3 = sheet2.getBins().get(0),
+                bin4 =sheet2.getBins().get(1);
+
+        if ((bin1.getRatio() +bin2.getRatio())/2 >= (bin3.getRatio()+bin4.getRatio())/2){
+            if(bin1.getRatio()<=bin2.getRatio()){
                 sheet.getBins().add(bin1);
                 sheet.getBins().add(bin2);
             }else{
@@ -29,7 +32,7 @@ public class RatioGuillotine implements Guillotine {
                 sheet.getBins().add(bin1);
             }
         }else{
-            if(bin3.getArea()<=bin4.getArea()){
+            if(bin3.getRatio()<=bin4.getRatio()){
                 sheet.getBins().add(bin3);
                 sheet.getBins().add(bin4);
             }else{
