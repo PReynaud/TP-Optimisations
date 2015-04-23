@@ -21,6 +21,10 @@ public class ShapeGroup extends PlacedShape {
         this.number=number;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public int getNumber() {
         return number;
     }

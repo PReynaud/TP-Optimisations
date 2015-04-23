@@ -83,7 +83,7 @@ public class Solution {
     /**
      * Will send the cost of a pattern. It's our fitness function
      */
-    public int calculCost() {
+    public int calculCost () throws Exception {
         cost = 0;
         Distribution solutionCalc = new Distribution(patterns.length, patterns[0].getNumberOfShapes());
 
@@ -93,8 +93,12 @@ public class Solution {
         double[] res = solutionCalc.getSolution().getPoint();
         for (int i = 0; i < res.length; i++) {
             // Will be our fitness
-            if(res[i]>0){
-                cost += (int)Math.round(res[i]);
+            if(res[i]>=0){
+                //TODO réfléchir à l'arrondi
+                cost += (int)Math.ceil(res[i]);
+            }
+            else{
+                //throw new Exception("Invalid simplex result");
             }
         }
         cost += res.length * 20;
@@ -102,18 +106,29 @@ public class Solution {
     }
 
     /**
-     * Will return if the solution is correct or not
+     * Check if each pattern of the list is packable
+     * @return
+     */
+    public boolean isPackable(){
+        boolean res = true;
+        int i = 0;
+        while (res && i < this.patterns.length) {
+            res = res && this.patterns[i].isPossible();
+            i++;
+        }
+        return res;
+    }
+
+    /**
+     * Return if the list of pattern has at least one shape
      *
      * @return True if correct, false otherwise
      */
     public boolean isPossible() {
-        boolean res = true;
         boolean atLeastOneShape = true;
         int i = 0;
-        while (res && i < this.patterns.length) {
-            res = res && this.patterns[i].isPossible();
-
-            // Parcours pour v�rifier qu'une solution va faire appara�tre chaque pi�ce au moins une fois
+        while (i < this.patterns.length) {
+            // Parcours pour vérifier qu'une solution va faire apparaître chaque piéce au moins une fois
             int[] sumOfShapes = new int[this.solution[0].length];
             for (int j = 0; j < sumOfShapes.length; j++){
                 sumOfShapes[j] = 0;
@@ -130,7 +145,7 @@ public class Solution {
             }
             i++;
         }
-        return res && atLeastOneShape;
+        return atLeastOneShape;
     }
 
 
@@ -143,12 +158,17 @@ public class Solution {
         Solution newSolution = new Solution();
 
         newSolution.setCost(this.getCost());
-        int[][] clone_solution = new int[this.getSolution().length][this.getSolution()[0].length];
-        for (int i = 0; i < clone_solution.length; i++) {
+        /*int[][] clone_solution = new int[this.getSolution().length][this.getSolution()[0].length];*/
+        /*for (int i = 0; i < clone_solution.length; i++) {
             for (int j = 0; j < clone_solution[0].length; j++) {
                 clone_solution[i][j] = this.getSolution()[i][j];
             }
+        }*/
+        int[][] clone_solution = this.getSolution().clone();
+        for(int i = 0; i < clone_solution.length;i++){
+            clone_solution[i] = this.getSolution()[i].clone();
         }
+
         newSolution.setSolution(clone_solution);
         newSolution.setOrder(this.getOrder().clone());
         newSolution.setPatterns(this.getPatterns().clone());
