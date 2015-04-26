@@ -15,15 +15,18 @@ public class FirstSolution {
         int[] order = new int[file.getPattern().length];
         Pattern[] listOfPatterns = new Pattern[numberOfPatterns];
 
-        ArrayList<ShapeGroup> patterns = new ArrayList<ShapeGroup>(Arrays.asList(file.getPattern()));
-        for(int i = 0; i < patterns.size(); i++){
-            order[i] = patterns.get(i).getNumber();
-            patterns.get(i).setNumber((int)Math.round(Math.random()));
-            /*patterns.get(i).setNumber(1);*/
-        }
 
         for(int i = 0; i < listOfPatterns.length; i++){
-            listOfPatterns[i] = new Pattern(patterns, new Sheet(file.getLx(), file.getLy()));
+            ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>(Arrays.asList(file.clone().getPattern()));
+
+            for(int j = 0; j < listOfShapes.size(); j++){
+                if(i == 0){
+                    order[j] = listOfShapes.get(j).getNumber();
+                }
+                listOfShapes.get(j).setNumber((int)Math.round(Math.random()));
+            }
+
+            listOfPatterns[i] = new Pattern(listOfShapes, new Sheet(file.getLx(), file.getLy()));
         }
 
         firstSolution = new Solution(listOfPatterns, order);

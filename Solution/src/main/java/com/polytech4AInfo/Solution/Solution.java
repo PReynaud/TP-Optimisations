@@ -2,7 +2,6 @@ package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Positioning.Distribution;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -12,7 +11,7 @@ public class Solution {
     /**
      * First dimension is the patterns, second dimension is the shapes on a pattern
      */
-    private int[][] solution;
+    private int[][] solutionArray;
 
     /**
      * Cost of the pattern
@@ -26,8 +25,8 @@ public class Solution {
 
     private int[] order;
 
-    public int[][] getSolution() {
-        return solution;
+    public int[][] getSolutionArray() {
+        return solutionArray;
     }
 
     public int getCost() {
@@ -42,8 +41,8 @@ public class Solution {
         return patterns;
     }
 
-    public void setSolution(int[][] solution) {
-        this.solution = solution;
+    public void setSolutionArray(int[][] solutionArray) {
+        this.solutionArray = solutionArray;
     }
 
     public void setCost(int cost) {
@@ -69,10 +68,10 @@ public class Solution {
 
         int nbPatterns = patterns.length;
         int nbShapes = patterns[0].getNumberOfShapes();
-        solution = new int[nbPatterns][nbShapes];
+        solutionArray = new int[nbPatterns][nbShapes];
         for (int i = 0; i < nbPatterns; i++) {
             for (int j = 0; j < nbShapes; j++) {
-                solution[i][j] = patterns[i].getPattern().get(j).getNumber();
+                solutionArray[i][j] = patterns[i].getPattern().get(j).getNumber();
             }
         }
     }
@@ -87,7 +86,7 @@ public class Solution {
         cost = 0;
         Distribution solutionCalc = new Distribution(patterns.length, patterns[0].getNumberOfShapes());
 
-        solutionCalc.addShapesForAllPattern(solution);
+        solutionCalc.addShapesForAllPattern(solutionArray);
 
         solutionCalc.addOrder(order);
         double[] res = solutionCalc.getSolution().getPoint();
@@ -107,50 +106,50 @@ public class Solution {
 
     /**
      * Check if each pattern of the list is packable
-     * @return
+     * @return -1 if every pattern of the solution is packable,
+     * otherwise return the number of the first pattern which is not possible
      */
-    public boolean isPackable(){
-        boolean res = true;
+    public int isPackable(){
         int i = 0;
-        while (res && i < this.patterns.length) {
-            res = res && this.patterns[i].isPossible();
+        while (i < this.patterns.length) {
+            if(!this.patterns[i].isPossible()){
+                return i;
+            }
             i++;
         }
-        return res;
+        return -1;
     }
 
     /**
      * Return if the list of pattern has at least one shape
      *
-     * @return True if correct, false otherwise
+     * @return -1 if everything is ok, the index of the first shape that is not present otherwise
      */
-    public boolean isPossible() {
-        boolean atLeastOneShape = true;
+    public int hasAtLeastOneShape() {
         int i = 0;
         while (i < this.patterns.length) {
-            // Parcours pour vérifier qu'une solution va faire apparaître chaque piéce au moins une fois
-            int[] sumOfShapes = new int[this.solution[0].length];
+            int[] sumOfShapes = new int[this.solutionArray[0].length];
             for (int j = 0; j < sumOfShapes.length; j++){
                 sumOfShapes[j] = 0;
             }
-            for (int j = 0; j < this.solution.length; j++){
-                for (int k = 0; k < this.solution[j].length; k++){
-                    sumOfShapes[k] += this.solution[j][k];
+            for (int j = 0; j < this.solutionArray.length; j++){
+                for (int k = 0; k < this.solutionArray[j].length; k++){
+                    sumOfShapes[k] += this.solutionArray[j][k];
                 }
             }
             for (int j = 0; j < sumOfShapes.length; j++){
                 if(sumOfShapes[j] <= 0){
-                    atLeastOneShape = false;
+                    return j;
                 }
             }
             i++;
         }
-        return atLeastOneShape;
+        return -1;
     }
 
 
     /**
-     * Clone the object solution and all of its attibutes
+     * Clone the object solutionArray and all of its attibutes
      *
      * @return A clone of the current object
      */
@@ -158,18 +157,12 @@ public class Solution {
         Solution newSolution = new Solution();
 
         newSolution.setCost(this.getCost());
-        /*int[][] clone_solution = new int[this.getSolution().length][this.getSolution()[0].length];*/
-        /*for (int i = 0; i < clone_solution.length; i++) {
-            for (int j = 0; j < clone_solution[0].length; j++) {
-                clone_solution[i][j] = this.getSolution()[i][j];
-            }
-        }*/
-        int[][] clone_solution = this.getSolution().clone();
+        int[][] clone_solution = this.getSolutionArray().clone();
         for(int i = 0; i < clone_solution.length;i++){
-            clone_solution[i] = this.getSolution()[i].clone();
+            clone_solution[i] = this.getSolutionArray()[i].clone();
         }
 
-        newSolution.setSolution(clone_solution);
+        newSolution.setSolutionArray(clone_solution);
         newSolution.setOrder(this.getOrder().clone());
         newSolution.setPatterns(this.getPatterns().clone());
 
@@ -179,15 +172,15 @@ public class Solution {
     @Override
     public String toString() {
         String tabSolution = " [";
-        for (int i = 0; i < solution.length; i++){
-            for(int j = 0; j < solution[0].length; j++){
-                tabSolution += solution[i][j] + " ";
+        for (int i = 0; i < solutionArray.length; i++){
+            for(int j = 0; j < solutionArray[0].length; j++){
+                tabSolution += solutionArray[i][j] + " ";
             }
             tabSolution += ", ";
         }
         tabSolution += "]";
         return "Solution{" +
-                "solution=" + tabSolution +
+                "solutionArray=" + tabSolution +
                 ", cost=" + cost +
                 ", order=" + Arrays.toString(order) +
                 '}';

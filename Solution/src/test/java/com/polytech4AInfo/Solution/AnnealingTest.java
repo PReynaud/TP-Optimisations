@@ -2,7 +2,6 @@ package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,14 +40,14 @@ public class AnnealingTest {
 
     @Test
     public void testFindNeighbour() {
-        Solution s_final = Annealing.findNeighbour(s_first);
+        Solution s_final = Neighbour.findNeighbour(s_first);
         int changes = 0;
-        assertEquals(s_final.getSolution().length, s_first.getSolution().length);
-        assertEquals(s_final.getSolution()[0].length, s_first.getSolution()[0].length);
-        for (int i = 0; i < s_final.getSolution().length; i++) {
-            for (int j = 0; j < s_final.getSolution()[i].length; j++) {
-                if (s_final.getSolution()[i][j] == s_first.getSolution()[i][j] - 1 ||
-                        s_final.getSolution()[i][j] == s_first.getSolution()[i][j] + 1) {
+        assertEquals(s_final.getSolutionArray().length, s_first.getSolutionArray().length);
+        assertEquals(s_final.getSolutionArray()[0].length, s_first.getSolutionArray()[0].length);
+        for (int i = 0; i < s_final.getSolutionArray().length; i++) {
+            for (int j = 0; j < s_final.getSolutionArray()[i].length; j++) {
+                if (s_final.getSolutionArray()[i][j] == s_first.getSolutionArray()[i][j] - 1 ||
+                        s_final.getSolutionArray()[i][j] == s_first.getSolutionArray()[i][j] + 1) {
                     changes += 1;
                 }
             }

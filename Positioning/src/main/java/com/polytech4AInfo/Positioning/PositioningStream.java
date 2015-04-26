@@ -39,7 +39,8 @@ public class PositioningStream {
                 .get();
             return true;
         }catch(NoSuchElementException e) {
-            return false;
+            //TODO j'ai changé parceque si y'a pas de valeurs, ça renvoit faux... alors que non
+            return true;
         }
     }
 }

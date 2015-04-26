@@ -126,6 +126,21 @@ public class ContextUtils {
             this.ly = ly;
             this.pattern = pattern;
         }
+
+        private Context(){
+
+        }
+
+        public Context clone(){
+            Context newContext = new Context();
+            newContext.lx = this.lx;
+            newContext.ly = this.ly;
+            newContext.pattern = new ShapeGroup[this.pattern.length];
+            for(int i = 0; i < this.pattern.length; i++){
+                newContext.pattern[i] = this.pattern[i].clone();
+            }
+            return newContext;
+        }
     }
 
     /**

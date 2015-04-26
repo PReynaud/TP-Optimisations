@@ -38,7 +38,7 @@ public class Annealing {
         while (counter < LIMIT) {
             while (counterTemp < LIMITTEMP) {
                 System.out.println("Number of iteration: " + counter);
-                Solution oneSolution = findNeighbour(currentSolution);
+                Solution oneSolution = Neighbour.findNeighbour(currentSolution);
                 System.out.println("Current solution: " + currentSolution.toString());
                 System.out.println("Tested neighbour: " + oneSolution.toString());
                 try {
@@ -74,27 +74,7 @@ public class Annealing {
         return bestSolution;
     }
 
-    /**
-     * Will look for a neighnour and return it
-     *
-     * @param s
-     * @return A clone of the initial solution but which has been modified
-     */
-    protected static Solution findNeighbour(Solution s) {
-        Solution s2 = s.clone();
-        do {
-            System.out.println("findNeighbour");
-            int a = (int) (Math.random() * (s2.getSolution().length));
-            int b = (int) (Math.random() * (s2.getSolution()[a].length));
-            int plus_or_minus = (int) (Math.random() * 2);
-            if (plus_or_minus == 0 && s2.getSolution()[a][b] > 0) {
-                s2.getSolution()[a][b] -= 1;
-            } else {
-                s2.getSolution()[a][b] += 1;
-            }
-        }while (!s2.isPossible());
-        return s2;
-    }
+
 
     /**
      * Calcule the new temperature. It used a geometric progression
