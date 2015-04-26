@@ -1,7 +1,7 @@
+package com.polytech4AInfo.Solution;
+
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
-import com.polytech4AInfo.Solution.Pattern;
-import com.polytech4AInfo.Solution.Solution;
 
 import java.util.ArrayList;
 import java.util.Arrays;

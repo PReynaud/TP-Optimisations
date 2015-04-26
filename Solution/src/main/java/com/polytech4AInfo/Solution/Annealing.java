@@ -1,18 +1,16 @@
 package com.polytech4AInfo.Solution;
 
 import org.apache.commons.math.util.FastMath;
-//import org.apache.log4j.Logger;
-
-//import com.polytech4AInfo.ProgramMain.ProgramMain;
+import org.apache.log4j.Logger;
 
 /**
  * Created by benoitvuillemin on 10/04/2015.
  * RECUIT SIMULE
  */
 public class Annealing {
-    //private static Logger logger = Logger.getLogger(ProgramMain.class);
+    private static Logger logger = Logger.getLogger(ProgramMain.class);
 
-    private static int LIMIT = 1000;
+    private static int LIMIT = 100;
     private static int LIMITTEMP = 100;
     /**
      * Will count the number of iterations of our algorithm
@@ -33,7 +31,7 @@ public class Annealing {
         try {
             s.calculCost();
         } catch (Exception e) {
-            System.out.println("Error for the cost of the initial solution");
+            logger.error("Error for the cost of the initial solution");
         }
         Solution currentSolution = s.clone();
         Solution bestSolution = s.clone();
@@ -41,14 +39,14 @@ public class Annealing {
         double deltaCost;
         double p;
         while (counter < LIMIT) {
+            logger.info("Percentage of iteration: " + (int)((double)counter/(double)LIMIT * 100));
             while (counterTemp < LIMITTEMP) {
-                System.out.println("Number of iteration: " + counter);
                 Solution oneSolution = Neighbour.findNeighbour(currentSolution);
-                System.out.println("Current solution: " + currentSolution.toString());
-                System.out.println("Tested neighbour: " + oneSolution.toString());
+                logger.debug("Current solution: " + currentSolution.toString());
+                logger.debug("Tested neighbour: " + oneSolution.toString());
                 try {
                     deltaCost = currentSolution.getCost() - oneSolution.calculCost();
-                    System.out.println("Cost of neighbour: " + oneSolution.getCost());
+                    logger.debug("Cost of tested neighbour: " + oneSolution.getCost());
                     if (deltaCost <= 0) {
                         currentSolution = oneSolution;
                         if (currentSolution.getCost() < bestSolution.getCost()) {
@@ -56,26 +54,24 @@ public class Annealing {
                         }
                     } else {
                         p = Math.random();
-                        System.out.println("p: " + p);
-                        System.out.println("Exp: " + FastMath.exp(-deltaCost / temperature));
                         if (p < FastMath.exp(-deltaCost / temperature)) {
                             currentSolution = oneSolution;
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println("Invalid cost");
+                    logger.error("Invalid cost");
                 }
                 counterTemp++;
             }
             counter++;
             counterTemp = 0;
             temperature = calculNewTemperature(temperature);
-            System.out.println("Temperature: " + temperature);
+            logger.debug("Temperature: " + temperature);
         }
-        System.out.println("-------------------------------");
-        System.out.println("Best Solution: " + bestSolution);
+        logger.info("-------------------------------");
+        logger.info("Best Solution: " + bestSolution);
         double stopTime = System.currentTimeMillis();
-        System.out.println("Execution time: " + (stopTime - startTime));
+        logger.info("Execution time: " + (stopTime - startTime));
         return bestSolution;
     }
 

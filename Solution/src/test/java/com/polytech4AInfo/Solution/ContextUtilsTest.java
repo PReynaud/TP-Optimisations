@@ -1,3 +1,5 @@
+package com.polytech4AInfo.Solution;
+
 import com.polytech4AInfo.Shape.ShapeGroup;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -29,17 +31,17 @@ public class ContextUtilsTest extends TestCase {
     @Test
     public void testLoadContext() throws Exception {
         ContextUtils.Context c_good = ContextUtils.loadContext(GOOD_FILE);
-        assertEquals(lx, c_good.getLx());
-        assertEquals(ly, c_good.getLy());
-        assertEquals(pattern.length, c_good.getPattern().length);
+        TestCase.assertEquals(lx, c_good.getLx());
+        TestCase.assertEquals(ly, c_good.getLy());
+        TestCase.assertEquals(pattern.length, c_good.getPattern().length);
         for (int i = 0; i < pattern.length; i++) {
-            assertEquals(pattern[i], c_good.getPattern()[i]);
+            TestCase.assertEquals(pattern[i], c_good.getPattern()[i]);
         }
 
         try {
             ContextUtils.Context c_bad = ContextUtils.loadContext(BAD_FILE);
         } catch (ContextUtils.ContextLoadException e) {
-            assertEquals(e.getMessage(), "Erreur dans la lecture des paramètres à la ligne 1");
+            TestCase.assertEquals(e.getMessage(), "Erreur dans la lecture des paramètres à la ligne 1");
         }
 
         try {

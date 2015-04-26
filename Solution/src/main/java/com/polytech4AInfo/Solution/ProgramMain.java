@@ -1,5 +1,5 @@
-import com.polytech4AInfo.Solution.Annealing;
-import com.polytech4AInfo.Solution.Solution;
+package com.polytech4AInfo.Solution;
+
 import org.apache.log4j.*;
 
 import java.io.IOException;
@@ -70,6 +70,6 @@ public class ProgramMain {
         ca.activateOptions();
         logger.addAppender(appender);
         logger.addAppender(ca);
-        logger.setLevel(Level.DEBUG);
+        logger.setLevel(Level.INFO);
     }
 }

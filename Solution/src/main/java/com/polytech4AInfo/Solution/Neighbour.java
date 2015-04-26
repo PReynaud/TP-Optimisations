@@ -16,7 +16,6 @@ public class Neighbour {
         Solution currentSolution = initialSolution.clone();
 
         do {
-            System.out.println("findNeighbour");
             int numberOfTheInvalidShape = currentSolution.hasAtLeastOneShape();
             if(numberOfTheInvalidShape == -1){
                 int numberOfTheInvalidPattern = currentSolution.isPackable();

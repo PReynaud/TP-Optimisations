@@ -1,3 +1,5 @@
+package com.polytech4AInfo.Solution;
+
 import com.polytech4AInfo.Shape.ShapeGroup;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
