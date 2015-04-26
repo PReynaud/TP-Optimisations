@@ -1,12 +1,17 @@
 package com.polytech4AInfo.Solution;
 
 import org.apache.commons.math.util.FastMath;
+import org.apache.log4j.Logger;
+
+//import com.polytech4AInfo.ProgramMain.ProgramMain;
 
 /**
  * Created by benoitvuillemin on 10/04/2015.
  * RECUIT SIMULE
  */
 public class Annealing {
+    //private static Logger logger = Logger.getLogger(ProgramMain.class);
+
     private static int LIMIT = 100;
     private static int LIMITTEMP = 100;
     /**

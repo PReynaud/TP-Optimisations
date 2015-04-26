@@ -1,18 +1,21 @@
-import com.polytech4AInfo.Shape.ShapeGroup;
-import com.polytech4AInfo.Shape.Sheet;
 import com.polytech4AInfo.Solution.Annealing;
-import com.polytech4AInfo.Solution.Pattern;
 import com.polytech4AInfo.Solution.Solution;
+import org.apache.log4j.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by Pierre on 13/04/2015.
  */
-public class Main {
+public class ProgramMain {
+    /**
+     * Logger.
+     */
+    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ProgramMain.class);
+
     public static void main(String args[]){
-        System.out.println("Beginning of the program");
+
+        logger.info("Beginning of the program");
 
         /*ArrayList<ShapeGroup> pattern1 = new ArrayList<ShapeGroup>();
         pattern1.add(new ShapeGroup(933,372,1));
@@ -45,12 +48,28 @@ public class Main {
             Annealing algo = new Annealing();
             Solution finalSolution = algo.simulatedAnnealing(firstSolution, 1000.0);
         } catch (IOException e) {
-            System.out.println("Cannot load file");
+            logger.error("Cannot load file");
         } catch (ContextUtils.ContextLoadException e) {
-            System.out.println("Cannot load file");
+            logger.error("Cannot load file");
         }
 
-        System.out.println("------------------");
-        System.out.println("End of the program");
+        logger.info("------------------");
+        logger.info("End of the program");
+    }
+
+    private static void defineLogger(){
+        HTMLLayout layout = new HTMLLayout();
+        DailyRollingFileAppender appender = null;
+        try {
+            appender = new DailyRollingFileAppender(layout, "./Logs/log.html", "yyyy-MM-dd");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ConsoleAppender ca=new ConsoleAppender();
+        ca.setLayout(new SimpleLayout());
+        ca.activateOptions();
+        logger.addAppender(appender);
+        logger.addAppender(ca);
+        logger.setLevel(Level.DEBUG);
     }
 }
