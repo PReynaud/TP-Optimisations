@@ -3,6 +3,7 @@ package com.polytech4AInfo.Solution;
 import com.polytech4AInfo.Positioning.Distribution;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Created by Pierre on 10/04/2015.
@@ -126,23 +127,19 @@ public class Solution {
      * @return -1 if everything is ok, the index of the first shape that is not present otherwise
      */
     public int hasAtLeastOneShape() {
-        int i = 0;
-        while (i < this.patterns.length) {
-            int[] sumOfShapes = new int[this.solutionArray[0].length];
-            for (int j = 0; j < sumOfShapes.length; j++){
-                sumOfShapes[j] = 0;
+        int[] sumOfShapes = new int[this.solutionArray[0].length];
+        for (int j = 0; j < sumOfShapes.length; j++){
+            sumOfShapes[j] = 0;
+        }
+        for (int j = 0; j < this.solutionArray.length; j++){
+            for (int k = 0; k < this.solutionArray[j].length; k++){
+                sumOfShapes[k] += this.solutionArray[j][k];
             }
-            for (int j = 0; j < this.solutionArray.length; j++){
-                for (int k = 0; k < this.solutionArray[j].length; k++){
-                    sumOfShapes[k] += this.solutionArray[j][k];
-                }
+        }
+        for (int j = 0; j < sumOfShapes.length; j++){
+            if(sumOfShapes[j] <= 0){
+                return j;
             }
-            for (int j = 0; j < sumOfShapes.length; j++){
-                if(sumOfShapes[j] <= 0){
-                    return j;
-                }
-            }
-            i++;
         }
         return -1;
     }

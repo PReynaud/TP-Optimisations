@@ -12,7 +12,7 @@ import org.apache.commons.math.util.FastMath;
 public class Annealing {
     //private static Logger logger = Logger.getLogger(ProgramMain.class);
 
-    private static int LIMIT = 100;
+    private static int LIMIT = 1000;
     private static int LIMITTEMP = 100;
     /**
      * Will count the number of iterations of our algorithm
