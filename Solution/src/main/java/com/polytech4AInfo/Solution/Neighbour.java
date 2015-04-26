@@ -5,7 +5,7 @@ package com.polytech4AInfo.Solution;
  */
 public class Neighbour {
     /**
-     * Will look for a neighnour and return it
+     * Will look for a neighbour and return it
      *
      * @param initialSolution
      * @return A clone of the initial solution but which has been modified
@@ -52,16 +52,28 @@ public class Neighbour {
     }
 
     private static void decrementSolutionRandomly(Solution currentSolution){
-        int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
-        int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
-        if(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] > 0)
-            currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] -= 1;
+        boolean isModified = false;
+        while(!isModified){
+            int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
+            int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
+            if(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] > 0)
+            {
+                currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] -= 1;
+                isModified = true;
+            }
+        }
     }
 
     private static void decrementSolutionOnOnePattern(Solution currentSolution, int numberOfThePattern){
-        int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[numberOfThePattern].length));
-        if(currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] > 0)
-            currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] -= 1;
+        boolean isModified = false;
+        while(!isModified){
+            int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[numberOfThePattern].length));
+            if(currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] > 0)
+            {
+                currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] -= 1;
+                isModified = true;
+            }
+        }
     }
 
     private static void incrementOrDecrementSolutionRandomly(Solution currentSolution, int percentageOfIncrementation){
