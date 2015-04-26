@@ -1,7 +1,7 @@
 package com.polytech4AInfo.Solution;
 
 import org.apache.commons.math.util.FastMath;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 //import com.polytech4AInfo.ProgramMain.ProgramMain;
 

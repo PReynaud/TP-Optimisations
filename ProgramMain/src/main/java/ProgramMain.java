@@ -11,10 +11,10 @@ public class ProgramMain {
     /**
      * Logger.
      */
-    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ProgramMain.class);
+    public static Logger logger = Logger.getLogger(ProgramMain.class);
 
     public static void main(String args[]){
-
+        defineLogger();
         logger.info("Beginning of the program");
 
         /*ArrayList<ShapeGroup> pattern1 = new ArrayList<ShapeGroup>();
