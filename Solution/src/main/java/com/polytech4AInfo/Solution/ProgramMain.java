@@ -70,6 +70,6 @@ public class ProgramMain {
         ca.activateOptions();
         logger.addAppender(appender);
         logger.addAppender(ca);
-        logger.setLevel(Level.INFO);
+        logger.setLevel(Level.DEBUG);
     }
 }

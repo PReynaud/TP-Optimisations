@@ -39,7 +39,7 @@ public class PositioningStream {
                 .get();
             return true;
         }catch(NoSuchElementException e) {
-            return true;
+            return false;
         }
     }
 }

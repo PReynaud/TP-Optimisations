@@ -21,7 +21,7 @@ public class Neighbour {
                 int numberOfTheInvalidPattern = currentSolution.isPackable();
                 if(numberOfTheInvalidPattern == -1){
                     if(firstIteration){
-                        incrementOrDecrementSolutionRandomly(currentSolution, 50);
+                        incrementOrDecrementSolutionRandomly(currentSolution, 60);
                         firstIteration = false;
                     }
                     else{
