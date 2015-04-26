@@ -44,11 +44,15 @@ public class Neighbour {
         int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
         int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
         currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] += 1;
+        currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
+                .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
     }
 
     private static void incrementSolutionForOneShape(Solution currentSolution, int numberOfTheShape){
         int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
         currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape] += 1;
+        currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(numberOfTheShape)
+                .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape]);
     }
 
     private static void decrementSolutionRandomly(Solution currentSolution){
@@ -59,6 +63,8 @@ public class Neighbour {
             if(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] > 0)
             {
                 currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] -= 1;
+                currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
+                        .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
                 isModified = true;
             }
         }
@@ -71,6 +77,8 @@ public class Neighbour {
             if(currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] > 0)
             {
                 currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] -= 1;
+                currentSolution.getPatterns()[numberOfThePattern].getPattern().get(randomNumberForShape)
+                        .setNumber(currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape]);
                 isModified = true;
             }
         }
