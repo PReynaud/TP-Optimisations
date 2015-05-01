@@ -42,8 +42,8 @@ public class ProgramMain {
         Solution finalSolution = algo.simulatedAnnealing(firstSolution, 500.0);*/
 
         try {
-            ContextUtils.Context file = ContextUtils.loadContext("Ressources/data.txt");
-            Solution firstSolution = FirstSolution.generateFirstSolution(file, 10);
+            ContextUtils.Context file = ContextUtils.loadContext("Ressources/data_20Lalpha.txt");
+            Solution firstSolution = FirstSolution.generateFirstSolution(file, 20);
 
             Annealing algo = new Annealing();
             Solution finalSolution = algo.simulatedAnnealing(firstSolution, 1000.0);
@@ -70,6 +70,6 @@ public class ProgramMain {
         ca.activateOptions();
         logger.addAppender(appender);
         logger.addAppender(ca);
-        logger.setLevel(Level.DEBUG);
+        logger.setLevel(Level.INFO);
     }
 }

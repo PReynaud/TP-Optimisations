@@ -15,17 +15,17 @@ public class FirstSolution {
         int[] order = new int[file.getPattern().length];
         Pattern[] listOfPatterns = new Pattern[numberOfPatterns];
 
-
+        //Create the list of patterns
         for(int i = 0; i < listOfPatterns.length; i++){
             ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>(Arrays.asList(file.clone().getPattern()));
-
             for(int j = 0; j < listOfShapes.size(); j++){
                 if(i == 0){
+                    //We set the order for each pattern
                     order[j] = listOfShapes.get(j).getNumber();
                 }
+                //We randomly add the shape or not on the pattern
                 listOfShapes.get(j).setNumber((int)Math.round(Math.random()));
             }
-
             listOfPatterns[i] = new Pattern(listOfShapes, new Sheet(file.getLx(), file.getLy()));
         }
 

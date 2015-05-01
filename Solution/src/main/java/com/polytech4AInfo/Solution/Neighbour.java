@@ -11,6 +11,7 @@ public class Neighbour {
      * @return A clone of the initial solution but which has been modified
      */
     public static Solution findNeighbour(Solution initialSolution) {
+        //TODO: trouver un moyen de gérer l'ajout et la suppression de patterns pour optimiser le cout
         boolean incorrectSolution = true;
         boolean firstIteration = true;
         Solution currentSolution = initialSolution.clone();
@@ -21,7 +22,7 @@ public class Neighbour {
                 int numberOfTheInvalidPattern = currentSolution.isPackable();
                 if(numberOfTheInvalidPattern == -1){
                     if(firstIteration){
-                        incrementOrDecrementSolutionRandomly(currentSolution, 60);
+                        incrementOrDecrementSolutionRandomly(currentSolution, 85);
                         firstIteration = false;
                     }
                     else{

@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 public class Annealing {
     private static Logger logger = Logger.getLogger(ProgramMain.class);
 
-    private static int LIMIT = 100;
-    private static int LIMITTEMP = 100;
+    private static int LIMIT = 200;
+    private static int LIMITTEMP = 1000;
     /**
      * Will count the number of iterations of our algorithm
      */

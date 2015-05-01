@@ -94,7 +94,6 @@ public class Solution {
         for (int i = 0; i < res.length; i++) {
             // Will be our fitness
             if(res[i]>=0){
-                //TODO réfléchir à l'arrondi
                 cost += (int)Math.ceil(res[i]);
             }
             else{
@@ -164,6 +163,24 @@ public class Solution {
         newSolution.setPatterns(this.getPatterns().clone());
 
         return newSolution;
+    }
+
+    /**
+     * Add one pattern with a random value
+     * @return true if the insertion has been done correctly
+     */
+    public boolean addOnePattern(){
+        //TODO : this
+        return false;
+    }
+
+    /**
+     * Remove one pattern from the list of patterns
+     * @return true if the deletion has been done correctly
+     */
+    public boolean removeOnePattern(){
+        //TODO : this
+        return false;
     }
 
     @Override
