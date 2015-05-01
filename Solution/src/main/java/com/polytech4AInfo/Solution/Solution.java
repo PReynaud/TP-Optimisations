@@ -211,8 +211,26 @@ public class Solution {
      * @return true if the deletion has been done correctly
      */
     public boolean removeOnePattern(int index){
-        //TODO : this
-        return false;
+        if(index < 0 || index >= patterns.length){
+            return false;
+        }
+
+        //We clone the tab of patterns
+        Pattern[] newPatternArray = new Pattern[patterns.length - 1];
+        for(int i = 0; i < patterns.length; i++){
+            if(i < index){
+                newPatternArray[i] = patterns[i];
+            }
+            if(i > index){
+                newPatternArray[i - 1] = patterns[i];
+            }
+        }
+        patterns = newPatternArray;
+
+        //We update the solution array
+        solutionArray = transformPatternArrayInSolutionArray(patterns);
+
+        return true;
     }
 
     @Override
