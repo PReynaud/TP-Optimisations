@@ -115,6 +115,10 @@ public class Solution {
             }
         }
         cost += res.length * 20;
+
+        if(cost == 0){
+            throw new Exception("Error in the calcul of the cost, the solution is probably not valid");
+        }
         return cost;
     }
 

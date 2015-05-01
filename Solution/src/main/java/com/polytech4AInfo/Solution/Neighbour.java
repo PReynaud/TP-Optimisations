@@ -4,8 +4,9 @@ package com.polytech4AInfo.Solution;
  * Created by Pierre on 26/04/2015.
  */
 public class Neighbour {
-    private static double PERCENTAGE_OF_INCREMENTATION = 85;
-    private static double PERCENTAGE_OF_ADDITION_OF_A_PATTERN = 0.01;
+    private static double PERCENTAGE_OF_INCREMENTATION = 25;
+    private static double PERCENTAGE_OF_ADDING_A_PATTERN = 0.05;
+    private static double PERCENTAGE_OF_REMOVING_A_PATTERN = 0.01;
 
     /**
      * Will look for a neighbour and return it
@@ -60,10 +61,16 @@ public class Neighbour {
      * @param numberOfTheShape
      */
     private static void incrementSolutionForOneShape(Solution currentSolution, int numberOfTheShape){
-        int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
-        currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape] += 1;
-        currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(numberOfTheShape)
-                .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape]);
+        double randomValue = Math.random();
+        if(randomValue * 100 > PERCENTAGE_OF_ADDING_A_PATTERN) {
+            int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
+            currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape] += 1;
+            currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(numberOfTheShape)
+                    .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape]);
+        }
+        else{
+            currentSolution.addOnePattern();
+        }
     }
 
     /**
@@ -74,21 +81,27 @@ public class Neighbour {
      */
     private static void decrementSolutionRandomly(Solution currentSolution){
         boolean isModified = false;
-        while(!isModified){
-            int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
-            int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
-            if(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] > 0)
-            {
-                currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] -= 1;
-                currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
-                        .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
-                isModified = true;
+        double randomValue = Math.random();
+        if(randomValue * 100 > PERCENTAGE_OF_REMOVING_A_PATTERN) {
+            while (!isModified) {
+                int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
+                int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
+                if (currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] > 0) {
+                    currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] -= 1;
+                    currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
+                            .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
+                    isModified = true;
 
-                //Remove the pattern if it's empty
-                if(isEmptyPattern(currentSolution, randomNumberForPattern)){
-                    currentSolution.removeOnePattern(randomNumberForPattern);
+                    //Remove the pattern if it's empty
+                    if (isEmptyPattern(currentSolution, randomNumberForPattern)) {
+                        currentSolution.removeOnePattern(randomNumberForPattern);
+                    }
                 }
             }
+        }
+        else{
+            int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
+            currentSolution.removeOnePattern(randomNumberForPattern);
         }
     }
 
@@ -125,7 +138,7 @@ public class Neighbour {
      */
     private static void incrementOrDecrementSolutionRandomly(Solution currentSolution){
         double randomValue = Math.random();
-        if(randomValue * 100 > PERCENTAGE_OF_ADDITION_OF_A_PATTERN){
+        if(randomValue * 100 > PERCENTAGE_OF_ADDING_A_PATTERN){
             randomValue = Math.random();
             if(randomValue * 100 > PERCENTAGE_OF_INCREMENTATION){
                 decrementSolutionRandomly(currentSolution);
