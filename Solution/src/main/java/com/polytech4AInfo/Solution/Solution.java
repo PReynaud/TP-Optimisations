@@ -1,7 +1,10 @@
 package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Positioning.Distribution;
+import com.polytech4AInfo.Shape.ShapeGroup;
+import com.polytech4AInfo.Shape.Sheet;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -67,14 +70,25 @@ public class Solution {
         this.patterns = patterns;
         this.order = order;
 
+        solutionArray = transformPatternArrayInSolutionArray(patterns);
+    }
+
+    /**
+     * Transform a pattern array in solution array which is more practical for the algorithm
+     * @param patterns
+     * @return
+     */
+    private int[][] transformPatternArrayInSolutionArray(Pattern[] patterns){
+        int[][] tempTab;
         int nbPatterns = patterns.length;
         int nbShapes = patterns[0].getNumberOfShapes();
-        solutionArray = new int[nbPatterns][nbShapes];
+        tempTab = new int[nbPatterns][nbShapes];
         for (int i = 0; i < nbPatterns; i++) {
             for (int j = 0; j < nbShapes; j++) {
-                solutionArray[i][j] = patterns[i].getPattern().get(j).getNumber();
+                tempTab[i][j] = patterns[i].getPattern().get(j).getNumber();
             }
         }
+        return tempTab;
     }
 
     public Solution() {
@@ -170,15 +184,29 @@ public class Solution {
      * @return true if the insertion has been done correctly
      */
     public boolean addOnePattern(){
-        //TODO : this
-        return false;
+        //We clone the tab of patterns
+        Pattern[] newPatternArray = new Pattern[patterns.length +1];
+        for(int i = 0; i < patterns.length; i++){
+            newPatternArray[i] = patterns[i];
+        }
+        //We add a new pattern
+        ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>(patterns[0].getPattern());
+        //TODO: change the values
+        Sheet newSheet = new Sheet(patterns[0].getSheet().getLength(), patterns[0].getSheet().getBreadth());
+        newPatternArray[newPatternArray.length - 1] = new Pattern(listOfShapes, newSheet);
+        patterns = newPatternArray;
+
+        //We update the solution array
+        solutionArray = transformPatternArrayInSolutionArray(patterns);
+
+        return true;
     }
 
     /**
      * Remove one pattern from the list of patterns
      * @return true if the deletion has been done correctly
      */
-    public boolean removeOnePattern(){
+    public boolean removeOnePattern(int index){
         //TODO : this
         return false;
     }

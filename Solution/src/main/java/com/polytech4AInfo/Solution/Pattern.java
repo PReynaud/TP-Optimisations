@@ -52,4 +52,6 @@ public class Pattern {
     public ArrayList<ShapeGroup> getPattern() {
         return pattern;
     }
+
+    public Sheet getSheet(){ return this.sheet;}
 }
