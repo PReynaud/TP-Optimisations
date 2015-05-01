@@ -3,6 +3,8 @@ package com.polytech4AInfo.Solution;
 import org.apache.commons.math.util.FastMath;
 import org.apache.log4j.Logger;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by benoitvuillemin on 10/04/2015.
  * RECUIT SIMULE
@@ -10,8 +12,6 @@ import org.apache.log4j.Logger;
 public class Annealing {
     private static Logger logger = Logger.getLogger(ProgramMain.class);
 
-    private static int LIMIT = 1000;
-    private static int LIMITTEMP = 200;
     /**
      * Will count the number of iterations of our algorithm
      */
@@ -28,6 +28,7 @@ public class Annealing {
      */
     public Solution simulatedAnnealing(Solution s, double temperature) {
         double startTime = System.currentTimeMillis();
+        DecimalFormat df = new DecimalFormat("0.00");
         try {
             s.calculCost();
             Solution currentSolution = s.clone();
@@ -35,9 +36,9 @@ public class Annealing {
 
             double deltaCost;
             double p;
-            while (counter < LIMIT) {
-                logger.info("Percentage of iteration: " + (int) ((double) counter / (double) LIMIT * 100));
-                while (counterTemp < LIMITTEMP) {
+            while (counter < ProgramMain.LIMIT) {
+                logger.info("Percentage of iteration: " + df.format((double) counter / (double) ProgramMain.LIMIT * 100));
+                while (counterTemp < ProgramMain.LIMITTEMP) {
                     Solution oneSolution = Neighbour.findNeighbour(currentSolution);
                     logger.debug("Current solution: " + currentSolution.toString());
                     logger.debug("Tested neighbour: " + oneSolution.toString());

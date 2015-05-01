@@ -2,7 +2,11 @@ package com.polytech4AInfo.Solution;
 
 import org.apache.log4j.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * Created by Pierre on 13/04/2015.
@@ -15,24 +19,63 @@ public class ProgramMain {
 
     private static int NUMBER_OF_PATTERN = 10;
     private static double TEMPERATURE = 800.0;
+    private static String FILE_TO_LOAD = "Ressources/data_20Lalpha.txt";
+
+    public static int LIMIT = 1000;
+    public static int LIMITTEMP = 200;
+
+    public static double PERCENTAGE_OF_INCREMENTATION = 25;
+    public static double PERCENTAGE_OF_ADDING_A_PATTERN = 0.05;
+    public static double PERCENTAGE_OF_REMOVING_A_PATTERN = 0.01;
 
     public static void main(String args[]){
         defineLogger();
         logger.info("Beginning of the program");
-        try {
-            ContextUtils.Context file = ContextUtils.loadContext("Ressources/data_20Lalpha.txt");
-            Solution firstSolution = FirstSolution.generateFirstSolution(file, NUMBER_OF_PATTERN);
-
-            Annealing algo = new Annealing();
-            Solution finalSolution = algo.simulatedAnnealing(firstSolution, TEMPERATURE);
+        try{
+            defineConfiguration();
+            try {
+                ContextUtils.Context file = ContextUtils.loadContext(FILE_TO_LOAD);
+                logger.info("------------------");
+                Solution firstSolution = FirstSolution.generateFirstSolution(file, NUMBER_OF_PATTERN);
+                Annealing algo = new Annealing();
+                algo.simulatedAnnealing(firstSolution, TEMPERATURE);
+            } catch (IOException e) {
+                logger.error("Cannot load data file");
+            } catch (ContextUtils.ContextLoadException e) {
+                logger.error("Cannot load data file");
+            }
         } catch (IOException e) {
-            logger.error("Cannot load file");
-        } catch (ContextUtils.ContextLoadException e) {
-            logger.error("Cannot load file");
+            logger.error("Cannot load configuration file");
         }
+
 
         logger.info("------------------");
         logger.info("End of the program");
+    }
+
+    private static void defineConfiguration() throws IOException {
+        Properties prop = new Properties();
+        String fileName = "Ressources/default.properties";
+        InputStream is = new FileInputStream(fileName);
+        prop.load(is);
+        NUMBER_OF_PATTERN = Integer.parseInt(prop.getProperty("NUMBER_OF_PATTERN"));
+        TEMPERATURE = Double.parseDouble(prop.getProperty("TEMPERATURE"));
+        FILE_TO_LOAD = prop.getProperty("FILE_TO_LOAD");
+        LIMIT = Integer.parseInt(prop.getProperty("LIMIT"));
+        LIMITTEMP = Integer.parseInt(prop.getProperty("LIMITTEMP"));
+        PERCENTAGE_OF_INCREMENTATION = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_INCREMENTATION"));
+        PERCENTAGE_OF_ADDING_A_PATTERN = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_ADDING_A_PATTERN"));
+        PERCENTAGE_OF_REMOVING_A_PATTERN = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_REMOVING_A_PATTERN"));
+
+        logger.info("The following properties have been loaded");
+        logger.info("NUMBER_OF_PATTERN: " + NUMBER_OF_PATTERN);
+        logger.info("TEMPERATURE: " + TEMPERATURE);
+        logger.info("FILE_TO_LOAD: " + FILE_TO_LOAD);
+        logger.info("LIMIT: " + LIMIT);
+        logger.info("LIMITTEMP: " + LIMITTEMP);
+        logger.info("PERCENTAGE_OF_INCREMENTATION: " + PERCENTAGE_OF_INCREMENTATION);
+        logger.info("PERCENTAGE_OF_ADDING_A_PATTERN: " + PERCENTAGE_OF_ADDING_A_PATTERN);
+        logger.info("PERCENTAGE_OF_REMOVING_A_PATTERN: " + PERCENTAGE_OF_REMOVING_A_PATTERN);
     }
 
     private static void defineLogger(){
