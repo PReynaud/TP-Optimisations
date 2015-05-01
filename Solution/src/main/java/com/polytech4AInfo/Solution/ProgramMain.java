@@ -2,10 +2,7 @@ package com.polytech4AInfo.Solution;
 
 import org.apache.log4j.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -79,6 +76,8 @@ public class ProgramMain {
     }
 
     private static void defineLogger(){
+        File file = new File("./Logs/log.html");
+        file.delete();
         HTMLLayout layout = new HTMLLayout();
         DailyRollingFileAppender appender = null;
         try {
