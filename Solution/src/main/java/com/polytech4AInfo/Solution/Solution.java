@@ -189,9 +189,13 @@ public class Solution {
         for(int i = 0; i < patterns.length; i++){
             newPatternArray[i] = patterns[i];
         }
-        //We add a new pattern
-        ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>(patterns[0].getPattern());
-        //TODO: change the values
+        //We add a new pattern and clone every shape in the new one
+        ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>();
+        for(ShapeGroup newShapeGroup: patterns[0].getPattern()){
+            ShapeGroup tempShapeGroup = newShapeGroup.clone();
+            tempShapeGroup.setNumber((int)Math.round(Math.random()));
+            listOfShapes.add(tempShapeGroup);
+        }
         Sheet newSheet = new Sheet(patterns[0].getSheet().getLength(), patterns[0].getSheet().getBreadth());
         newPatternArray[newPatternArray.length - 1] = new Pattern(listOfShapes, newSheet);
         patterns = newPatternArray;
