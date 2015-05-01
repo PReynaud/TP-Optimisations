@@ -4,6 +4,9 @@ package com.polytech4AInfo.Solution;
  * Created by Pierre on 26/04/2015.
  */
 public class Neighbour {
+    private static double PERCENTAGE_OF_INCREMENTATION = 85;
+    private static double PERCENTAGE_OF_ADDITION_OF_A_PATTERN = 0.01;
+
     /**
      * Will look for a neighbour and return it
      *
@@ -11,7 +14,6 @@ public class Neighbour {
      * @return A clone of the initial solution but which has been modified
      */
     public static Solution findNeighbour(Solution initialSolution) {
-        //TODO: trouver un moyen de gérer l'ajout et la suppression de patterns pour optimiser le cout
         boolean incorrectSolution = true;
         boolean firstIteration = true;
         Solution currentSolution = initialSolution.clone();
@@ -22,7 +24,7 @@ public class Neighbour {
                 int numberOfTheInvalidPattern = currentSolution.isPackable();
                 if(numberOfTheInvalidPattern == -1){
                     if(firstIteration){
-                        incrementOrDecrementSolutionRandomly(currentSolution, 85);
+                        incrementOrDecrementSolutionRandomly(currentSolution);
                         firstIteration = false;
                     }
                     else{
@@ -40,6 +42,10 @@ public class Neighbour {
         return currentSolution;
     }
 
+    /**
+     * Increment one random shape on one random pattern
+     * @param currentSolution
+     */
     private static void incrementSolutionRandomly(Solution currentSolution){
         int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
         int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
@@ -48,6 +54,11 @@ public class Neighbour {
                 .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
     }
 
+    /**
+     * Increment one random pattern for a given shape. Use if we need one patticular shape
+     * @param currentSolution
+     * @param numberOfTheShape
+     */
     private static void incrementSolutionForOneShape(Solution currentSolution, int numberOfTheShape){
         int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
         currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape] += 1;
@@ -55,6 +66,12 @@ public class Neighbour {
                 .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][numberOfTheShape]);
     }
 
+    /**
+     * Decrement one random shape on one random pattern
+     * If the selected shape is already to 0, we decrement an other one
+     * After the decrementation we verify that the selected pattern is not empty, if it is, it's delete from the list
+     * @param currentSolution
+     */
     private static void decrementSolutionRandomly(Solution currentSolution){
         boolean isModified = false;
         while(!isModified){
@@ -66,12 +83,24 @@ public class Neighbour {
                 currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
                         .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
                 isModified = true;
+
+                //Remove the pattern if it's empty
+                if(isEmptyPattern(currentSolution, randomNumberForPattern)){
+                    currentSolution.removeOnePattern(randomNumberForPattern);
+                }
             }
         }
     }
 
+    /**
+     * Decrement one random shape on the given pattern. Useful if we know that the shape can not be placed on the pattern.
+     * After one shape has been deleted, we verify that the selected pattern is not null, if it is, it is deleted from the list
+     * @param currentSolution
+     * @param numberOfThePattern
+     */
     private static void decrementSolutionOnOnePattern(Solution currentSolution, int numberOfThePattern){
         boolean isModified = false;
+
         while(!isModified){
             int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[numberOfThePattern].length));
             if(currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] > 0)
@@ -82,15 +111,45 @@ public class Neighbour {
                 isModified = true;
             }
         }
+        //Remove the pattern if it's empty
+        if(isEmptyPattern(currentSolution, numberOfThePattern)){
+            currentSolution.removeOnePattern(numberOfThePattern);
+        }
     }
 
-    private static void incrementOrDecrementSolutionRandomly(Solution currentSolution, int percentageOfIncrementation){
+    /**
+     * Has a percentage of chance to add a new pattern
+     * Has a percentage of chance to increment one random shape on one random pattern
+     * Otherwise, we decrement the value of one random shape on one random pattern
+     * @param currentSolution
+     */
+    private static void incrementOrDecrementSolutionRandomly(Solution currentSolution){
         double randomValue = Math.random();
-        if(randomValue * 100 > percentageOfIncrementation){
-            decrementSolutionRandomly(currentSolution);
+        if(randomValue * 100 > PERCENTAGE_OF_ADDITION_OF_A_PATTERN){
+            randomValue = Math.random();
+            if(randomValue * 100 > PERCENTAGE_OF_INCREMENTATION){
+                decrementSolutionRandomly(currentSolution);
+            }
+            else{
+                incrementSolutionRandomly(currentSolution);
+            }
         }
         else{
-            incrementSolutionRandomly(currentSolution);
+            currentSolution.addOnePattern();
         }
+    }
+
+    /**
+     * Verify if a pattern is empty or not
+     * @param currentSolution
+     * @param numberOfThePattern
+     * @return
+     */
+    private static boolean isEmptyPattern(Solution currentSolution, int numberOfThePattern){
+        int res = 0;
+        for(int i = 0; i <currentSolution.getSolutionArray()[numberOfThePattern].length; i++){
+            res += currentSolution.getSolutionArray()[numberOfThePattern][i];
+        }
+        return res == 0;
     }
 }

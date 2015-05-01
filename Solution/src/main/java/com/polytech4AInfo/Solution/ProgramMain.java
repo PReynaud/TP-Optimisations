@@ -46,7 +46,7 @@ public class ProgramMain {
             Solution firstSolution = FirstSolution.generateFirstSolution(file, 20);
 
             Annealing algo = new Annealing();
-            Solution finalSolution = algo.simulatedAnnealing(firstSolution, 1000.0);
+            Solution finalSolution = algo.simulatedAnnealing(firstSolution, 500.0);
         } catch (IOException e) {
             logger.error("Cannot load file");
         } catch (ContextUtils.ContextLoadException e) {
@@ -70,6 +70,6 @@ public class ProgramMain {
         ca.activateOptions();
         logger.addAppender(appender);
         logger.addAppender(ca);
-        logger.setLevel(Level.INFO);
+        logger.setLevel(Level.DEBUG);
     }
 }
