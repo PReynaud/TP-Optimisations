@@ -1,6 +1,7 @@
 package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Positioning.PositioningStream;
+import com.polytech4AInfo.Positioning.ToImg;
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
@@ -54,4 +55,19 @@ public class Pattern {
     }
 
     public Sheet getSheet(){ return this.sheet;}
+
+    public void savePatternInFile(String fileName){
+        positionings.isPossibleAndSave(sheet, pattern, fileName);
+    }
+
+    public Pattern clone(){
+        Sheet newSheet = sheet.clone();
+        ArrayList<ShapeGroup> newArrayList = new ArrayList<>();
+        for(ShapeGroup oneShapeGroup: this.pattern){
+            newArrayList.add(oneShapeGroup.clone());
+        }
+
+        Pattern newPattern = new Pattern(newArrayList, newSheet);
+        return newPattern;
+    }
 }

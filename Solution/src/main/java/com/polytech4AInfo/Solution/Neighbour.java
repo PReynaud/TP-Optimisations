@@ -15,7 +15,6 @@ public class Neighbour {
         boolean incorrectSolution = true;
         boolean firstIteration = true;
         Solution currentSolution = initialSolution.clone();
-
         do {
             int numberOfTheInvalidShape = currentSolution.hasAtLeastOneShape();
             if(numberOfTheInvalidShape == -1){
@@ -46,7 +45,7 @@ public class Neighbour {
      */
     private static void incrementSolutionRandomly(Solution currentSolution){
         int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
-        int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
+        int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[0].length));
         currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] += 1;
         currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
                 .setNumber(currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape]);
@@ -82,7 +81,7 @@ public class Neighbour {
         if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_REMOVING_A_PATTERN) {
             while (!isModified) {
                 int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
-                int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[randomNumberForPattern].length));
+                int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[0].length));
                 if (currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] > 0) {
                     currentSolution.getSolutionArray()[randomNumberForPattern][randomNumberForShape] -= 1;
                     currentSolution.getPatterns()[randomNumberForPattern].getPattern().get(randomNumberForShape)
@@ -112,7 +111,7 @@ public class Neighbour {
         boolean isModified = false;
 
         while(!isModified){
-            int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[numberOfThePattern].length));
+            int randomNumberForShape = (int) (Math.random() * (currentSolution.getSolutionArray()[0].length));
             if(currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] > 0)
             {
                 currentSolution.getSolutionArray()[numberOfThePattern][randomNumberForShape] -= 1;

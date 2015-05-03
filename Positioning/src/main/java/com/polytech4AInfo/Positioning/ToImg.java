@@ -41,7 +41,7 @@ import java.io.IOException;
  */
 public class ToImg {
 
-    protected final static String OUTPUT_PATH = "../OUTPUT/";
+    protected final static String OUTPUT_PATH = "./OUTPUT/";
 
     /**
      * Font size for legend.
@@ -89,7 +89,7 @@ public class ToImg {
     /**
      * Get a grey color.
      *
-     * @param pId N° Image in Pattern.
+     * @param pId Nï¿½ Image in Pattern.
      * @param pNb Number of Images in a Pattern.
      * @return Color
      */
@@ -106,7 +106,7 @@ public class ToImg {
     /**
      * Get a color.
      *
-     * @param pId N° Image in Pattern.
+     * @param pId Nï¿½ Image in Pattern.
      * @param pNb Number of Images in a Pattern.
      * @return Color
      */
@@ -123,7 +123,7 @@ public class ToImg {
     /**
      * Get a color or a gray
      *
-     * @param pId N° Image in Pattern.
+     * @param pId Nï¿½ Image in Pattern.
      * @param pNb Number of Images in a Pattern.
      * @return Color color in grey or not.
      */
@@ -202,7 +202,7 @@ public class ToImg {
         graph.dispose();
     }
 
-    public void savePattern(String contextId, Sheet sheet){
+    public void savePattern(String contextId, Sheet sheet, String fileName){
         double coeff = (float)(800.0 / sheet.getLength());
         BufferedImage img = new BufferedImage(
                 (int)(sheet.getLength() * coeff),
@@ -224,9 +224,9 @@ public class ToImg {
             }
             i++;
         }
-        String filename = OUTPUT_PATH + contextId + "_pattern_test.png";
+        String filePath = OUTPUT_PATH + contextId + fileName;
         try {
-            File file = new File(filename);
+            File file = new File(filePath);
             if (!file.exists()) {
                 file.mkdirs();
                 file.createNewFile();

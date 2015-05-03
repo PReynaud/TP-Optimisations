@@ -33,7 +33,6 @@ public class Annealing {
             s.calculCost();
             Solution currentSolution = s.clone();
             Solution bestSolution = s.clone();
-
             double deltaCost;
             double p;
             while (counter < ProgramMain.LIMIT) {

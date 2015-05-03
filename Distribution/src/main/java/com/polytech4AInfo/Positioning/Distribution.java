@@ -70,7 +70,7 @@ public class Distribution {
     public boolean addShapesForOnePattern(int indexOfPattern, int[] shapesOnPattern){
         if(shapesOnPattern.length == nbShapes){
             if(indexOfPattern >= 0 && indexOfPattern < nbPatterns){
-                shapesOnPatterns[indexOfPattern] = shapesOnPattern;
+                shapesOnPatterns[indexOfPattern] = shapesOnPattern.clone();
                 return true;
             }
             else{
@@ -90,7 +90,7 @@ public class Distribution {
     public boolean addShapesForAllPattern(int[][] shapesAllPattern){
         if(shapesAllPattern.length == nbPatterns){
             if(shapesAllPattern[0].length == nbShapes){
-                shapesOnPatterns = shapesAllPattern;
+                shapesOnPatterns = shapesAllPattern.clone();
                 return true;
             }
             else{

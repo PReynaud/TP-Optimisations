@@ -94,6 +94,19 @@ public class Solution {
     public Solution() {
     }
 
+    public boolean verifyPatternArrayAndSolutionArray(){
+        int nbPatterns = patterns.length;
+        int nbShapes = patterns[0].getNumberOfShapes();
+        for (int i = 0; i < nbPatterns; i++) {
+            for (int j = 0; j < nbShapes; j++) {
+                if(patterns[i].getPattern().get(j).getNumber() != solutionArray[i][j]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Will send the cost of a pattern. It's our fitness function
      */
@@ -169,16 +182,22 @@ public class Solution {
      */
     public Solution clone() {
         Solution newSolution = new Solution();
-
         newSolution.setCost(this.getCost());
-        int[][] clone_solution = this.getSolutionArray().clone();
-        for(int i = 0; i < clone_solution.length;i++){
-            clone_solution[i] = this.getSolutionArray()[i].clone();
-        }
-
-        newSolution.setSolutionArray(clone_solution);
         newSolution.setOrder(this.getOrder().clone());
-        newSolution.setPatterns(this.getPatterns().clone());
+
+        int[][] clone_solution = new int[this.getSolutionArray().length][this.getSolutionArray()[0].length];
+        for(int i = 0; i < this.getSolutionArray().length; i++){
+            for(int j = 0; j < this.getSolutionArray()[0].length; j++){
+                clone_solution[i][j] = this.getSolutionArray()[i][j];
+            }
+        }
+        newSolution.setSolutionArray(clone_solution);
+
+        Pattern[] clonePattern = new Pattern[this.getPatterns().length];
+        for(int i = 0; i < this.getPatterns().length; i++){
+            clonePattern[i] = this.getPatterns()[i].clone();
+        }
+        newSolution.setPatterns(clonePattern);
 
         return newSolution;
     }
@@ -252,5 +271,14 @@ public class Solution {
                 ", cost=" + cost +
                 ", order=" + Arrays.toString(order) +
                 '}';
+    }
+
+    /**
+     * Save all the patterns of the solution in png files
+     */
+    public void saveSolutionInFiles(){
+        for (int i = 0; i < patterns.length; i++){
+            patterns[i].savePatternInFile("Solution" + i + ".png");
+        }
     }
 }

@@ -18,6 +18,8 @@ public class ProgramMain {
     private static double TEMPERATURE = 800.0;
     private static String FILE_TO_LOAD = "Ressources/data_20Lalpha.txt";
 
+    public static String PATH_TO_IMAGES = "";
+
     public static int LIMIT = 1000;
     public static int LIMITTEMP = 200;
 
@@ -35,7 +37,8 @@ public class ProgramMain {
                 logger.info("------------------");
                 Solution firstSolution = FirstSolution.generateFirstSolution(file, NUMBER_OF_PATTERN);
                 Annealing algo = new Annealing();
-                algo.simulatedAnnealing(firstSolution, TEMPERATURE);
+                Solution lastSolution = algo.simulatedAnnealing(firstSolution, TEMPERATURE);
+                lastSolution.saveSolutionInFiles();
             } catch (IOException e) {
                 logger.error("Cannot load data file");
             } catch (ContextUtils.ContextLoadException e) {
