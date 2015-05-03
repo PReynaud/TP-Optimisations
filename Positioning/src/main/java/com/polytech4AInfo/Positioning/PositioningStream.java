@@ -49,9 +49,12 @@ public class PositioningStream {
      * @param shapes pattern to put on the sheet
      * @return boolean : true if the pattern fits the sheet
      */
-    public void isPossibleAndSave(Sheet sheet, ArrayList<ShapeGroup> shapes, String fileName){
+    public boolean isPossibleAndSave(Sheet sheet, ArrayList<ShapeGroup> shapes, String fileName){
         for(int i = 0; i < positionings.size(); i++){
-            positionings.get(i).isPossibleAndSave(sheet, shapes, fileName);
+            if(positionings.get(i).isPossibleAndSave(sheet, shapes, fileName)){
+                return true;
+            }
         }
+        return false;
     }
 }

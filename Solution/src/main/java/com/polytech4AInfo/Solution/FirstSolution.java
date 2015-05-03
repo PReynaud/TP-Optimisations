@@ -30,6 +30,6 @@ public class FirstSolution {
         }
 
         firstSolution = new Solution(listOfPatterns, order);
-        return firstSolution;
+        return Neighbour.findNeighbour(firstSolution);
     }
 }
