@@ -49,4 +49,71 @@ public class PositioningTest {
 
         assertEquals("Test isPossible2 : should return true", positioning2.isPossible(sheet, pattern), true);
     }*/
+
+    @Test
+    public void testCaseOfTheBestSolution1(){
+        this.sheet = new Sheet(1400, 700);
+        this.pattern = new ArrayList<>();
+        pattern.add(new ShapeGroup(511, 340, 2));
+        pattern.add(new ShapeGroup(708, 199, 2));
+        pattern.add(new ShapeGroup(315, 301, 2));
+        pattern.add(new ShapeGroup(141, 324, 1));
+        pattern.add(new ShapeGroup(161, 182, 1));
+
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+    }
+
+    @Test
+     public void testCaseOfTheBestSolution2(){
+        this.sheet = new Sheet(1400, 700);
+        this.pattern = new ArrayList<>();
+        pattern.add(new ShapeGroup(933, 372, 1));
+        pattern.add(new ShapeGroup(893, 307, 1));
+        pattern.add(new ShapeGroup(472, 198, 1));
+        pattern.add(new ShapeGroup(197, 443, 1));
+        pattern.add(new ShapeGroup(463, 144, 1));
+        pattern.add(new ShapeGroup(453, 127, 1));
+
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+    }
+
+    @Test
+     public void testCaseOfTheBestSolution3(){
+        this.sheet = new Sheet(1400, 700);
+        this.pattern = new ArrayList<>();
+        pattern.add(new ShapeGroup(727, 333, 1));
+        pattern.add(new ShapeGroup(846, 263, 1));
+        pattern.add(new ShapeGroup(364, 366, 1));
+        pattern.add(new ShapeGroup(234, 399, 1));
+        pattern.add(new ShapeGroup(742, 102, 1));
+        pattern.add(new ShapeGroup(341, 153, 1));
+        pattern.add(new ShapeGroup(141, 324, 1));
+        pattern.add(new ShapeGroup(396, 78, 1));
+
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+    }
+
+    @Test
+    public void testCaseOfTheBestSolution4(){
+        this.sheet = new Sheet(1400, 700);
+        this.pattern = new ArrayList<>();
+        pattern.add(new ShapeGroup(571, 408, 1));
+        pattern.add(new ShapeGroup(731, 269, 2));
+        pattern.add(new ShapeGroup(234, 399, 1));
+        pattern.add(new ShapeGroup(742, 102, 1));
+        pattern.add(new ShapeGroup(161, 182, 1));
+
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+    }
+
+    @Test
+    public void testCaseOfTheBestSolution5(){
+        this.sheet = new Sheet(1400, 700);
+        this.pattern = new ArrayList<>();
+        pattern.add(new ShapeGroup(571, 408, 2));
+        pattern.add(new ShapeGroup(364, 366, 1));
+        pattern.add(new ShapeGroup(341, 153, 4));
+
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+    }
 }
