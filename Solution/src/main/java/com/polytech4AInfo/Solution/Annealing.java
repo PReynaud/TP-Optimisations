@@ -42,7 +42,7 @@ public class Annealing {
                     logger.debug("Current solution: " + currentSolution.toString());
                     logger.debug("Tested neighbour: " + oneSolution.toString());
                     try {
-                        deltaCost = currentSolution.getCost() - oneSolution.calculCost();
+                        deltaCost = currentSolution.getCost() - oneSolution.getCost();
                         logger.debug("Cost of tested neighbour: " + oneSolution.getCost());
                         if (deltaCost <= 0) {
                             currentSolution = oneSolution;

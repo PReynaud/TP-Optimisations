@@ -1,9 +1,52 @@
 package com.polytech4AInfo.Solution;
 
+import org.apache.log4j.Logger;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * Created by Pierre on 26/04/2015.
  */
 public class Neighbour {
+    private static Logger logger = Logger.getLogger(ProgramMain.class);
+
+    public static Solution findNeighbour(Solution initialSolution){
+        ArrayList<Solution> solutionsTab = new ArrayList<>();
+        Solution finalSolution = null;
+
+        double randomValue = Math.random();
+        if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN) {
+            for (int i = 0; i < 10; i++) {
+                solutionsTab.add(initialSolution);
+            }
+
+            try {
+                finalSolution =
+                        solutionsTab
+                                .parallelStream()
+                                .map(p -> {
+                                    try {
+                                        Solution tempNeighbour = findOneNeighbour(p);
+                                        tempNeighbour.calculCost();
+                                        return tempNeighbour;
+                                    } catch (Exception e) {
+                                        logger.error("Error in parallel streams for the search of a neighbour");
+                                        return null;
+                                    }
+                                })
+                                .min(Comparator.comparing(p -> p.getCost()))
+                                .get();
+            } catch (Exception e) {
+                logger.error("Error in parallel streams for the search of a neighbour");
+            }
+        }
+        else{
+            finalSolution = initialSolution.clone();
+            finalSolution.addOnePattern();
+        }
+        return finalSolution;
+    }
 
     /**
      * Will look for a neighbour and return it
@@ -11,7 +54,7 @@ public class Neighbour {
      * @param initialSolution
      * @return A clone of the initial solution but which has been modified
      */
-    public static Solution findNeighbour(Solution initialSolution) {
+    public static Solution findOneNeighbour(Solution initialSolution) {
         boolean incorrectSolution = true;
         boolean firstIteration = true;
         Solution currentSolution = initialSolution.clone();
