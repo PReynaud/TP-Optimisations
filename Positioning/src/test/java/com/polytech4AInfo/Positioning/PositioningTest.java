@@ -60,7 +60,7 @@ public class PositioningTest {
         pattern.add(new ShapeGroup(141, 324, 1));
         pattern.add(new ShapeGroup(161, 182, 1));
 
-        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern)!=null);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class PositioningTest {
         pattern.add(new ShapeGroup(463, 144, 1));
         pattern.add(new ShapeGroup(453, 127, 1));
 
-        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern)!=null);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class PositioningTest {
         pattern.add(new ShapeGroup(141, 324, 1));
         pattern.add(new ShapeGroup(396, 78, 1));
 
-        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern)!=null);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class PositioningTest {
         pattern.add(new ShapeGroup(742, 102, 1));
         pattern.add(new ShapeGroup(161, 182, 1));
 
-        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern)!=null);
     }
 
     @Test
@@ -114,6 +114,6 @@ public class PositioningTest {
         pattern.add(new ShapeGroup(364, 366, 1));
         pattern.add(new ShapeGroup(341, 153, 4));
 
-        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern));
+        assertTrue("should be able to put this pattern on the shape", positioning.isPossible(this.sheet, this.pattern)!=null);
     }
 }

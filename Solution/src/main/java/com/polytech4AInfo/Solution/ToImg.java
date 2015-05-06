@@ -1,4 +1,4 @@
-package com.polytech4AInfo.Positioning;
+package com.polytech4AInfo.Solution;
 
 /*
  *
@@ -30,6 +30,7 @@ import java.io.IOException;
         import java.awt.geom.Rectangle2D;
         import java.awt.image.BufferedImage;
         import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by Antoine CARON on 24/03/2015.
@@ -243,49 +244,12 @@ public class ToImg {
      * @param contextId Name of the file.
      * @param solution  Final Solution.
      */
-    /*@Override
     public void save(String contextId, Solution solution) {
-        ArrayList<Pattern> patterns = solution.getPatterns();
-        int coeff = (int) Math.ceil(800 / Math.max(patterns.get(0).getSize().getX(), patterns.get(0).getSize().getY()));
-        int y = 0;
-        for (Pattern cur_patt : patterns) {
-            BufferedImage img = new BufferedImage(
-                    (int) (patterns.get(0).getSize().getX() * coeff),
-                    (int) (patterns.get(0).getSize().getY() * coeff),
-                    BufferedImage.TYPE_INT_RGB);
-            Graphics2D graphics = img.createGraphics();
-            graphics.setPaint(BACKGROUND);
-            graphics.fillRect(0, 0, img.getWidth(), img.getHeight());
-            int i = 0;
-            for (PlacedBox placedBox : cur_patt.getPlacedBoxes()) {
-                Vector position = placedBox.getPosition();
-                Vector size = placedBox.getSize();
-                if (!placedBox.isRotation()) {
-                    drawRectangle(img, (int) (position.getX() * coeff), (int) (position.getY() * coeff),
-                            (int) (size.getX() * coeff), (int) (size.getY() * coeff), String.valueOf(i),
-                            getColor(i, cur_patt.getPlacedBoxes().size()));
-                } else {
-                    drawRectangle(img, (int) (position.getX() * coeff), (int) (position.getY() * coeff),
-                            (int) (size.getY() * coeff), (int) (size.getX() * coeff), String.valueOf(i),
-                            getColor(i, cur_patt.getPlacedBoxes().size()));
-                }
-                i++;
-            }
-            String filename = OUTPUT_PATH + contextId + "_pattern_" + y + ".png";
-            try {
-                File file = new File(filename);
-                if (!file.exists()) {
-                    file.mkdirs();
-                    file.createNewFile();
-                }
-                ImageIO.write(img, "png", file);
-                logger.info("Create new file " + file.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            y++;
+        Pattern[] patterns = solution.getPatterns();
+        for (int i=0; i<patterns.length; i++){
+            savePattern(contextId,patterns[i].savePatternInFile(),"Solution" + i + ".png");
         }
-    }*/
+    }
 
 
 }

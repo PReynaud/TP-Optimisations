@@ -48,7 +48,7 @@ public class Positioning {
      * @param _pattern List of shapes to put on the sheet
      * @return true if the shapes can be put on the sheet
      */
-    public boolean isPossible(Sheet _sheet, ArrayList<ShapeGroup> _pattern) {
+    public Sheet isPossible(Sheet _sheet, ArrayList<ShapeGroup> _pattern) {
         int i;
         Sheet sheet = _sheet.clone();
         ArrayList<ShapeGroup> pattern = new ArrayList<ShapeGroup>();
@@ -60,40 +60,11 @@ public class Positioning {
         for(ShapeGroup shape: pattern) {
             for (int j=0; j<shape.getNumber();j++) {
                 i = put(shape, sheet);
-                if (i < 0) return false;
+                if (i < 0) return null;
                 guillotine(sheet, i, shape);
             }
         }
-        //ToImg img = new ToImg();
-        //img.savePattern("/Tests/",sheet);
-        return true;
-    }
-
-    /**
-     * Tries to put the shapes of the pattern on the sheet
-     * @param _sheet Content for the shapes
-     * @param _pattern List of shapes to put on the sheet
-     * @return true if the shapes can be put on the sheet
-     */
-    public boolean isPossibleAndSave(Sheet _sheet, ArrayList<ShapeGroup> _pattern, String fileName) {
-        int i;
-        Sheet sheet = _sheet.clone();
-        ArrayList<ShapeGroup> pattern = new ArrayList<ShapeGroup>();
-        for(ShapeGroup p : _pattern){
-            pattern.add(p.clone());
-        }
-
-        pattern.sort((Comparator)comparator);
-        for(ShapeGroup shape: pattern) {
-            for (int j=0; j<shape.getNumber();j++) {
-                i = put(shape, sheet);
-                if (i < 0) return false;
-                guillotine(sheet, i, shape);
-            }
-        }
-        ToImg img = new ToImg();
-        img.savePattern("/Tests/",sheet, fileName);
-        return true;
+        return sheet;
     }
 
     /**

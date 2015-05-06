@@ -32,9 +32,9 @@ public class PositioningStream {
      */
     public boolean isPossible(Sheet sheet, ArrayList<ShapeGroup> shapes){
         //Parallel execution catch the first match
-        try{ Positioning pos = positionings
+        try{ positionings
                 .parallelStream()
-                .filter(p->p.isPossible(sheet,shapes))
+                .filter(p->p.isPossible(sheet,shapes)!=null)
                 .findAny()
                 .get();
             return true;
@@ -49,12 +49,13 @@ public class PositioningStream {
      * @param shapes pattern to put on the sheet
      * @return boolean : true if the pattern fits the sheet
      */
-    public boolean isPossibleAndSave(Sheet sheet, ArrayList<ShapeGroup> shapes, String fileName){
+    public Sheet isPossibleAndSave(Sheet sheet, ArrayList<ShapeGroup> shapes){
         for(int i = 0; i < positionings.size(); i++){
-            if(positionings.get(i).isPossibleAndSave(sheet, shapes, fileName)){
-                return true;
+             Sheet testedSheet=positionings.get(i).isPossible(sheet, shapes);
+            if (testedSheet!=null){
+                return testedSheet;
             }
         }
-        return false;
+        return null;
     }
 }

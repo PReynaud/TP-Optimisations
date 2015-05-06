@@ -277,8 +277,6 @@ public class Solution {
      * Save all the patterns of the solution in png files
      */
     public void saveSolutionInFiles(){
-        for (int i = 0; i < patterns.length; i++){
-            patterns[i].savePatternInFile("Solution" + i + ".png");
-        }
+        new ToImg().save("/Tests/",this);
     }
 }
