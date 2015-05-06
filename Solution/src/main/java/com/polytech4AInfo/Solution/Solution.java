@@ -279,4 +279,12 @@ public class Solution {
     public void saveSolutionInFiles(){
         new ToImg().save("/Tests/",this);
     }
+
+    public ArrayList<Integer> getFillingRatio(){
+        ArrayList<Integer> res = new ArrayList<>();
+        for (int i=0; i<patterns.length; i++){
+            res.add((int)patterns[i].getFillingRatio());
+        }
+        return res;
+    }
 }

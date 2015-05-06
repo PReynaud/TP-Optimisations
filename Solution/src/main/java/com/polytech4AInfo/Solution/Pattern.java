@@ -1,6 +1,8 @@
 package com.polytech4AInfo.Solution;
 
 import com.polytech4AInfo.Positioning.PositioningStream;
+import com.polytech4AInfo.Shape.PlacedShape;
+import com.polytech4AInfo.Shape.Shape;
 import com.polytech4AInfo.Shape.ShapeGroup;
 import com.polytech4AInfo.Shape.Sheet;
 
@@ -68,5 +70,9 @@ public class Pattern {
 
         Pattern newPattern = new Pattern(newArrayList, newSheet);
         return newPattern;
+    }
+
+    public float getFillingRatio (){
+        return (float)pattern.parallelStream().mapToInt(p->p.getArea()*p.getNumber()).sum()/(float)(sheet.getLength()*sheet.getBreadth());
     }
 }
