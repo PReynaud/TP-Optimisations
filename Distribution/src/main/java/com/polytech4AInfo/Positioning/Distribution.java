@@ -1,12 +1,9 @@
 package com.polytech4AInfo.Positioning;
 
-import org.apache.commons.math.optimization.GoalType;
-import org.apache.commons.math.optimization.OptimizationException;
-import org.apache.commons.math.optimization.RealPointValuePair;
-import org.apache.commons.math.optimization.linear.LinearConstraint;
-import org.apache.commons.math.optimization.linear.LinearObjectiveFunction;
-import org.apache.commons.math.optimization.linear.Relationship;
-import org.apache.commons.math.optimization.linear.SimplexSolver;
+import org.apache.commons.math3.optim.MaxIter;
+import org.apache.commons.math3.optim.PointValuePair;
+import org.apache.commons.math3.optim.linear.*;
+import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
 
 import java.util.ArrayList;
 
@@ -107,7 +104,7 @@ public class Distribution {
      * Will resolve the equation if all the parameter have been incorporated with success
      * @return The solution which can be accessed with solution.get()point[i] or null if there is no solution
      */
-    public RealPointValuePair getSolution(){
+    public PointValuePair getSolution(){
         ArrayList<LinearConstraint> constraints = new ArrayList<LinearConstraint>();
 
         for(int i = 0; i < nbShapes; i++){
@@ -124,13 +121,9 @@ public class Distribution {
             objectiveToSolve[i] = 1;
         }
 
-        RealPointValuePair solution = null;
+        PointValuePair solution = null;
         LinearObjectiveFunction f = new LinearObjectiveFunction(objectiveToSolve, 0);
-        try {
-            solution = new SimplexSolver().optimize(f, constraints, GoalType.MINIMIZE, true);
-        } catch (OptimizationException e) {
-            return null;
-        }
+        solution = new SimplexSolver().optimize(new MaxIter(1000),f, new LinearConstraintSet(constraints), GoalType.MINIMIZE, new NonNegativeConstraint(true));
 
         return solution;
     }

@@ -1,6 +1,6 @@
 package com.polytech4AInfo.Solution;
 
-import org.apache.commons.math.util.FastMath;
+import org.apache.commons.math3.util.FastMath;
 import org.apache.log4j.Logger;
 
 import java.text.DecimalFormat;
@@ -33,12 +33,17 @@ public class Annealing {
             s.calculCost();
             Solution currentSolution = s.clone();
             Solution bestSolution = s.clone();
+            Solution oneSolution = s.clone();
             double deltaCost;
             double p;
             while (counter < ProgramMain.LIMIT) {
-                logger.info("Percentage of iteration: " + df.format((double) counter / (double) ProgramMain.LIMIT * 100));
+                logger.info("Percentage of iteration: " + df.format((double) counter / (double) ProgramMain.LIMIT * 100)
+                + "\n Best cost: " + bestSolution.getCost()
+                + "\n Temperature: " + temperature
+                + "\n Nb Patterns: " + currentSolution.getPatterns().length
+                + "\n Current cost: " + oneSolution.getCost());
                 while (counterTemp < ProgramMain.LIMITTEMP) {
-                    Solution oneSolution = Neighbour.findNeighbour(currentSolution);
+                    oneSolution = Neighbour.findNeighbour(currentSolution);
                     logger.debug("Current solution: " + currentSolution.toString());
                     logger.debug("Tested neighbour: " + oneSolution.toString());
                     try {
@@ -86,6 +91,11 @@ public class Annealing {
      */
     private double calculNewTemperature(double oldTemperature) {
         return 0.99 * oldTemperature;
+       /* double mu;
+        double deltaF = 50;
+        double pFinal = 1/1000;
+        mu = Math.exp(Math.log(deltaF/(Math.log(1/pFinal)* ProgramMain.TEMPERATURE))/ProgramMain.LIMIT);
+        return mu * oldTemperature;*/
     }
 
 }

@@ -3,7 +3,6 @@ package com.polytech4AInfo.Solution;
 import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Pierre on 26/04/2015.
@@ -32,7 +31,7 @@ public class Neighbour {
                                         return tempNeighbour;
                                     } catch (Exception e) {
                                         logger.error("Error in parallel streams for the search of a neighbour");
-                                        return null;
+                                        return initialSolution;
                                     }
                                 })
                                 .min(Comparator.comparing(p -> p.getCost()))

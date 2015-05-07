@@ -15,7 +15,7 @@ public class ProgramMain {
     public static Logger logger = Logger.getLogger(ProgramMain.class);
 
     private static int NUMBER_OF_PATTERN = 10;
-    private static double TEMPERATURE = 800.0;
+    public static double TEMPERATURE = 800.0;
     private static String FILE_TO_LOAD = "Ressources/data_20Lalpha.txt";
 
     public static String PATH_TO_IMAGES = "";
