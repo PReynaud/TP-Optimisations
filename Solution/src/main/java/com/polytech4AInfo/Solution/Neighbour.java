@@ -72,10 +72,12 @@ public class Neighbour {
                 }
                 else{
                     decrementSolutionOnOnePattern(currentSolution, numberOfTheInvalidPattern);
+                    firstIteration = false;
                 }
             }
             else{
                 incrementSolutionForOneShape(currentSolution, numberOfTheInvalidShape);
+                firstIteration = false;
             }
         }while (incorrectSolution);
         return currentSolution;
@@ -171,23 +173,49 @@ public class Neighbour {
     /**
      * Has a percentage of chance to add a new pattern
      * Has a percentage of chance to increment one random shape on one random pattern
+     * Has a percentage of chance to invert two random shapes from two random patterns
      * Otherwise, we decrement the value of one random shape on one random pattern
      * @param currentSolution
      */
     private static void incrementOrDecrementSolutionRandomly(Solution currentSolution){
         double randomValue = Math.random();
-        if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN){
+        if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_INVERTING_TWO_SHAPES){
             randomValue = Math.random();
-            if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_INCREMENTATION){
-                decrementSolutionRandomly(currentSolution);
+            if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN){
+                randomValue = Math.random();
+                if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_INCREMENTATION){
+                    decrementSolutionRandomly(currentSolution);
+                }
+                else{
+                    incrementSolutionRandomly(currentSolution);
+                }
             }
             else{
-                incrementSolutionRandomly(currentSolution);
+                currentSolution.addOnePattern();
             }
         }
         else{
-            currentSolution.addOnePattern();
+            invertTwoShapesBetweenTwoPatterns(currentSolution);
         }
+    }
+
+    /**
+     * Intervert two random shapes from two random pattern
+     * @param initialSolution
+     */
+    private static void invertTwoShapesBetweenTwoPatterns(Solution initialSolution){
+        int randomNumberForFirstPattern = (int) (Math.random() * (initialSolution.getSolutionArray().length));
+        int randomNumberForSecondPattern = (int) (Math.random() * (initialSolution.getSolutionArray().length));
+        int randomNumberForFirstShape = (int) (Math.random() * (initialSolution.getSolutionArray()[0].length));
+        int randomNumberForSecondShape = (int) (Math.random() * (initialSolution.getSolutionArray()[0].length));
+
+        int buffer1 = initialSolution.getSolutionArray()[randomNumberForFirstPattern][randomNumberForFirstShape];
+        int buffer2 = initialSolution.getSolutionArray()[randomNumberForSecondPattern][randomNumberForSecondShape];
+
+        initialSolution.getSolutionArray()[randomNumberForFirstPattern][randomNumberForFirstShape] = buffer2;
+        initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(randomNumberForFirstShape).setNumber(buffer2);
+        initialSolution.getSolutionArray()[randomNumberForSecondPattern][randomNumberForSecondShape] = buffer1;
+        initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(randomNumberForSecondShape).setNumber(buffer1);
     }
 
     /**
