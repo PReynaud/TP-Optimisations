@@ -1,25 +1,4 @@
 package com.polytech4AInfo.Solution;
-
-/*
- *
- *  * Project to resolve 2D cutting stock problem for Discreet Optimizations course at Polytech Lyon
- *  * Copyright (C) 2015.  CARON Antoine and CHAUSSENDE Adrien
- *  *
- *  * This program is free software: you can redistribute it and/or modify
- *  * it under the terms of the GNU Affero General Public License as
- *  * published by the Free Software Foundation, either version 3 of the
- *  * License, or (at your option) any later version.
- *  *
- *  * This program is distributed in the hope that it will be useful,
- *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  * GNU Affero General Public License for more details.
- *  *
- *  * You should have received a copy of the GNU Affero General Public License
- *  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
-
 import com.polytech4AInfo.Shape.PlacedShape;
 import com.polytech4AInfo.Shape.Sheet;
 
@@ -32,18 +11,7 @@ import java.io.IOException;
         import java.io.File;
 import java.util.ArrayList;
 
-/**
- * Created by Antoine CARON on 24/03/2015.
- *
- * @author Antoine CARON
- * @version 1.0
- *          <p>
- *          Save Method to generate a IMG Output.
- */
 public class ToImg {
-
-    protected final static String OUTPUT_PATH = "./OUTPUT/";
-
     /**
      * Font size for legend.
      */
@@ -225,7 +193,7 @@ public class ToImg {
             }
             i++;
         }
-        String filePath = OUTPUT_PATH + contextId + fileName;
+        String filePath = ProgramMain.PATH_TO_IMAGES + contextId + fileName;
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -245,11 +213,29 @@ public class ToImg {
      * @param solution  Final Solution.
      */
     public void save(String contextId, Solution solution) {
+        deleteDirectory(ProgramMain.PATH_TO_IMAGES + contextId);
         Pattern[] patterns = solution.getPatterns();
         for (int i=0; i<patterns.length; i++){
             savePattern(contextId,patterns[i].savePatternInFile(),"Solution" + i + ".png");
         }
     }
 
-
+    /**
+     * Delete all files in the indicated directory
+     * @param emplacement
+     */
+    static public void deleteDirectory(String emplacement) {
+        File path = new File(emplacement);
+        if( path.exists() ) {
+            File[] files = path.listFiles();
+            for(int i=0; i<files.length; i++) {
+                if(files[i].isDirectory()) {
+                    deleteDirectory(path+"\\"+files[i]);
+                }
+                else {
+                    files[i].delete();
+                }
+            }
+        }
+    }
 }

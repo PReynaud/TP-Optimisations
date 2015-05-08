@@ -90,12 +90,12 @@ public class Annealing {
      * @return The new temperature we'll used
      */
     private double calculNewTemperature(double oldTemperature) {
-        return 0.99 * oldTemperature;
-       /* double mu;
-        double deltaF = 50;
-        double pFinal = 1/1000;
-        mu = Math.exp(Math.log(deltaF/(Math.log(1/pFinal)* ProgramMain.TEMPERATURE))/ProgramMain.LIMIT);
-        return mu * oldTemperature;*/
+        //return 0.99 * oldTemperature;
+        double mu;
+        double deltaF = 50.0;
+        double pFinal = 1.0/1000.0;
+        mu = Math.exp(Math.log(deltaF/(Math.log(1.0/pFinal)* ProgramMain.TEMPERATURE))/ProgramMain.LIMIT);
+        return mu * oldTemperature;
     }
 
 }

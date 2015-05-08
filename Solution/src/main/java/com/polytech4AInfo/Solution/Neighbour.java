@@ -178,7 +178,7 @@ public class Neighbour {
      * @param currentSolution
      */
     private static void incrementOrDecrementSolutionRandomly(Solution currentSolution){
-        double randomValue = Math.random();
+        /*double randomValue = Math.random();
         if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_INVERTING_TWO_SHAPES){
             randomValue = Math.random();
             if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN){
@@ -196,7 +196,38 @@ public class Neighbour {
         }
         else{
             invertTwoShapesBetweenTwoPatterns(currentSolution);
+        }*/
+
+        double randomValue = Math.random();
+        int randomOperation = (int) Math.random() * 3;
+        if(randomOperation == 0){
+            if(randomValue * 100 <= ProgramMain.PERCENTAGE_OF_INVERTING_TWO_SHAPES){
+                invertTwoShapesBetweenTwoPatterns(currentSolution);
+                return;
+            }
         }
+        else if(randomOperation == 1){
+            if(randomValue * 100 <= ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN){
+                currentSolution.addOnePattern();
+                return;
+            }
+        }
+        else if(randomOperation == 2){
+            if(randomValue * 100 <= ProgramMain.PERCENTAGE_OF_REMOVING_A_PATTERN){
+                int randomNumberForPattern = (int) (Math.random() * (currentSolution.getSolutionArray().length));
+                currentSolution.removeOnePattern(randomNumberForPattern);
+                return;
+            }
+        }
+
+        randomValue = Math.random();
+        if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_INCREMENTATION){
+            decrementSolutionRandomly(currentSolution);
+        }
+        else{
+            incrementSolutionRandomly(currentSolution);
+        }
+
     }
 
     /**
