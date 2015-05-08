@@ -32,4 +32,12 @@ public class FirstSolution {
         firstSolution = new Solution(listOfPatterns, order);
         return Neighbour.findNeighbour(firstSolution);
     }
+
+    public static ArrayList<Solution> generateFirstPopulation(ContextUtils.Context file, int numberOfPatterns, int populationSize){
+        ArrayList<Solution> population = new ArrayList<>();
+        for(int i = 0; i < populationSize; i++){
+            population.add(generateFirstSolution(file, numberOfPatterns));
+        }
+        return population;
+    }
 }

@@ -3,6 +3,7 @@ package com.polytech4AInfo.Solution;
 import org.apache.log4j.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -26,6 +27,7 @@ public class ProgramMain {
     public static double PERCENTAGE_OF_INCREMENTATION = 25;
     public static double PERCENTAGE_OF_ADDING_A_PATTERN = 0.05;
     public static double PERCENTAGE_OF_REMOVING_A_PATTERN = 0.01;
+    public static double PERCENTAGE_OF_INVERTING_TWO_SHAPES = 0.1;
 
     public static void main(String args[]){
         defineLogger();
@@ -36,8 +38,13 @@ public class ProgramMain {
                 ContextUtils.Context file = ContextUtils.loadContext(FILE_TO_LOAD);
                 logger.info("------------------");
                 Solution firstSolution = FirstSolution.generateFirstSolution(file, NUMBER_OF_PATTERN);
-                Annealing algo = new Annealing();
-                Solution lastSolution = algo.simulatedAnnealing(firstSolution, TEMPERATURE);
+                //Annealing algo = new Annealing();
+                //Solution lastSolution = algo.simulatedAnnealing(firstSolution, TEMPERATURE);
+
+                ArrayList<Solution> firstPopulation = FirstSolution.generateFirstPopulation(file, NUMBER_OF_PATTERN, 100);
+
+                Genetic algo = new Genetic();
+                Solution lastSolution = algo.simulatedGenetic(firstPopulation);
                 lastSolution.saveSolutionInFiles();
             } catch (IOException e) {
                 logger.error("Cannot load data file");
@@ -66,6 +73,7 @@ public class ProgramMain {
         PERCENTAGE_OF_INCREMENTATION = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_INCREMENTATION"));
         PERCENTAGE_OF_ADDING_A_PATTERN = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_ADDING_A_PATTERN"));
         PERCENTAGE_OF_REMOVING_A_PATTERN = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_REMOVING_A_PATTERN"));
+        PERCENTAGE_OF_INVERTING_TWO_SHAPES = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_INVERTING_TWO_SHAPES"));
 
         logger.info("The following properties have been loaded");
         logger.info("NUMBER_OF_PATTERN: " + NUMBER_OF_PATTERN);
@@ -76,6 +84,7 @@ public class ProgramMain {
         logger.info("PERCENTAGE_OF_INCREMENTATION: " + PERCENTAGE_OF_INCREMENTATION);
         logger.info("PERCENTAGE_OF_ADDING_A_PATTERN: " + PERCENTAGE_OF_ADDING_A_PATTERN);
         logger.info("PERCENTAGE_OF_REMOVING_A_PATTERN: " + PERCENTAGE_OF_REMOVING_A_PATTERN);
+        logger.info("PERCENTAGE_OF_INVERTING_TWO_SHAPES: " + PERCENTAGE_OF_INVERTING_TWO_SHAPES);
     }
 
     private static void defineLogger(){

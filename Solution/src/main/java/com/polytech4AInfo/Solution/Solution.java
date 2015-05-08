@@ -91,6 +91,10 @@ public class Solution {
         return tempTab;
     }
 
+    public void transformPatternArrayInSolutionArray(){
+        this.solutionArray = this.transformPatternArrayInSolutionArray(this.patterns);
+    }
+
     public Solution() {
     }
 
