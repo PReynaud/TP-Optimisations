@@ -39,10 +39,11 @@ public class ProgramMain {
     public static double PERCENTAGE_OF_APPLY_CROSSOVER = 80;
 
     public static void main(String args[]){
-        defineLogger();
-        logger.info("Beginning of the program");
         try{
             defineConfiguration();
+            defineLogger();
+            printConfiguration();
+            logger.info("Beginning of the program");
             try {
                 ContextUtils.Context file = ContextUtils.loadContext(FILE_TO_LOAD);
                 logger.info("------------------");
@@ -96,7 +97,9 @@ public class ProgramMain {
         PATH_TO_IMAGES = prop.getProperty("PATH_TO_IMAGES");
         DEBUG_LEVEL = prop.getProperty("DEBUG_LEVEL");
         ALGO = prop.getProperty("ALGO");
+    }
 
+    private static void printConfiguration(){
         logger.info("The following properties have been loaded:");
         logger.info("FILE_TO_LOAD: " + FILE_TO_LOAD
                 + ", PATH_TO_LOG_FILES: " + PATH_TO_LOG_FILES
@@ -139,7 +142,7 @@ public class ProgramMain {
         ca.activateOptions();
         logger.addAppender(appender);
         logger.addAppender(ca);
-        if(DEBUG_LEVEL == "DEBUG"){
+        if(DEBUG_LEVEL.equals("DEBUG")){
             logger.setLevel(Level.DEBUG);
         }
         else{
