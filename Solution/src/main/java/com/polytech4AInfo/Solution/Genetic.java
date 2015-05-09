@@ -39,7 +39,7 @@ public class Genetic {
             /* Crossover and mutations */
             applyCrossoverBetweenPatterns(population);
             for(int i = 0; i < population.size(); i++){
-                applyCrossoverBetweenShapes(population.get(i));
+                population.set(i, applyCrossoverBetweenShapes(population.get(i)));
             }
             applyMutations(population);
 
@@ -146,7 +146,7 @@ public class Genetic {
      * Do a crossover between the shapes from two pattern on the same solution
      * @param initialSolution
      */
-    public void applyCrossoverBetweenShapes(Solution initialSolution){
+    public Solution applyCrossoverBetweenShapes(Solution initialSolution){
         for(int i = 0; i < initialSolution.getPatterns().length; i++){
             int randomNumberForCrossover = (int)(Math.random() * 100);
             if(randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER){
@@ -174,9 +174,11 @@ public class Genetic {
                         initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).setNumber(buffer1);
                     }
                 }
-                initialSolution.transformPatternArrayInSolutionArray();
             }
+            initialSolution.transformPatternArrayInSolutionArray();
+            initialSolution = Neighbour.findNeighbour(initialSolution);
         }
+        return initialSolution;
     }
 
     /**
@@ -184,8 +186,8 @@ public class Genetic {
      * @param population
      */
     public void applyMutations(ArrayList<Solution> population){
-        int numberOfMutation = (int)((ProgramMain.PERCENTAGE_OF_APPLY_MUTATION / 100) * population.size());
-        for(int i = 0; i< numberOfMutation; i++){
+        int randomNumberForMutation = (int)(Math.random() * 100);
+        if(randomNumberForMutation < ProgramMain.PERCENTAGE_OF_APPLY_MUTATION){
             int randomNumberForSolution = (int) (Math.random() * (population.size()));
             population.set(randomNumberForSolution, Neighbour.findNeighbour(population.get(randomNumberForSolution)));
         }
