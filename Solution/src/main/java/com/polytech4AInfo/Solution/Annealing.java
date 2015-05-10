@@ -93,7 +93,7 @@ public class Annealing {
         //return 0.99 * oldTemperature;
         double mu;
         double deltaF = 50.0;
-        double pFinal = 1.0/1000.0;
+        double pFinal = 1.0/1000000.0;
         mu = Math.exp(Math.log(deltaF/(Math.log(1.0/pFinal)* ProgramMain.TEMPERATURE))/ProgramMain.LIMIT);
         return mu * oldTemperature;
     }
