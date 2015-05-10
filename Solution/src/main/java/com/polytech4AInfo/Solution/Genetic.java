@@ -2,6 +2,7 @@ package com.polytech4AInfo.Solution;
 
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -32,6 +33,9 @@ public class Genetic {
             logger.info("Current generation: " + j + ", Best cost: " + bestSolution.getCost() + ", Patterns: " + bestSolution.getSolutionArray().length);
             /* Selection */
             ArrayList<Solution> selectedPopulation = rouletteWheelSelection(population);
+
+            population = selectedPopulation;
+
             for(int i = 0; i < population.size(); i++){
                 population.set(i, selectedPopulation.get(i));
             }
@@ -39,8 +43,10 @@ public class Genetic {
             /* Crossover and mutations */
             applyCrossoverBetweenPatterns(population);
             for(int i = 0; i < population.size(); i++){
-                population.set(i, applyCrossoverBetweenShapes(population.get(i)));
+                Solution newSolution = applyCrossoverBetweenShapes(population.get(i));
+                population.set(i, newSolution);
             }
+
             applyMutations(population);
 
             /*Selection of the best solution for the current generation*/
@@ -49,7 +55,7 @@ public class Genetic {
                     .get();
             logger.debug("Best current solution: " + bestCurrentSolution.toString());
             if(bestCurrentSolution.getCost() < bestSolution.getCost()){
-                bestSolution = bestCurrentSolution;
+                bestSolution = bestCurrentSolution.clone();
             }
         }
 
@@ -101,7 +107,7 @@ public class Genetic {
      * @param population
      */
     public void applyCrossoverBetweenPatterns(ArrayList<Solution> population){
-        for(int i = 0; i < population.size(); i+=2){
+        for(int i = 0; i < population.size() - 1; i+=2){
             int randomNumberForCrossover = (int)(Math.random() * 100);
             if(randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER){
                 Solution firstSolution = population.get(i);
@@ -147,9 +153,9 @@ public class Genetic {
      * @param initialSolution
      */
     public Solution applyCrossoverBetweenShapes(Solution initialSolution){
-        for(int i = 0; i < initialSolution.getPatterns().length; i++){
-            int randomNumberForCrossover = (int)(Math.random() * 100);
-            if(randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER){
+        int randomNumberForCrossover = (int)(Math.random() * 100);
+        if(randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER){
+            for(int i = 0; i < initialSolution.getPatterns().length; i++){
                 int randomNumberForFirstPattern = (int)(Math.random() * initialSolution.getPatterns().length);
                 int randomNumberForSecondPattern = (int)(Math.random() * initialSolution.getPatterns().length);
 

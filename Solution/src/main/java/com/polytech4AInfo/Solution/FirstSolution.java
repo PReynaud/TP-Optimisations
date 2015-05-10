@@ -36,7 +36,11 @@ public class FirstSolution {
     public static ArrayList<Solution> generateFirstPopulation(ContextUtils.Context file, int numberOfPatterns, int populationSize){
         ArrayList<Solution> population = new ArrayList<>();
         for(int i = 0; i < populationSize; i++){
-            population.add(generateFirstSolution(file, numberOfPatterns));
+            Solution newSolution = generateFirstSolution(file, numberOfPatterns);
+            while(newSolution.getCost() == 0){
+                newSolution = generateFirstSolution(file, numberOfPatterns);
+            }
+            population.add(newSolution);
         }
         return population;
     }

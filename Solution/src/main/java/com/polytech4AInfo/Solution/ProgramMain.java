@@ -128,7 +128,7 @@ public class ProgramMain {
     }
 
     private static void defineLogger(){
-        File file = new File("./Logs/log.html");
+        File file = new File(PATH_TO_LOG_FILES);
         file.delete();
         HTMLLayout layout = new HTMLLayout();
         DailyRollingFileAppender appender = null;
