@@ -12,6 +12,8 @@ import java.util.Comparator;
 public class Genetic {
     private static Logger logger = Logger.getLogger(ProgramMain.class);
 
+    private double percentageOfMutation = 0.1;
+
     /**
      * Will count the number of iterations of our algorithm
      */
@@ -24,18 +26,23 @@ public class Genetic {
      * Execute the algorithm
      */
     public Solution simulatedGenetic(ArrayList<Solution> initialPopulation) {
+        percentageOfMutation = ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
         double startTime = System.currentTimeMillis();
         Solution bestSolution = initialPopulation.get(0).clone();
         ArrayList<Solution> population = initialPopulation;
+        int counter = 0;
 
         /*Go through the generations*/
         for(int j=0; j < ProgramMain.GENERATION; j++){
             logger.info("Current generation: " + j + ", Best cost: " + bestSolution.getCost() + ", Patterns: " + bestSolution.getSolutionArray().length);
+            counter++;
+            if(counter%10 == 0){
+                percentageOfMutation += ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
+            }
+
             /* Selection */
             ArrayList<Solution> selectedPopulation = rouletteWheelSelection(population);
-
             population = selectedPopulation;
-
             for(int i = 0; i < population.size(); i++){
                 population.set(i, selectedPopulation.get(i));
             }
@@ -47,7 +54,7 @@ public class Genetic {
                 population.set(i, newSolution);
             }
 
-            applyMutations(population);
+            applyMutations(population, percentageOfMutation);
 
             /*Selection of the best solution for the current generation*/
             Solution bestCurrentSolution = population.stream()
@@ -56,6 +63,8 @@ public class Genetic {
             logger.debug("Best current solution: " + bestCurrentSolution.toString());
             if(bestCurrentSolution.getCost() < bestSolution.getCost()){
                 bestSolution = bestCurrentSolution.clone();
+                percentageOfMutation = ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
+                counter = 0;
             }
         }
 
@@ -191,9 +200,9 @@ public class Genetic {
      * Call the find neighbour function that will apply a random mutation and send a valid solution
      * @param population
      */
-    public void applyMutations(ArrayList<Solution> population){
+    public void applyMutations(ArrayList<Solution> population, double percentageOfMutation){
         int randomNumberForMutation = (int)(Math.random() * 100);
-        if(randomNumberForMutation < ProgramMain.PERCENTAGE_OF_APPLY_MUTATION){
+        if(randomNumberForMutation < percentageOfMutation){
             int randomNumberForSolution = (int) (Math.random() * (population.size()));
             population.set(randomNumberForSolution, Neighbour.findNeighbour(population.get(randomNumberForSolution)));
         }
