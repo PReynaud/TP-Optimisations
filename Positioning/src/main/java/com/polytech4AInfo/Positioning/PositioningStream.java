@@ -18,6 +18,7 @@ public class PositioningStream {
         this.positionings.add(new Positioning(new LengthGuillotine(),Shape.Comparators.BREADTH));
         this.positionings.add(new Positioning(new BreadthGuillotine(),Shape.Comparators.LENGTH));
         this.positionings.add(new Positioning(new RatioGuillotine(),Shape.Comparators.RATIO));
+        this.positionings.add(new Positioning(new BestFitGuillotine(),Shape.Comparators.AREA));
     }
 
     public PositioningStream(ArrayList<Positioning> positionings){
@@ -51,7 +52,7 @@ public class PositioningStream {
      */
     public Sheet isPossibleAndSave(Sheet sheet, ArrayList<ShapeGroup> shapes){
         for(int i = 0; i < positionings.size(); i++){
-             Sheet testedSheet=positionings.get(i).isPossible(sheet, shapes);
+            Sheet testedSheet=positionings.get(i).isPossible(sheet, shapes);
             if (testedSheet!=null){
                 return testedSheet;
             }
