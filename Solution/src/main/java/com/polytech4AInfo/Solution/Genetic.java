@@ -42,16 +42,16 @@ public class Genetic {
     /**
      * Execute the algorithm
      */
-    public Solution simulatedGenetic(ArrayList<Solution> initialPopulation) {
+    public Solution simulatedGenetic(ArrayList<Solution> population) {
         percentageOfMutation = ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
         double startTime = System.currentTimeMillis();
+        int counter = 0;
 
-        Solution bestSolution = initialPopulation.stream()
+        /* Look for the first best solution */
+        Solution bestSolution = population.stream()
                 .min(Comparator.comparing(p -> p.getCost()))
                 .get();
 
-        ArrayList<Solution> population = initialPopulation;
-        int counter = 0;
 
         /*Go through the generations*/
         for (int j = 0; j < ProgramMain.GENERATION; j++) {
@@ -186,10 +186,8 @@ public class Genetic {
                     firstSolution.transformPatternArrayInSolutionArray();
                     secondSolution.transformPatternArrayInSolutionArray();
 
-                    firstSolution = Neighbour.findNeighbour(firstSolution);
-                    population.set(i, firstSolution);
-                    secondSolution = Neighbour.findNeighbour(secondSolution);
-                    population.set(i, secondSolution);
+                    population.set(i, Neighbour.findNeighbour(firstSolution));
+                    population.set(i + 1, Neighbour.findNeighbour(secondSolution));
                 }
             }
         }

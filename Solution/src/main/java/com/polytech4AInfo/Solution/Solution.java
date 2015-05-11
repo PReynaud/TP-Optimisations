@@ -231,6 +231,11 @@ public class Solution {
             //We update the solution array
             solutionArray = transformPatternArrayInSolutionArray(patterns);
         }
+        else{
+            //TODO vérif ça
+            int randomNumberOfPattern = (int) Math.random() * patterns.length;
+            removeOnePattern(randomNumberOfPattern);
+        }
         return true;
     }
 

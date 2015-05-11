@@ -15,34 +15,28 @@ public class Neighbour {
         Solution finalSolution = null;
 
         double randomValue = Math.random();
-        if(randomValue * 100 > ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN) {
-            for (int i = 0; i < 10; i++) {
-                solutionsTab.add(initialSolution);
-            }
-
-            try {
-                finalSolution =
-                        solutionsTab
-                                .parallelStream()
-                                .map(p -> {
-                                    try {
-                                        Solution tempNeighbour = findOneNeighbour(p);
-                                        tempNeighbour.calculCost();
-                                        return tempNeighbour;
-                                    } catch (Exception e) {
-                                        logger.error("Error in parallel streams for the search of a neighbour");
-                                        return initialSolution;
-                                    }
-                                })
-                                .min(Comparator.comparing(p -> p.getCost()))
-                                .get();
-            } catch (Exception e) {
-                logger.error("Error in parallel streams for the search of a neighbour");
-            }
+        for (int i = 0; i < 10; i++) {
+            solutionsTab.add(initialSolution);
         }
-        else{
-            finalSolution = initialSolution.clone();
-            finalSolution.addOnePattern();
+
+        try {
+            finalSolution =
+                    solutionsTab
+                            .parallelStream()
+                            .map(p -> {
+                                try {
+                                    Solution tempNeighbour = findOneNeighbour(p);
+                                    tempNeighbour.calculCost();
+                                    return tempNeighbour;
+                                } catch (Exception e) {
+                                    logger.error("Error in parallel streams for the search of a neighbour");
+                                    return initialSolution;
+                                }
+                            })
+                            .min(Comparator.comparing(p -> p.getCost()))
+                            .get();
+        } catch (Exception e) {
+            logger.error("Error in parallel streams for the search of a neighbour");
         }
         return finalSolution;
     }
