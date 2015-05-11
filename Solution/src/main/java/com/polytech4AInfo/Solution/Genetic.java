@@ -69,11 +69,11 @@ public class Genetic {
             injectBestSolutionIntoPopulation(population, bestSolution);
 
             /* Crossover and mutations */
-            /*applyCrossoverBetweenPatterns(population);
+            applyCrossoverBetweenPatterns(population);
             for (int i = 0; i < population.size(); i++) {
                 Solution newSolution = applyCrossoverBetweenShapes(population.get(i));
                 population.set(i, newSolution);
-            }*/
+            }
 
             applyMutations(population, percentageOfMutation);
 

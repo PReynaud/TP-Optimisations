@@ -31,7 +31,7 @@ public class Annealing {
             stringWriter  = new StringWriter();
             bufferedWriter = new BufferedWriter(stringWriter);
             try {
-                bufferedWriter.write("Iteration,Minimum Value,Maximum Value,Average Value,Best Value");
+                bufferedWriter.write("Progress;Temperature;Current Cost;Current number of patterns;Best Value");
                 bufferedWriter.newLine();
             } catch (IOException e) {
                 logger.error("Error catching statistics for CSV file");
@@ -55,11 +55,18 @@ public class Annealing {
             double deltaCost;
             double p;
             while (counter < ProgramMain.LIMIT) {
-                logger.info("Percentage of iteration: " + df.format((double) counter / (double) ProgramMain.LIMIT * 100)
-                + "\n Best cost: " + bestSolution.getCost()
-                + "\n Temperature: " + temperature
-                + "\n Nb Patterns: " + currentSolution.getPatterns().length
-                + "\n Current cost: " + currentSolution.getCost());
+                double percentage = (double) counter / (double) ProgramMain.LIMIT * 100;
+                logger.info("Progress: " + df.format(percentage));
+
+                if(ProgramMain.RECORD_STATS.equals("true")){
+                    logger.debug("Best cost: " + bestSolution.getCost()
+                            + "\n Temperature: " + temperature
+                            + "\n Nb Patterns: " + currentSolution.getPatterns().length
+                            + "\n Current cost: " + currentSolution.getCost());
+
+                    recordStatisticsInCSVFile(percentage, temperature, currentSolution.getCost(), currentSolution.getPatterns().length, bestSolution.getCost());
+                }
+
                 while (counterTemp < ProgramMain.LIMITTEMP) {
                     oneSolution = Neighbour.findNeighbour(currentSolution);
                     logger.debug("Current solution: " + currentSolution.toString());
@@ -88,11 +95,17 @@ public class Annealing {
                 temperature = calculNewTemperature(temperature);
                 logger.debug("Temperature: " + temperature);
             }
+
             logger.info("-------------------------------");
             logger.info("Best Solution: " + bestSolution);
             logger.info("Final temperature: " + temperature);
             double stopTime = System.currentTimeMillis();
             logger.info("Execution time: " + (stopTime - startTime));
+
+            if(ProgramMain.RECORD_STATS.equals("true")){
+                generateCSVFile();
+            }
+
             return bestSolution;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -116,9 +129,9 @@ public class Annealing {
         return mu * oldTemperature;
     }
 
-    private void recordStatisticsInCSVFile(int generation, int min, int max, double avg, int bestValue){
+    private void recordStatisticsInCSVFile(double percentage, double temperature, int currentCost, int currentPatterns, int bestValue){
         try {
-            bufferedWriter.write(generation + "," + min + "," + max + "," + avg + "," + bestValue);
+            bufferedWriter.write(percentage + ";" + temperature + ";" + currentCost + ";" + currentPatterns + ";" + bestValue);
             bufferedWriter.newLine();
         } catch (IOException e) {
             logger.error("Error catching statistics for CSV file");
