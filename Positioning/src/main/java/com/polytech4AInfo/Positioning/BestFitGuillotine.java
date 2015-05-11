@@ -12,8 +12,8 @@ public class BestFitGuillotine implements Guillotine{
     @Override
     public void cut(Sheet sheet, int index, Shape shape) {
         Sheet sheet1 = sheet.clone(), sheet2 = sheet.clone();
-        new BreadthGuillotine().cut(sheet1, index, shape);
-        new LengthGuillotine().cut(sheet2, index, shape);
+        new LengthGuillotine().cut(sheet1, index, shape);
+        new BreadthGuillotine().cut(sheet2, index, shape);
 
         PlacedShape bin1 = sheet1.getBins().get(0),
                 bin2 = sheet1.getBins().get(1),
