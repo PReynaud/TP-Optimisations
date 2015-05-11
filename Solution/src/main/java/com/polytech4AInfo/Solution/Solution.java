@@ -211,25 +211,26 @@ public class Solution {
      * @return true if the insertion has been done correctly
      */
     public boolean addOnePattern(){
-        //We clone the tab of patterns
-        Pattern[] newPatternArray = new Pattern[patterns.length +1];
-        for(int i = 0; i < patterns.length; i++){
-            newPatternArray[i] = patterns[i];
-        }
-        //We add a new pattern and clone every shape in the new one
-        ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>();
-        for(ShapeGroup newShapeGroup: patterns[0].getPattern()){
-            ShapeGroup tempShapeGroup = newShapeGroup.clone();
-            tempShapeGroup.setNumber((int)Math.round(Math.random()));
-            listOfShapes.add(tempShapeGroup);
-        }
-        Sheet newSheet = new Sheet(patterns[0].getSheet().getLength(), patterns[0].getSheet().getBreadth());
-        newPatternArray[newPatternArray.length - 1] = new Pattern(listOfShapes, newSheet);
-        patterns = newPatternArray;
+        if (this.getPatterns().length<this.getPatterns()[0].getNumberOfShapes()) {
+            //We clone the tab of patterns
+            Pattern[] newPatternArray = new Pattern[patterns.length + 1];
+            for (int i = 0; i < patterns.length; i++) {
+                newPatternArray[i] = patterns[i];
+            }
+            //We add a new pattern and clone every shape in the new one
+            ArrayList<ShapeGroup> listOfShapes = new ArrayList<ShapeGroup>();
+            for (ShapeGroup newShapeGroup : patterns[0].getPattern()) {
+                ShapeGroup tempShapeGroup = newShapeGroup.clone();
+                tempShapeGroup.setNumber((int) Math.round(Math.random()));
+                listOfShapes.add(tempShapeGroup);
+            }
+            Sheet newSheet = new Sheet(patterns[0].getSheet().getLength(), patterns[0].getSheet().getBreadth());
+            newPatternArray[newPatternArray.length - 1] = new Pattern(listOfShapes, newSheet);
+            patterns = newPatternArray;
 
-        //We update the solution array
-        solutionArray = transformPatternArrayInSolutionArray(patterns);
-
+            //We update the solution array
+            solutionArray = transformPatternArrayInSolutionArray(patterns);
+        }
         return true;
     }
 

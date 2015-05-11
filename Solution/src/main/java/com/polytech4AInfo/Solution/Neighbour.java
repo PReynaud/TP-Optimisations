@@ -207,7 +207,7 @@ public class Neighbour {
             }
         }
         else if(randomOperation == 1){
-            if(randomValue * 100 <= ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN && currentSolution.getPatterns().length<currentSolution.getPatterns()[0].getNumberOfShapes()){
+            if(randomValue * 100 <= ProgramMain.PERCENTAGE_OF_ADDING_A_PATTERN ){
                 currentSolution.addOnePattern();
                 return;
             }
