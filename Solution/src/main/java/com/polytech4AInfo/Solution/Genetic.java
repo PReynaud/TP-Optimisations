@@ -45,7 +45,11 @@ public class Genetic {
     public Solution simulatedGenetic(ArrayList<Solution> initialPopulation) {
         percentageOfMutation = ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
         double startTime = System.currentTimeMillis();
-        Solution bestSolution = initialPopulation.get(0).clone();
+
+        Solution bestSolution = initialPopulation.stream()
+                .min(Comparator.comparing(p -> p.getCost()))
+                .get();
+
         ArrayList<Solution> population = initialPopulation;
         int counter = 0;
 

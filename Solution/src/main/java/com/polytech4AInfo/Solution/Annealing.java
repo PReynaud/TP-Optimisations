@@ -56,11 +56,11 @@ public class Annealing {
             double p;
             while (counter < ProgramMain.LIMIT) {
                 double percentage = (double) counter / (double) ProgramMain.LIMIT * 100;
-                logger.info("Progress: " + df.format(percentage));
+                logger.info("Progress: " + df.format(percentage)
+                        + "\nBest cost: " + bestSolution.getCost());
 
                 if(ProgramMain.RECORD_STATS.equals("true")){
-                    logger.debug("Best cost: " + bestSolution.getCost()
-                            + "\n Temperature: " + temperature
+                    logger.debug("Temperature: " + temperature
                             + "\n Nb Patterns: " + currentSolution.getPatterns().length
                             + "\n Current cost: " + currentSolution.getCost());
 
