@@ -85,19 +85,19 @@ public class Genetic {
                     .min(Comparator.comparing(p -> p.getCost()))
                     .get();
 
-            /* Record stats */
-            if(ProgramMain.RECORD_STATS.equals("true")){
-                IntSummaryStatistics stats = population.stream()
-                        .mapToInt(p -> p.getCost())
-                        .summaryStatistics();
-                recordStatisticsInCSVFile(j, stats.getMin(), stats.getMax(), stats.getAverage(), bestCurrentSolution.getCost());
-            }
-
             logger.debug("Best current solution: " + bestCurrentSolution.toString());
             if (bestCurrentSolution.getCost() < bestSolution.getCost()) {
                 bestSolution = bestCurrentSolution.clone();
                 percentageOfMutation = ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
                 counter = 0;
+            }
+
+            /* Record stats */
+            if(ProgramMain.RECORD_STATS.equals("true")){
+                IntSummaryStatistics stats = population.stream()
+                        .mapToInt(p -> p.getCost())
+                        .summaryStatistics();
+                recordStatisticsInCSVFile(j, stats.getMin(), stats.getMax(), stats.getAverage(), bestSolution.getCost());
             }
         }
 
@@ -183,11 +183,11 @@ public class Genetic {
                             secondSon.getPatterns()[j] = buffer.clone();
                         }
                     }
-                    firstSolution.transformPatternArrayInSolutionArray();
-                    secondSolution.transformPatternArrayInSolutionArray();
+                    firstSon.transformPatternArrayInSolutionArray();
+                    secondSon.transformPatternArrayInSolutionArray();
 
-                    population.set(i, Neighbour.findNeighbour(firstSolution));
-                    population.set(i + 1, Neighbour.findNeighbour(secondSolution));
+                    population.set(i, Neighbour.findNeighbour(firstSon));
+                    population.set(i + 1, Neighbour.findNeighbour(secondSon));
                 }
             }
         }
@@ -200,6 +200,7 @@ public class Genetic {
      */
     private Solution applyCrossoverBetweenShapes(Solution initialSolution) {
         int randomNumberForCrossover = (int) (Math.random() * 100);
+        Solution firstSon = initialSolution.clone();
         if (randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER) {
             for (int i = 0; i < initialSolution.getPatterns().length; i++) {
                 int randomNumberForFirstPattern = (int) (Math.random() * initialSolution.getPatterns().length);
@@ -214,22 +215,22 @@ public class Genetic {
                     for (int j = randomNumberForFirstCrossover; j < randomNumberForSecondCrossover; j++) {
                         buffer1 = initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).getNumber();
                         buffer2 = initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).getNumber();
-                        initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).setNumber(buffer2);
-                        initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).setNumber(buffer1);
+                        firstSon.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).setNumber(buffer2);
+                        firstSon.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).setNumber(buffer1);
                     }
                 } else {
                     for (int j = randomNumberForSecondCrossover; j < randomNumberForFirstCrossover; j++) {
                         buffer1 = initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).getNumber();
                         buffer2 = initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).getNumber();
-                        initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).setNumber(buffer2);
-                        initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).setNumber(buffer1);
+                        firstSon.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).setNumber(buffer2);
+                        firstSon.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).setNumber(buffer1);
                     }
                 }
             }
-            initialSolution.transformPatternArrayInSolutionArray();
-            initialSolution = Neighbour.findNeighbour(initialSolution);
+            firstSon.transformPatternArrayInSolutionArray();
+            firstSon = Neighbour.findNeighbour(firstSon);
         }
-        return initialSolution;
+        return firstSon;
     }
 
     /**

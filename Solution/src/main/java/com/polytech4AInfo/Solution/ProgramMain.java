@@ -62,12 +62,12 @@ public class ProgramMain {
                     lastSolution.saveSolutionInFiles();
                 }
 
-            } catch (IOException e) {
-                logger.error("Cannot load data file");
-            } catch (ContextUtils.ContextLoadException e) {
+            } catch (Exception e) {
                 logger.error("Cannot load data file");
             }
         } catch (IOException e) {
+            logger.error("Cannot load configuration file");
+        } catch (Exception e) {
             logger.error("Cannot load configuration file");
         }
 
@@ -76,7 +76,7 @@ public class ProgramMain {
         logger.info("End of the program");
     }
 
-    private static void defineConfiguration() throws IOException {
+    private static void defineConfiguration() throws Exception {
         Properties prop = new Properties();
         String fileName = "Ressources/default.properties";
         InputStream is = new FileInputStream(fileName);
@@ -85,6 +85,12 @@ public class ProgramMain {
         NUMBER_OF_PATTERN = Integer.parseInt(prop.getProperty("NUMBER_OF_PATTERN"));
         TEMPERATURE = Double.parseDouble(prop.getProperty("TEMPERATURE"));
         FILE_TO_LOAD = "Ressources/" + filename + ".txt";
+        ALGO = prop.getProperty("ALGO");
+
+        if(!(ALGO.equals("GEN") || ALGO.equals("ANN"))){
+            throw new Exception("Bad value for algorithm");
+        }
+
         LIMIT = Integer.parseInt(prop.getProperty("LIMIT"));
         LIMITTEMP = Integer.parseInt(prop.getProperty("LIMITTEMP"));
         PERCENTAGE_OF_INCREMENTATION = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_INCREMENTATION"));
@@ -95,10 +101,9 @@ public class ProgramMain {
         INITIAL_POPULATION_SIZE = Integer.parseInt(prop.getProperty("INITIAL_POPULATION_SIZE"));
         PERCENTAGE_OF_APPLY_MUTATION = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_APPLY_MUTATION"));
         PERCENTAGE_OF_APPLY_CROSSOVER = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_APPLY_CROSSOVER"));
-        PATH_TO_LOG_FILES = prop.getProperty("PATH_TO_LOG_FILES") + filename + "/";
-        PATH_TO_IMAGES = prop.getProperty("PATH_TO_IMAGES") + filename + "/";
+        PATH_TO_LOG_FILES = prop.getProperty("PATH_TO_LOG_FILES") + ALGO + "/" + filename + "/";
+        PATH_TO_IMAGES = prop.getProperty("PATH_TO_IMAGES") + ALGO + "/" + filename + "/";
         DEBUG_LEVEL = prop.getProperty("DEBUG_LEVEL");
-        ALGO = prop.getProperty("ALGO");
         RECORD_STATS = prop.getProperty("RECORD_STATS");
     }
 
