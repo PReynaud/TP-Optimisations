@@ -3,6 +3,10 @@ package com.polytech4AInfo.Solution;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.log4j.Logger;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
 
 /**
@@ -18,7 +22,21 @@ public class Annealing {
     private int counter = 0;
     private int counterTemp = 0;
 
+
+    private StringWriter stringWriter;
+    private BufferedWriter bufferedWriter;
+
     public Annealing() {
+        if(ProgramMain.RECORD_STATS.equals("true")){
+            stringWriter  = new StringWriter();
+            bufferedWriter = new BufferedWriter(stringWriter);
+            try {
+                bufferedWriter.write("Iteration,Minimum Value,Maximum Value,Average Value,Best Value");
+                bufferedWriter.newLine();
+            } catch (IOException e) {
+                logger.error("Error catching statistics for CSV file");
+            }
+        }
     }
 
     /**
@@ -96,6 +114,26 @@ public class Annealing {
         double pFinal = 1.0/1000000.0;
         mu = Math.exp(Math.log(deltaF/(Math.log(1.0/pFinal)* ProgramMain.TEMPERATURE))/ProgramMain.LIMIT);
         return mu * oldTemperature;
+    }
+
+    private void recordStatisticsInCSVFile(int generation, int min, int max, double avg, int bestValue){
+        try {
+            bufferedWriter.write(generation + "," + min + "," + max + "," + avg + "," + bestValue);
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            logger.error("Error catching statistics for CSV file");
+        }
+    }
+
+    private void generateCSVFile(){
+        try {
+            FileWriter writer = new FileWriter(ProgramMain.PATH_TO_LOG_FILES + "stats.csv");
+            writer.append(stringWriter.toString());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            logger.error("Error writing CSV file");
+        }
     }
 
 }

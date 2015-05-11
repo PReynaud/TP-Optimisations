@@ -20,13 +20,14 @@ public class ProgramMain {
     private static String FILE_TO_LOAD = "Ressources/data_20Lalpha.txt";
 
     public static String PATH_TO_IMAGES = "./OUTPUT/";
-    private static String PATH_TO_LOG_FILES = "./OUTPUT/log.html";
+    public static String PATH_TO_LOG_FILES = "./OUTPUT/";
 
     public static int LIMIT = 1000;
     public static int LIMITTEMP = 200;
 
     private static String DEBUG_LEVEL = "INFO";
     private static String ALGO = "GEN";
+    public static String RECORD_STATS = "true";
 
     public static double PERCENTAGE_OF_INCREMENTATION = 25;
     public static double PERCENTAGE_OF_ADDING_A_PATTERN = 0.05;
@@ -97,6 +98,7 @@ public class ProgramMain {
         PATH_TO_IMAGES = prop.getProperty("PATH_TO_IMAGES");
         DEBUG_LEVEL = prop.getProperty("DEBUG_LEVEL");
         ALGO = prop.getProperty("ALGO");
+        RECORD_STATS = prop.getProperty("RECORD_STATS");
     }
 
     private static void printConfiguration(){
@@ -104,7 +106,8 @@ public class ProgramMain {
         logger.info("FILE_TO_LOAD: " + FILE_TO_LOAD
                 + ", PATH_TO_LOG_FILES: " + PATH_TO_LOG_FILES
                 + ", PATH_TO_IMAGES: " + PATH_TO_IMAGES
-                + ", NUMBER_OF_PATTERN: " + NUMBER_OF_PATTERN);
+                + ", NUMBER_OF_PATTERN: " + NUMBER_OF_PATTERN
+                + ", RECORD_STATS: " + RECORD_STATS);
 
         logger.info("Neighbours properties:");
         logger.info("PERCENTAGE_OF_INCREMENTATION: " + PERCENTAGE_OF_INCREMENTATION
@@ -128,12 +131,12 @@ public class ProgramMain {
     }
 
     private static void defineLogger(){
-        File file = new File(PATH_TO_LOG_FILES);
+        File file = new File(PATH_TO_LOG_FILES + "log.html");
         file.delete();
         HTMLLayout layout = new HTMLLayout();
         DailyRollingFileAppender appender = null;
         try {
-            appender = new DailyRollingFileAppender(layout, PATH_TO_LOG_FILES, "yyyy-MM-dd");
+            appender = new DailyRollingFileAppender(layout, PATH_TO_LOG_FILES + "log.html", "yyyy-MM-dd");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -2,9 +2,14 @@ package com.polytech4AInfo.Solution;
 
 import org.apache.log4j.Logger;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 
 /**
  * Created by Pierre on 08/05/2015.
@@ -19,7 +24,20 @@ public class Genetic {
      */
     private int counter = 0;
 
+    private StringWriter stringWriter;
+    private BufferedWriter bufferedWriter;
+
     public Genetic() {
+        if(ProgramMain.RECORD_STATS.equals("true")){
+            stringWriter  = new StringWriter();
+            bufferedWriter = new BufferedWriter(stringWriter);
+            try {
+                bufferedWriter.write("Generation;Minimum Value;Maximum Value;Average Value;Best Value");
+                bufferedWriter.newLine();
+            } catch (IOException e) {
+                logger.error("Error catching statistics for CSV file");
+            }
+        }
     }
 
     /**
@@ -51,11 +69,11 @@ public class Genetic {
             injectBestSolutionIntoPopulation(population, bestSolution);
 
             /* Crossover and mutations */
-            applyCrossoverBetweenPatterns(population);
+            /*applyCrossoverBetweenPatterns(population);
             for (int i = 0; i < population.size(); i++) {
                 Solution newSolution = applyCrossoverBetweenShapes(population.get(i));
                 population.set(i, newSolution);
-            }
+            }*/
 
             applyMutations(population, percentageOfMutation);
 
@@ -63,6 +81,15 @@ public class Genetic {
             Solution bestCurrentSolution = population.stream()
                     .min(Comparator.comparing(p -> p.getCost()))
                     .get();
+
+            /* Record stats */
+            if(ProgramMain.RECORD_STATS.equals("true")){
+                IntSummaryStatistics stats = population.stream()
+                        .mapToInt(p -> p.getCost())
+                        .summaryStatistics();
+                recordStatisticsInCSVFile(j, stats.getMin(), stats.getMax(), stats.getAverage(), bestCurrentSolution.getCost());
+            }
+
             logger.debug("Best current solution: " + bestCurrentSolution.toString());
             if (bestCurrentSolution.getCost() < bestSolution.getCost()) {
                 bestSolution = bestCurrentSolution.clone();
@@ -75,6 +102,11 @@ public class Genetic {
         logger.info("Best solution: " + bestSolution.toString());
         double stopTime = System.currentTimeMillis();
         logger.info("Execution time: " + (stopTime - startTime));
+
+        if(ProgramMain.RECORD_STATS.equals("true")){
+            generateCSVFile();
+        }
+
         return bestSolution;
     }
 
@@ -216,6 +248,27 @@ public class Genetic {
     private void injectBestSolutionIntoPopulation(ArrayList<Solution> population, Solution bestSolution) {
         int randomNumberForPosition = (int) (Math.random() * population.size());
         population.set(randomNumberForPosition, bestSolution);
+    }
+
+    private void recordStatisticsInCSVFile(int generation, int min, int max, double avg, int bestValue){
+        try {
+            bufferedWriter.write(generation + ";" + min + ";" + max + ";" + avg + ";" + bestValue);
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            logger.error("Error catching statistics for CSV file");
+        }
+    }
+
+    private void generateCSVFile(){
+        try {
+            FileWriter writer = new FileWriter(ProgramMain.PATH_TO_LOG_FILES + "stats.csv");
+            bufferedWriter.close();
+            writer.append(stringWriter.toString());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            logger.error("Error writing CSV file");
+        }
     }
 }
 
