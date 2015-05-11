@@ -33,23 +33,26 @@ public class Genetic {
         int counter = 0;
 
         /*Go through the generations*/
-        for(int j=0; j < ProgramMain.GENERATION; j++){
+        for (int j = 0; j < ProgramMain.GENERATION; j++) {
             logger.info("Current generation: " + j + ", Best cost: " + bestSolution.getCost() + ", Patterns: " + bestSolution.getSolutionArray().length);
             counter++;
-            if(counter%10 == 0){
+            if (counter % 100 == 0) {
                 percentageOfMutation += ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
             }
 
             /* Selection */
             ArrayList<Solution> selectedPopulation = rouletteWheelSelection(population);
             population = selectedPopulation;
-            for(int i = 0; i < population.size(); i++){
+            for (int i = 0; i < population.size(); i++) {
                 population.set(i, selectedPopulation.get(i));
             }
 
+            /* Inject best solution into population*/
+            injectBestSolutionIntoPopulation(population, bestSolution);
+
             /* Crossover and mutations */
             applyCrossoverBetweenPatterns(population);
-            for(int i = 0; i < population.size(); i++){
+            for (int i = 0; i < population.size(); i++) {
                 Solution newSolution = applyCrossoverBetweenShapes(population.get(i));
                 population.set(i, newSolution);
             }
@@ -61,7 +64,7 @@ public class Genetic {
                     .min(Comparator.comparing(p -> p.getCost()))
                     .get();
             logger.debug("Best current solution: " + bestCurrentSolution.toString());
-            if(bestCurrentSolution.getCost() < bestSolution.getCost()){
+            if (bestCurrentSolution.getCost() < bestSolution.getCost()) {
                 bestSolution = bestCurrentSolution.clone();
                 percentageOfMutation = ProgramMain.PERCENTAGE_OF_APPLY_MUTATION;
                 counter = 0;
@@ -75,13 +78,13 @@ public class Genetic {
         return bestSolution;
     }
 
-
     /**
      * Select a new population, the solutions with the best cost have a higher probability to be selected
+     *
      * @param population
      * @return
      */
-    public ArrayList<Solution> rouletteWheelSelection(ArrayList<Solution> population){
+    private ArrayList<Solution> rouletteWheelSelection(ArrayList<Solution> population) {
         ArrayList<Solution> selectedPopulation = new ArrayList<>();
         double randomValue;
         double sumOfFitness;
@@ -90,18 +93,18 @@ public class Genetic {
 
         population.sort(new SolutionComparator());
 
-        for(int i = 0; i < population.size(); i++){
+        for (int i = 0; i < population.size(); i++) {
             sumOfAllFitness += population.get(i).getCost();
         }
 
-        for(double i = 0; i <= population.size(); i++){
+        for (double i = 0; i <= population.size(); i++) {
             sumOfFitness = 0;
             randomValue = Math.random();
-            for(Solution individual: population){
+            for (Solution individual : population) {
                 probabilityToBeSelected = (individual.getCost() / sumOfAllFitness);
                 probabilityToBeSelected = (1 - probabilityToBeSelected) / (population.size() - 1);
                 sumOfFitness += probabilityToBeSelected;
-                if(sumOfFitness > randomValue){
+                if (sumOfFitness > randomValue) {
                     selectedPopulation.add(individual);
                     break;
                 }
@@ -113,14 +116,15 @@ public class Genetic {
 
     /**
      * Do a crossover between two patterns from two solutions
+     *
      * @param population
      */
-    public void applyCrossoverBetweenPatterns(ArrayList<Solution> population){
-        for(int i = 0; i < population.size() - 1; i+=2){
-            int randomNumberForCrossover = (int)(Math.random() * 100);
-            if(randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER){
+    private void applyCrossoverBetweenPatterns(ArrayList<Solution> population) {
+        for (int i = 0; i < population.size() - 1; i += 2) {
+            int randomNumberForCrossover = (int) (Math.random() * 100);
+            if (randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER) {
                 Solution firstSolution = population.get(i);
-                Solution secondSolution = population.get(i+1);
+                Solution secondSolution = population.get(i + 1);
 
                 Solution firstSon = firstSolution.clone();
                 Solution secondSon = secondSolution.clone();
@@ -130,16 +134,15 @@ public class Genetic {
 
                 Pattern buffer;
 
-                if(randomNumberForFirstCrossover < secondSolution.getPatterns().length && randomNumberForSecondCrossover < secondSolution.getPatterns().length){
-                    if(randomNumberForFirstCrossover < randomNumberForSecondCrossover){
-                        for(int j = randomNumberForFirstCrossover; j < randomNumberForSecondCrossover; j++){
+                if (randomNumberForFirstCrossover < secondSolution.getPatterns().length && randomNumberForSecondCrossover < secondSolution.getPatterns().length) {
+                    if (randomNumberForFirstCrossover < randomNumberForSecondCrossover) {
+                        for (int j = randomNumberForFirstCrossover; j < randomNumberForSecondCrossover; j++) {
                             buffer = firstSon.getPatterns()[j];
                             firstSon.getPatterns()[j] = secondSolution.getPatterns()[j].clone();
                             secondSon.getPatterns()[j] = buffer.clone();
                         }
-                    }
-                    else{
-                        for(int j = randomNumberForSecondCrossover; j < randomNumberForFirstCrossover; j++){
+                    } else {
+                        for (int j = randomNumberForSecondCrossover; j < randomNumberForFirstCrossover; j++) {
                             buffer = firstSon.getPatterns()[j];
                             firstSon.getPatterns()[j] = secondSolution.getPatterns()[j].clone();
                             secondSon.getPatterns()[j] = buffer.clone();
@@ -159,30 +162,30 @@ public class Genetic {
 
     /**
      * Do a crossover between the shapes from two pattern on the same solution
+     *
      * @param initialSolution
      */
-    public Solution applyCrossoverBetweenShapes(Solution initialSolution){
-        int randomNumberForCrossover = (int)(Math.random() * 100);
-        if(randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER){
-            for(int i = 0; i < initialSolution.getPatterns().length; i++){
-                int randomNumberForFirstPattern = (int)(Math.random() * initialSolution.getPatterns().length);
-                int randomNumberForSecondPattern = (int)(Math.random() * initialSolution.getPatterns().length);
+    private Solution applyCrossoverBetweenShapes(Solution initialSolution) {
+        int randomNumberForCrossover = (int) (Math.random() * 100);
+        if (randomNumberForCrossover < ProgramMain.PERCENTAGE_OF_APPLY_CROSSOVER) {
+            for (int i = 0; i < initialSolution.getPatterns().length; i++) {
+                int randomNumberForFirstPattern = (int) (Math.random() * initialSolution.getPatterns().length);
+                int randomNumberForSecondPattern = (int) (Math.random() * initialSolution.getPatterns().length);
 
                 int randomNumberForFirstCrossover = (int) (Math.random() * (initialSolution.getSolutionArray()[0].length));
                 int randomNumberForSecondCrossover = (int) (Math.random() * (initialSolution.getSolutionArray()[0].length));
 
                 int buffer1;
                 int buffer2;
-                if(randomNumberForFirstCrossover < randomNumberForSecondCrossover){
-                    for(int j = randomNumberForFirstCrossover; j < randomNumberForSecondCrossover; j++){
+                if (randomNumberForFirstCrossover < randomNumberForSecondCrossover) {
+                    for (int j = randomNumberForFirstCrossover; j < randomNumberForSecondCrossover; j++) {
                         buffer1 = initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).getNumber();
                         buffer2 = initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).getNumber();
                         initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).setNumber(buffer2);
                         initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).setNumber(buffer1);
                     }
-                }
-                else{
-                    for(int j = randomNumberForSecondCrossover; j < randomNumberForFirstCrossover; j++){
+                } else {
+                    for (int j = randomNumberForSecondCrossover; j < randomNumberForFirstCrossover; j++) {
                         buffer1 = initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).getNumber();
                         buffer2 = initialSolution.getPatterns()[randomNumberForSecondPattern].getPattern().get(j).getNumber();
                         initialSolution.getPatterns()[randomNumberForFirstPattern].getPattern().get(j).setNumber(buffer2);
@@ -198,16 +201,24 @@ public class Genetic {
 
     /**
      * Call the find neighbour function that will apply a random mutation and send a valid solution
+     *
      * @param population
      */
-    public void applyMutations(ArrayList<Solution> population, double percentageOfMutation){
-        int randomNumberForMutation = (int)(Math.random() * 100);
-        if(randomNumberForMutation < percentageOfMutation){
+    private void applyMutations(ArrayList<Solution> population, double percentageOfMutation) {
+        int randomNumberForMutation = (int) (Math.random() * 100);
+        if (randomNumberForMutation < percentageOfMutation) {
             int randomNumberForSolution = (int) (Math.random() * (population.size()));
             population.set(randomNumberForSolution, Neighbour.findNeighbour(population.get(randomNumberForSolution)));
         }
     }
+
+
+    private void injectBestSolutionIntoPopulation(ArrayList<Solution> population, Solution bestSolution) {
+        int randomNumberForPosition = (int) (Math.random() * population.size());
+        population.set(randomNumberForPosition, bestSolution);
+    }
 }
+
 
 class SolutionComparator implements Comparator<Solution> {
     @Override
