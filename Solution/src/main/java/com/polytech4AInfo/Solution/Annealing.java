@@ -41,13 +41,13 @@ public class Annealing {
                 + "\n Best cost: " + bestSolution.getCost()
                 + "\n Temperature: " + temperature
                 + "\n Nb Patterns: " + currentSolution.getPatterns().length
-                + "\n Current cost: " + oneSolution.getCost());
+                + "\n Current cost: " + currentSolution.getCost());
                 while (counterTemp < ProgramMain.LIMITTEMP) {
                     oneSolution = Neighbour.findNeighbour(currentSolution);
                     logger.debug("Current solution: " + currentSolution.toString());
                     logger.debug("Tested neighbour: " + oneSolution.toString());
                     try {
-                        deltaCost = currentSolution.getCost() - oneSolution.getCost();
+                        deltaCost = oneSolution.getCost()- currentSolution.getCost();
                         logger.debug("Cost of tested neighbour: " + oneSolution.getCost());
                         if (deltaCost <= 0) {
                             currentSolution = oneSolution;
