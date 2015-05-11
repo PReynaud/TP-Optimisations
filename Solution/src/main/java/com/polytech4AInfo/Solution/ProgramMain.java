@@ -81,9 +81,10 @@ public class ProgramMain {
         String fileName = "Ressources/default.properties";
         InputStream is = new FileInputStream(fileName);
         prop.load(is);
+        String filename = prop.getProperty("FILE_TO_LOAD");
         NUMBER_OF_PATTERN = Integer.parseInt(prop.getProperty("NUMBER_OF_PATTERN"));
         TEMPERATURE = Double.parseDouble(prop.getProperty("TEMPERATURE"));
-        FILE_TO_LOAD = prop.getProperty("FILE_TO_LOAD");
+        FILE_TO_LOAD = "Ressources/" + filename + ".txt";
         LIMIT = Integer.parseInt(prop.getProperty("LIMIT"));
         LIMITTEMP = Integer.parseInt(prop.getProperty("LIMITTEMP"));
         PERCENTAGE_OF_INCREMENTATION = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_INCREMENTATION"));
@@ -94,8 +95,8 @@ public class ProgramMain {
         INITIAL_POPULATION_SIZE = Integer.parseInt(prop.getProperty("INITIAL_POPULATION_SIZE"));
         PERCENTAGE_OF_APPLY_MUTATION = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_APPLY_MUTATION"));
         PERCENTAGE_OF_APPLY_CROSSOVER = Double.parseDouble(prop.getProperty("PERCENTAGE_OF_APPLY_CROSSOVER"));
-        PATH_TO_LOG_FILES = prop.getProperty("PATH_TO_LOG_FILES");
-        PATH_TO_IMAGES = prop.getProperty("PATH_TO_IMAGES");
+        PATH_TO_LOG_FILES = prop.getProperty("PATH_TO_LOG_FILES") + filename + "/";
+        PATH_TO_IMAGES = prop.getProperty("PATH_TO_IMAGES") + filename + "/";
         DEBUG_LEVEL = prop.getProperty("DEBUG_LEVEL");
         ALGO = prop.getProperty("ALGO");
         RECORD_STATS = prop.getProperty("RECORD_STATS");

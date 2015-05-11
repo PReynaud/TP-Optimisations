@@ -281,7 +281,7 @@ public class Solution {
      * Save all the patterns of the solution in png files
      */
     public void saveSolutionInFiles(){
-        new ToImg().save("/Tests/",this);
+        new ToImg().save("/Images/",this);
     }
 
     public ArrayList<Integer> getFillingRatio(){
