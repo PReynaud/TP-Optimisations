@@ -2,10 +2,7 @@ package com.polytech4AInfo.Solution;
 
 import org.apache.log4j.Logger;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
@@ -28,6 +25,8 @@ public class Genetic {
 
     public Genetic() {
         if(ProgramMain.RECORD_STATS.equals("true")){
+            File file = new File(ProgramMain.PATH_TO_LOG_FILES + "stats.csv");
+            file.delete();
             stringWriter  = new StringWriter();
             bufferedWriter = new BufferedWriter(stringWriter);
             try {
@@ -98,6 +97,9 @@ public class Genetic {
                         .mapToInt(p -> p.getCost())
                         .summaryStatistics();
                 recordStatisticsInCSVFile(j, stats.getMin(), stats.getMax(), stats.getAverage(), bestSolution.getCost());
+                if(j%100 == 99){
+                    generateCSVFile();
+                }
             }
         }
 
@@ -108,6 +110,12 @@ public class Genetic {
 
         if(ProgramMain.RECORD_STATS.equals("true")){
             generateCSVFile();
+            try {
+                stringWriter.close();
+                bufferedWriter.close();
+            } catch (IOException e) {
+                logger.error("Error writing CSV file");
+            }
         }
 
         return bestSolution;
@@ -263,11 +271,13 @@ public class Genetic {
 
     private void generateCSVFile(){
         try {
-            FileWriter writer = new FileWriter(ProgramMain.PATH_TO_LOG_FILES + "stats.csv");
-            bufferedWriter.close();
-            writer.append(stringWriter.toString());
+            FileWriter writer = new FileWriter(ProgramMain.PATH_TO_LOG_FILES + "stats.csv", true);
+            writer.write(stringWriter.toString());
             writer.flush();
             writer.close();
+
+            stringWriter.getBuffer().setLength(0);
+            bufferedWriter.flush();
         } catch (IOException e) {
             logger.error("Error writing CSV file");
         }
