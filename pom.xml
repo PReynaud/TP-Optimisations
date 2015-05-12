@@ -25,7 +25,6 @@
         <module>Positioning</module>
         <module>Shape</module>
         <module>Solution</module>
-        <module>ProgramMain</module>
     </modules>
     <build>
         <plugins>
@@ -35,6 +34,20 @@
                 <version>3.3</version>
                 <configuration>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.polytech4AInfo.Solution.ProgramMain</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
